@@ -22,7 +22,7 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
-config :todos, Pheddit.Repo,
+config :pheddit, Pheddit.Repo,
   adapter: Ecto.Adapters.MySQL,
   username: System.get_env("DB_USER") || "phoenix",
   password: System.get_env("DB_PASSWORD") || "",
