@@ -21,6 +21,13 @@ defmodule Pheddit.LinkControllerTest do
     assert json_response(conn, 200) == render_json(LinkView, "show.json", link: link)
   end
 
+  test "#gives 404 for a non existant link" do
+    conn = build_conn()
+    response = get conn, link_path(conn, :show, -1)
+
+    assert response.status == 404
+  end
+
   test "#create adds a new link" do
     link = %{title: "A wonderfull link", url: "http://reddit.com"}
 

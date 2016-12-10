@@ -11,6 +11,7 @@ defmodule Pheddit.LinkView do
 
   def link_json(link) do
     %{
+      id: link.id,
       title: link.title,
       url: link.url,
       inserted_at: link.inserted_at,

@@ -9,6 +9,7 @@ defmodule Pheddit.LinkViewTest do
     rendered_link = LinkView.link_json(link)
 
     assert rendered_link == %{
+      id: link.id,
       title: link.title,
       url: link.url,
       inserted_at: link.inserted_at,

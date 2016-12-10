@@ -9,8 +9,13 @@ defmodule Pheddit.LinkController do
   end
 
   def show(conn, %{"id" => id}) do
-    link = Repo.get!(Link, id)
-    render conn, "show.json", link: link
+    case Repo.get(Link, id) do
+      nil ->
+        conn
+        |> put_status(404)
+        |> render(Pheddit.ErrorView, "404.json")
+      link -> render conn, "show.json", link: link
+    end
   end
 
   def create(conn, params) do
@@ -18,8 +23,8 @@ defmodule Pheddit.LinkController do
 
     case Repo.insert(changeset) do
       {:ok, link} ->
-         conn 
-         |> put_status(:created) 
+         conn
+         |> put_status(:created)
          |> render("show.json", link: link)
     end
   end
