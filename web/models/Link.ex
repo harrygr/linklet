@@ -11,5 +11,6 @@ defmodule Pheddit.Link do
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:title, :url])
+    |> validate_required([:title, :url])
   end
 end

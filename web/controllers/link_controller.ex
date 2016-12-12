@@ -26,6 +26,10 @@ defmodule Pheddit.LinkController do
          conn
          |> put_status(:created)
          |> render("show.json", link: link)
+      {:error, changeset} ->
+        conn
+        |> put_status(:unprocessable_entity)
+        |> render(Pheddit.ChangesetView, "error.json", changeset: changeset)
     end
   end
 end

@@ -38,6 +38,14 @@ defmodule Pheddit.LinkControllerTest do
     %{"title" => returned_title, "url" => returned_url} = response
 
     assert link == %{title: returned_title, url: returned_url}
-
   end
+
+  test "#create validates an invalid link" do
+    link = %{title: "", url: ""}
+
+    response = post build_conn(), "/api/links", link
+
+    assert response.status == 422
+  end
+
 end
