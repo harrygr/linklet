@@ -23,6 +23,7 @@ defmodule Pheddit.Router do
   scope "/api", Pheddit do
     pipe_through :api
 
+    resources "/users", UserController, only: [:create]
     resources "/links", LinkController, only: [:index, :show, :create]
   end
 end
