@@ -29,6 +29,21 @@ defmodule Pheddit.User do
     |> put_password_hash
   end
 
+  def find_and_confirm_password(model, params \\ %{}) do
+    changeset = model
+    |> cast(params, [:email, :password])
+    |> validate_required([:email, :password])
+
+    case changeset do
+      %{valid?: true, changes: credentials} ->
+        case Pheddit.Authenticator.authenticate(credentials) do
+          {:ok, user} -> {:ok, user}
+          {:error, reason} -> {:error, add_error(changeset, :auth, reason)}
+        end
+      _ -> {:error, changeset}
+    end
+  end
+
   defp put_password_hash(changeset) do
     case changeset do
       %{changes: %{password: pass}} ->

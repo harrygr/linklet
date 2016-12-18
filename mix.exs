@@ -39,6 +39,7 @@ defmodule Pheddit.Mixfile do
      {:gettext, "~> 0.11"},
      {:ex_machina, "~> 1.0", only: :test},
      {:comeonin, "~> 3.0"},
+     {:guardian, "~> 0.13.0"},
      {:cowboy, "~> 1.0"}]
   end
 
