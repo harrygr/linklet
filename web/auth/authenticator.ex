@@ -5,7 +5,9 @@ defmodule Pheddit.Authenticator do
     user = Pheddit.Repo.get_by(User, email: String.downcase(email))
 
     case user do
-      nil -> {:error, "User does not exist"}
+      nil ->
+        Comeonin.Bcrypt.dummy_checkpw
+        {:error, "Invalid credentials"}
       _   ->
         case Comeonin.Bcrypt.checkpw(password, user.password_hash) do
           true -> {:ok, user}

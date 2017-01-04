@@ -17,3 +17,5 @@ config :pheddit, Pheddit.Repo,
   database: System.get_env("DB_DATABASE") || "pheddit_test",
   hostname: System.get_env("DB_HOST") || "127.0.0.1",
   pool: Ecto.Adapters.SQL.Sandbox
+
+config :comeonin, :bcrypt_log_rounds, 4

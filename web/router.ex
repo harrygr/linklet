@@ -26,7 +26,7 @@ defmodule Pheddit.Router do
     pipe_through :api
 
     resources "/auth", SessionController, only: [:create]
-    resources "/users", UserController, only: [:show, :create]
+    resources "/users", UserController, only: [:create]
     resources "/links", LinkController, only: [:index, :show, :create]
   end
 end
