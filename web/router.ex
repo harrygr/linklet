@@ -11,7 +11,7 @@ defmodule Pheddit.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
-    plug Guardian.Plug.VerifyHeader # Looks in the Authorization header for the token
+    plug Guardian.Plug.VerifyHeader, realm: "Bearer" # Looks in the Authorization header for the token
     plug Guardian.Plug.LoadResource
   end
 
@@ -26,7 +26,7 @@ defmodule Pheddit.Router do
     pipe_through :api
 
     resources "/auth", SessionController, only: [:create]
-    resources "/users", UserController, only: [:create]
+    resources "/users", UserController, only: [:show, :create]
     resources "/links", LinkController, only: [:index, :show, :create]
   end
 end

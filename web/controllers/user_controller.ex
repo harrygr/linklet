@@ -15,7 +15,6 @@ defmodule Pheddit.UserController do
         conn
         |> put_status(:unprocessable_entity)
         |> render(Pheddit.ChangesetView, "error.json", changeset: changeset)
-
     end
   end
 end

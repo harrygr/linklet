@@ -2,6 +2,8 @@ defmodule Pheddit.UserControllerTest do
   use Pheddit.ConnCase
 
   alias Pheddit.User
+  alias Pheddit.UserView
+
   @valid_attrs %{username: "joebloggs", email: "foo@bar.com", password: "s3cr3t123"}
   @invalid_attrs %{}
 

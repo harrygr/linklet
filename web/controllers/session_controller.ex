@@ -21,6 +21,12 @@ defmodule Pheddit.SessionController do
     end
   end
 
+  def unauthenticated(conn, _) do
+    conn
+    |> put_status(401)
+    |> render(Pheddit.ErrorView, "401.json")
+  end
+
   defp get_claims(conn) do
     case Guardian.Plug.claims(conn) do
       {:ok, claims} -> Map.take(claims, ["exp", "sub"])

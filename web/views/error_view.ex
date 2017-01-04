@@ -13,6 +13,10 @@ defmodule Pheddit.ErrorView do
     "Not Found"
   end
 
+  def render("401.json", _assigns) do
+    "Unauthorized"
+  end
+
   def render("error.json", reason) do
     %{error: reason}
   end

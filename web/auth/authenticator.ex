@@ -2,7 +2,8 @@ defmodule Pheddit.Authenticator do
   alias Pheddit.User
 
   def authenticate(%{email: email, password: password}) do
-    user = Pheddit.Repo.get_by(Pheddit.User, email: String.downcase(email))
+    user = Pheddit.Repo.get_by(User, email: String.downcase(email))
+
     case user do
       nil -> {:error, "User does not exist"}
       _   ->
