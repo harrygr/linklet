@@ -3,7 +3,7 @@ defmodule Pheddit.LinkController do
 
   alias Pheddit.Link
 
-  plug Guardian.Plug.EnsureAuthenticated, %{ on_failure: { Pheddit.SessionController, :unauthenticated } }
+  plug Guardian.Plug.EnsureAuthenticated, [handler: Pheddit.SessionController]
 
 
   def index(conn, _params) do
