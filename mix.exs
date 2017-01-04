@@ -19,7 +19,7 @@ defmodule Pheddit.Mixfile do
   def application do
     [mod: {Pheddit, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :mariaex]]
+                    :phoenix_ecto, :mariaex, :comeonin]]
   end
 
   # Specifies which paths to compile per environment.
@@ -38,6 +38,8 @@ defmodule Pheddit.Mixfile do
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.11"},
      {:ex_machina, "~> 1.0", only: :test},
+     {:comeonin, "~> 3.0"},
+     {:guardian, "~> 0.13.0"},
      {:cowboy, "~> 1.0"}]
   end
 

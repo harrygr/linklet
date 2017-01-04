@@ -5,6 +5,7 @@ defmodule Pheddit.Repo.Migrations.AddLinksTable do
     create table :links do
       add :title, :string
       add :url, :string
+      add :user_id, references(:users)
 
       timestamps
     end

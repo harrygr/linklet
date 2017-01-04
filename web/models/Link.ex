@@ -8,8 +8,8 @@ defmodule Pheddit.Link do
     timestamps
   end
 
-  def changeset(struct, params \\ %{}) do
-    struct
+  def changeset(model, params \\ %{}) do
+    model
     |> cast(params, [:title, :url])
     |> validate_required([:title, :url])
   end
