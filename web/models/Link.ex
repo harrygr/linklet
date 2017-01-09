@@ -1,6 +1,8 @@
 defmodule Pheddit.Link do
   use Pheddit.Web, :model
 
+  @timestamps_opts [usec: false]
+
   schema "links" do
     field :title
     field :url

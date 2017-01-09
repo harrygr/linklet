@@ -17,7 +17,8 @@ defmodule Pheddit.LinkController do
         conn
         |> put_status(404)
         |> render(Pheddit.ErrorView, "404.json")
-      link -> render conn, "show.json", link: link
+      link ->
+        render conn, "show.json", link: link
     end
   end
 
