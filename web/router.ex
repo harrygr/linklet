@@ -9,17 +9,17 @@ defmodule Pheddit.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :spa do
+    plug :put_layout, false
+    plug :accepts, ["html"]
+    plug :put_secure_browser_headers
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
     plug Corsica, origins: "*"
     plug Guardian.Plug.VerifyHeader, realm: "Bearer" # Looks in the Authorization header for the token
     plug Guardian.Plug.LoadResource
-  end
-
-  scope "/", Pheddit do
-    pipe_through :browser # Use the default browser stack
-
-    get "/", PageController, :index
   end
 
   # Here be the API routes
@@ -29,5 +29,12 @@ defmodule Pheddit.Router do
     resources "/auth", SessionController, only: [:create]
     resources "/users", UserController, only: [:create]
     resources "/links", LinkController, only: [:index, :show, :create]
+  end
+
+  scope "/", Pheddit do
+    pipe_through :spa # Use the SPA browser stack
+
+    get "/", PageController, :index
+    get "/*path", PageController, :index
   end
 end

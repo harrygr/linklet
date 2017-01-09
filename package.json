@@ -1,0 +1,23 @@
+{
+  "name": "Pheddit",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": {
+    "url": "https://github.com/harrygr/Pheddit.git",
+    "type": "git"
+  },
+  "author": "harrygr <harry@grumbar.me>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "mix phoenix.server & webpack -w"
+  },
+  "devDependencies": {
+    "choo": "^4.0.3",
+    "babel-core": "^6.21.0",
+    "babel-loader": "^6.2.10",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "choo-log": "^3.0.0",
+    "webpack": "beta"
+  }
+}
