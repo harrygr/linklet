@@ -1,9 +1,13 @@
 const html = require('choo/html')
+const navMenu = require('./layout/nav-menu')
+const notification = require('./components/notification')
 
-module.exports = (page) => (state, prev, next) => {
+module.exports = (page, {hero = false} = {}) => (state, prev, send) => {
+  const onload = () => send('auth:check')
+
   return html`
-  <div>
-  <nav class="nav has-shadow" id="top">
+  <div onload=${onload}>
+  <nav class="nav has-shadow" id="top" style="position:fixed; right: 0; left: 0">
     <div class="container">
       <div class="nav-left">
         <a class="nav-item" href="/">
@@ -15,35 +19,35 @@ module.exports = (page) => (state, prev, next) => {
         <span></span>
         <span></span>
       </span>
-      <div class="nav-right nav-menu">
-        <a class="nav-item is-tab is-active">
-          Home
-        </a>
-        <a class="nav-item is-tab">
-          Features
-        </a>
-        <a class="nav-item is-tab">
-          Team
-        </a>
-        <a class="nav-item is-tab">
-          Help
-        </a>
-        <span class="nav-item">
-          <a class="button">
-            Log in
-          </a>
-          <a class="button is-info">
-            Sign up
-          </a>
-        </span>
-      </div>
+      ${navMenu(state, prev, send)}
     </div>
   </nav>
-  <main class="section">
-    <div class="container content">
-      ${page(state, prev, next)}
+  <main class="${hero ? 'is-dark hero is-fullheight' : 'clears-navbar'}">
+    <div class="${hero ? 'hero-body' : 'section'} content">
+      ${page(state, prev, send)}
     </div>
   </main>
+  ${notification(state.alert)}
+
+  <style>
+    .clears-navbar {
+      padding-top: 40px;
+    }
+
+    .snackbar {
+      position: fixed;
+      margin: 0!important;
+      border-radius: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      transition: transform .25s cubic-bezier(.4,0,1,1),-webkit-transform .25s cubic-bezier(.4,0,1,1);
+      transform: translate(0, 100px);
+    }
+    .snackbar.visible {
+      transform: translate(0, 0);
+    }
+  </style>
   </div>
   `
 }

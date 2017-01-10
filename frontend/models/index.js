@@ -3,5 +3,10 @@
  * @type {Array}
  */
 module.exports = [
-  require('./app')()
+  require('./app')(),
+  require('./http')(),
+  require('./alert')(),
+  require('./register')(),
+  require('./auth')(),
+  require('./links')(),
 ]

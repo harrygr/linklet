@@ -1,7 +1,7 @@
 module.exports = () => {
   return {
     state: {
-      user: 'Jimbob'
+      user: null
     },
     reducers: {
       setUser (state, data) {
