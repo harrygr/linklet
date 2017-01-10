@@ -129,7 +129,7 @@ aws4@^1.2.1:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.5.0.tgz#0a29ffb79c31c9e712eeb087e8e7a64b4a56d755"
 
-axios:
+axios@^0.15.3:
   version "0.15.3"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.15.3.tgz#2c9d638b2e191a08ea1d6cc988eadd6ba5bdc053"
   dependencies:
@@ -143,7 +143,7 @@ babel-code-frame@^6.20.0:
     esutils "^2.0.2"
     js-tokens "^2.0.0"
 
-babel-core, babel-core@^6.18.0:
+babel-core@^6.18.0, babel-core@^6.21.0:
   version "6.21.0"
   resolved "https://registry.yarnpkg.com/babel-core/-/babel-core-6.21.0.tgz#75525480c21c803f826ef3867d22c19f080a3724"
   dependencies:
@@ -297,7 +297,7 @@ babel-helpers@^6.16.0:
     babel-runtime "^6.0.0"
     babel-template "^6.16.0"
 
-babel-loader:
+babel-loader@^6.2.10:
   version "6.2.10"
   resolved "https://registry.yarnpkg.com/babel-loader/-/babel-loader-6.2.10.tgz#adefc2b242320cd5d15e65b31cea0e8b1b02d4b0"
   dependencies:
@@ -628,7 +628,7 @@ babel-plugin-transform-strict-mode@^6.18.0:
     babel-runtime "^6.0.0"
     babel-types "^6.18.0"
 
-babel-preset-es2015:
+babel-preset-es2015@^6.18.0:
   version "6.18.0"
   resolved "https://registry.yarnpkg.com/babel-preset-es2015/-/babel-preset-es2015-6.18.0.tgz#b8c70df84ec948c43dcf2bf770e988eb7da88312"
   dependencies:
@@ -657,7 +657,7 @@ babel-preset-es2015:
     babel-plugin-transform-es2015-unicode-regex "^6.3.13"
     babel-plugin-transform-regenerator "^6.16.0"
 
-babel-preset-stage-0:
+babel-preset-stage-0@^6.16.0:
   version "6.16.0"
   resolved "https://registry.yarnpkg.com/babel-preset-stage-0/-/babel-preset-stage-0-6.16.0.tgz#f5a263c420532fd57491f1a7315b3036e428f823"
   dependencies:
@@ -745,16 +745,16 @@ babel-types@^6.13.0, babel-types@^6.16.0, babel-types@^6.18.0, babel-types@^6.19
     to-fast-properties "^1.0.1"
 
 babylon@^6.11.0:
-  version "6.14.1"
-  resolved "https://registry.yarnpkg.com/babylon/-/babylon-6.14.1.tgz#956275fab72753ad9b3435d7afe58f8bf0a29815"
+  version "6.15.0"
+  resolved "https://registry.yarnpkg.com/babylon/-/babylon-6.15.0.tgz#ba65cfa1a80e1759b0e89fb562e27dccae70348e"
 
 balanced-match@^0.4.1:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-0.4.2.tgz#cb3f3e3c732dc0f01ee70b403f302e61d7709838"
 
 barracks@^9.0.0:
-  version "9.2.1"
-  resolved "https://registry.yarnpkg.com/barracks/-/barracks-9.2.1.tgz#f12ddb64f6656b36cda265135639d2f0ef043073"
+  version "9.3.0"
+  resolved "https://registry.yarnpkg.com/barracks/-/barracks-9.3.0.tgz#8eb222e62e814531c84a0718a83867113bd89c03"
   dependencies:
     nanotick "^1.1.2"
     xtend "^4.0.1"
@@ -939,7 +939,15 @@ chokidar@^1.4.3:
   optionalDependencies:
     fsevents "^1.0.0"
 
-choo:
+choo-log@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/choo-log/-/choo-log-3.0.0.tgz#b0ee02ead88e0b8c078cc756da8c6e54ca7ff836"
+  dependencies:
+    detect-browser "^1.5.0"
+    pad-left "^2.1.0"
+    pad-right "^0.2.2"
+
+choo@^4.0.3:
   version "4.0.3"
   resolved "https://registry.yarnpkg.com/choo/-/choo-4.0.3.tgz#e099cfec9a761560b636a97fc44fdecc7fdb8829"
   dependencies:
@@ -950,14 +958,6 @@ choo:
     sheet-router "^4.0.1"
     xtend "^4.0.1"
     yo-yo "^1.2.2"
-
-choo-log:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/choo-log/-/choo-log-3.0.0.tgz#b0ee02ead88e0b8c078cc756da8c6e54ca7ff836"
-  dependencies:
-    detect-browser "^1.5.0"
-    pad-left "^2.1.0"
-    pad-right "^0.2.2"
 
 cipher-base@^1.0.0, cipher-base@^1.0.1:
   version "1.0.3"
@@ -1722,7 +1722,7 @@ loader-utils@^0.2.11, loader-utils@^0.2.16:
     json5 "^0.5.0"
     object-assign "^4.0.1"
 
-lodash, lodash@^4.14.0, lodash@^4.2.0:
+lodash@^4.14.0, lodash@^4.17.4, lodash@^4.2.0:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
@@ -1815,9 +1815,9 @@ mkdirp@^0.5.1, "mkdirp@>=0.5 0", mkdirp@~0.5.0, mkdirp@~0.5.1:
   dependencies:
     minimist "0.0.8"
 
-morphdom@^2.1.0:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/morphdom/-/morphdom-2.3.1.tgz#94247c316360b92cee49e529815370763e27da90"
+morphdom@~2.1.0:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/morphdom/-/morphdom-2.1.2.tgz#e07d0a61cda5cbed43389372d78c5c84d0154b0a"
 
 ms@0.7.1:
   version "0.7.1"
@@ -2663,9 +2663,9 @@ yargs@~3.10.0:
     window-size "0.1.0"
 
 yo-yo@^1.2.2:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/yo-yo/-/yo-yo-1.3.1.tgz#5ebf60481825fba84299914081c62348576d5481"
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/yo-yo/-/yo-yo-1.3.2.tgz#73b253cc8e24f058ed5c765a3a234c4ab0112393"
   dependencies:
     bel "^4.0.0"
-    morphdom "^2.1.0"
+    morphdom "~2.1.0"
 

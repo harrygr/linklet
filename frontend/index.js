@@ -20,7 +20,7 @@ app.router([
   ['/', layout(require('./pages/home'))],
   ['/register', guestView(require('./pages/register'), {hero: true})],
   ['/login', guestView(require('./pages/login'), {hero: true})],
-  ['/links', protectedView(require('./pages/links'))],
+  ['/links', layout(require('./pages/links'))],
   ])
 
 const tree = app.start()

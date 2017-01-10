@@ -3,19 +3,10 @@ const TextField = require('../components/textfield')
 
 module.exports = (state, prev, send) => {
   const updateForm = key => value => send('register:setField', {key, value})
-  const submitForm = () => send('http:post', {
-    url: '/users',
-    data: state.register.form,
-    onSuccess: response => {
-      console.log(response)
-      send('register:resetForm')
-      send('location:set', '/')
-    },
-    onFailure: response => console.log(response)
-  })
+  const submitForm = () => send('register:submitForm')
 
   return html`
-  <section>
+  <section class="container">
     <div class="columns">
       <div class="column is-4 is-offset-4">
         <h1 class="title">
@@ -44,7 +35,7 @@ module.exports = (state, prev, send) => {
           ${TextField({
             label: 'Password',
             id: 'password',
-            placeholder: '●●●●●●●',
+            placeholder: '',
             type: 'password',
             value: state.register.form.password,
             oninput: updateForm('password')
@@ -53,7 +44,7 @@ module.exports = (state, prev, send) => {
           ${TextField({
             label: 'Confirm Password',
             id: 'password_confirmation',
-            placeholder: '●●●●●●●',
+            placeholder: '',
             type: 'password',
             value: state.register.form.password_confirmation,
             oninput: updateForm('password_confirmation')
@@ -61,8 +52,7 @@ module.exports = (state, prev, send) => {
 
           <hr>
           <p class="control">
-            <button class="button is-primary" onclick=${submitForm}>Register</button>
-            <button class="button is-default">Cancel</button>
+            <button class="button is-primary is-fullwidth" onclick=${submitForm}>Register</button>
           </p>
         </div>
         <p class="has-text-centered">

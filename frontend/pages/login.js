@@ -27,7 +27,7 @@ module.exports = (state, prev, send) => {
           ${TextField({
             label: 'Password',
             id: 'password',
-            placeholder: '●●●●●●●',
+            placeholder: '',
             type: 'password',
             value: state.auth.form.password,
             oninput: updateForm('password')

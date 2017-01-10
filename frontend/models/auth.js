@@ -61,6 +61,7 @@ module.exports = ({
         send('auth:resetForm', null, done)
         send('auth:storeTokens', payload, done)
         send('http:setToken', payload.jwt, done)
+        send('setUser', payload.user, done)
         send('location:set', '/', done)
         send('alert:growl', {message: 'Successfully logged in!', type: 'success'}, done)
       },

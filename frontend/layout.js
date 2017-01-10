@@ -3,10 +3,11 @@ const navMenu = require('./layout/nav-menu')
 const notification = require('./components/notification')
 
 module.exports = (page, {hero = false} = {}) => (state, prev, send) => {
-  const onload = () => send('auth:check')
+  const checkAuth = () => { send('auth:check') }
 
   return html`
-  <div onload=${onload}>
+  <div onload=${checkAuth}>
+  ${notification(state.alert)}
   <nav class="nav has-shadow" id="top" style="position:fixed; right: 0; left: 0">
     <div class="container">
       <div class="nav-left">
@@ -27,7 +28,6 @@ module.exports = (page, {hero = false} = {}) => (state, prev, send) => {
       ${page(state, prev, send)}
     </div>
   </main>
-  ${notification(state.alert)}
 
   <style>
     .clears-navbar {
@@ -42,7 +42,7 @@ module.exports = (page, {hero = false} = {}) => (state, prev, send) => {
       right: 0;
       bottom: 0;
       transition: transform .25s cubic-bezier(.4,0,1,1),-webkit-transform .25s cubic-bezier(.4,0,1,1);
-      transform: translate(0, 100px);
+      transform: translate(0, 100%);
     }
     .snackbar.visible {
       transform: translate(0, 0);
