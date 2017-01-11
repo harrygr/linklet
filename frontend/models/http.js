@@ -49,7 +49,10 @@ module.exports = () => {
       },
 
       post (state, payload, send, done) {
-        handleResponse(state.client.post(payload.url, payload.data), payload)
+        const options = {
+          headers: payload.auth ? getHeaders(state.accessToken) : {}
+        }
+        handleResponse(state.client.post(payload.url, payload.data, options), payload)
       }
     }
   }

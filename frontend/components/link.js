@@ -1,6 +1,7 @@
 const html = require('choo/html')
+const moment = require('moment')
 
-const link = (link) => {
+module.exports = (link) => {
   return html`
   <div class="box">
     <article class="media">
@@ -13,20 +14,11 @@ const link = (link) => {
         <div class="content">
           <p>
           <a href=${link.url}>${link.title}</a>
+          <small>${moment(link.inserted_at).fromNow()}</small>
           </p>
         </div>
       </div>
     </article>
   </div>
-  `
-}
-
-module.exports = (state, prev, send) => {
-  return html`
-    <section onload=${() => send('links:fetchAll')} >
-    <h1 class="title">Links</h1>
-
-    ${state.links.links.map(link)}
-    </section>
   `
 }

@@ -1,9 +1,16 @@
+const decorateFormModel = require('../utils/decorate-form-model')
+
 const form = () => ({
   email: '',
-  password: '',
+  password: ''
 })
 
-module.exports = ({
+const constraints = () => ({
+  email: {presence: true, email: true},
+  password: {presence: true, length: {min: 6}}
+})
+
+const model = ({
   storage = window.localStorage
 } = {}) => {
   return {
@@ -17,24 +24,41 @@ module.exports = ({
       resetForm () {
         return {form: form()}
       },
-
-      setField (state, {key, value}) {
-        return {form: {...state.form, [key]: value}}
-      }
     },
 
     effects: {
+      setAndValidate (state, payload, send, done) {
+        send('auth:setField', payload, () => {
+          if (state.submitted) {
+            send('auth:validate', done)
+          }
+        })
+      },
+
       getToken (state, payload, send, done) {
-        send('http:post', {
-          url: '/auth',
-          data: state.form,
-          onSuccess: response => {
-            send('auth:login', response, done)
-          },
-          onFailure: response => {
-            console.log(response)
-          },
-        }, done)
+        send('auth:setSubmitted', done)
+        const login = (_, globalState) => {
+          if (!globalState.auth.valid) {
+            console.log('not logging in due to invalid form')
+            return
+          }
+          send('http:post', {
+            url: '/auth',
+            data: state.form,
+            onSuccess: response => {
+              send('auth:login', response, done)
+            },
+            onFailure: response => {
+              send('alert:growl', {
+                message: 'Login Failed',
+                type: 'danger'
+              }, done)
+              console.log(response)
+            },
+          }, done)
+        }
+
+        send('auth:validate', null, login)
       },
 
       check (state, payload, send, done) {
@@ -75,3 +99,8 @@ module.exports = ({
     }
   }
 }
+
+module.exports = decorateFormModel({
+  model: model(),
+  constraints: constraints()
+})

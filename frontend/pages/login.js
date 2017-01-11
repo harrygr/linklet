@@ -2,8 +2,11 @@ const html = require('choo/html')
 const TextField = require('../components/textfield')
 
 module.exports = (state, prev, send) => {
-  const updateForm = key => value => send('auth:setField', {key, value})
-  const submitForm = () => { send('auth:getToken')}
+  const updateForm = key => value => send('auth:setAndValidate', {key, value})
+  const submitForm = (e) => {
+    e.preventDefault()
+    send('auth:getToken')
+  }
 
   return html`
     <section class="container">
@@ -12,7 +15,7 @@ module.exports = (state, prev, send) => {
         <h1 class="title">
           Login
         </h1>
-        <div class="box">
+        <form class="box" onsubmit=${submitForm} novalidate>
 
           ${TextField({
             label: 'Email',
@@ -20,7 +23,8 @@ module.exports = (state, prev, send) => {
             placeholder: 'jsmith@example.org',
             type: 'email',
             value: state.auth.form.email,
-            oninput: updateForm('email')
+            oninput: updateForm('email'),
+            errors: state.auth.errors.email
           })}
 
           <hr>
@@ -30,14 +34,15 @@ module.exports = (state, prev, send) => {
             placeholder: '',
             type: 'password',
             value: state.auth.form.password,
-            oninput: updateForm('password')
+            oninput: updateForm('password'),
+            errors: state.auth.errors.password
           })}
 
           <hr>
           <p class="control">
-            <button class="button is-primary is-fullwidth" onclick=${submitForm}>Login</button>
+            <button class="button is-primary is-fullwidth" type="submit">Login</button>
           </p>
-        </div>
+        </form>
         <p class="has-text-centered">
           <a href="/login">Login</a>
         </p>

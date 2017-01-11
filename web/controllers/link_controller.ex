@@ -1,17 +1,18 @@
 defmodule Pheddit.LinkController do
   use Pheddit.Web, :controller
+  use Guardian.Phoenix.Controller
 
   alias Pheddit.Link
 
-  plug Guardian.Plug.EnsureAuthenticated, [handler: Pheddit.SessionController]
+  plug Guardian.Plug.EnsureAuthenticated, [handler: Pheddit.SessionController] when action in [:create]
 
 
-  def index(conn, _params) do
+  def index(conn, _params, _, _) do
     links = Repo.all(Link)
     render conn, "index.json", links: links
   end
 
-  def show(conn, %{"id" => id}) do
+  def show(conn, %{"id" => id}, _, _) do
     case Repo.get(Link, id) do
       nil ->
         conn
@@ -22,7 +23,7 @@ defmodule Pheddit.LinkController do
     end
   end
 
-  def create(conn, params) do
+  def create(conn, params, user, _) do
     changeset = Link.changeset(%Link{}, params)
 
     case Repo.insert(changeset) do

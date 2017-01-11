@@ -3,7 +3,7 @@ const choo = require('choo')
 const log = require('choo-log')
 const layout = require('./layout')
 const middleware = require('./middleware')
-const {compose} = require('lodash/fp')
+const compose = require('lodash/fp/compose')
 
 const app = choo()
 
@@ -21,6 +21,7 @@ app.router([
   ['/register', guestView(require('./pages/register'), {hero: true})],
   ['/login', guestView(require('./pages/login'), {hero: true})],
   ['/links', layout(require('./pages/links'))],
+  ['/links/new', layout(require('./pages/links/create'))],
   ])
 
 const tree = app.start()

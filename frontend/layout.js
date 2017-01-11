@@ -3,7 +3,12 @@ const navMenu = require('./layout/nav-menu')
 const notification = require('./components/notification')
 
 module.exports = (page, {hero = false} = {}) => (state, prev, send) => {
-  const checkAuth = () => { send('auth:check') }
+  const checkAuth = () => {
+    if (!state.http.accessToken) {
+      return send('auth:check')
+    }
+    console.log('not checking for a token in storage as we already have one in state')
+  }
 
   return html`
   <div onload=${checkAuth}>

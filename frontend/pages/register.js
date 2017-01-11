@@ -2,8 +2,11 @@ const html = require('choo/html')
 const TextField = require('../components/textfield')
 
 module.exports = (state, prev, send) => {
-  const updateForm = key => value => send('register:setField', {key, value})
-  const submitForm = () => send('register:submitForm')
+  const updateForm = key => value => send('register:setAndValidate', {key, value})
+  const submitForm = (e) => {
+    e.preventDefault()
+    send('register:submitForm')
+  }
 
   return html`
   <section class="container">
@@ -12,14 +15,15 @@ module.exports = (state, prev, send) => {
         <h1 class="title">
           Register an Account
         </h1>
-        <div class="box">
+        <form class="box" onsubmit=${submitForm} novalidate>
 
           ${TextField({
             label: 'Username',
             id: 'username',
             placeholder: 'jsmith',
             value: state.register.form.username,
-            oninput: updateForm('username')
+            oninput: updateForm('username'),
+            errors: state.register.errors.username
           })}
 
           ${TextField({
@@ -28,7 +32,8 @@ module.exports = (state, prev, send) => {
             placeholder: 'jsmith@example.org',
             type: 'email',
             value: state.register.form.email,
-            oninput: updateForm('email')
+            oninput: updateForm('email'),
+            errors: state.register.errors.email
           })}
 
           <hr>
@@ -38,7 +43,8 @@ module.exports = (state, prev, send) => {
             placeholder: '',
             type: 'password',
             value: state.register.form.password,
-            oninput: updateForm('password')
+            oninput: updateForm('password'),
+            errors: state.register.errors.password
           })}
 
           ${TextField({
@@ -47,14 +53,15 @@ module.exports = (state, prev, send) => {
             placeholder: '',
             type: 'password',
             value: state.register.form.password_confirmation,
-            oninput: updateForm('password_confirmation')
+            oninput: updateForm('password_confirmation'),
+            errors: state.register.errors.password_confirmation
           })}
 
           <hr>
           <p class="control">
-            <button class="button is-primary is-fullwidth" onclick=${submitForm}>Register</button>
+            <button class="button is-primary is-fullwidth" type="submit">Register</button>
           </p>
-        </div>
+        </form>
         <p class="has-text-centered">
           <a href="/login">Login</a>
         </p>
