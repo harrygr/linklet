@@ -9,7 +9,8 @@
   "author": "harrygr <harry@grumbar.me>",
   "license": "MIT",
   "scripts": {
-    "dev": "mix phoenix.server & npm run watchify",
+    "setenv": "source ./.env 2> /dev/null",
+    "dev": "npm run setenv && mix phoenix.server & npm run watchify",
     "browserify": "browserify frontend/index.js -o priv/static/js/app.bundle.js --debug --verbose -t babelify -t yo-yoify",
     "watchify": "watchify frontend/index.js -o priv/static/js/app.bundle.js --debug --verbose -t babelify -t yo-yoify"
   },

@@ -23,7 +23,7 @@ defmodule Pheddit.LinkController do
     end
   end
 
-  def create(conn, params, user, _) do
+  def create(conn, params, _user, _) do
     changeset = Link.changeset(%Link{}, params)
 
     case Repo.insert(changeset) do
