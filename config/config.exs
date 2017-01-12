@@ -7,8 +7,7 @@ use Mix.Config
 
 # General application configuration
 config :pheddit,
-  ecto_repos: [Pheddit.Repo],
-  script: "/js/app.bundle.js"
+  ecto_repos: [Pheddit.Repo]
 
 # Configures the endpoint
 config :pheddit, Pheddit.Endpoint,
