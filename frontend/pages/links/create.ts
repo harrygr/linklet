@@ -14,7 +14,7 @@ export default (state, prev, send) => {
   const updateForm = key => value => send('links:setAndValidate', {key, value})
 
   return html`
-    <section onunload=${onunload}>
+    <section id="links-create-page" onunload=${onunload}>
     <h1 class="title">New Link</h1>
 
     <form class="box" onsubmit=${submitForm} novalidate>

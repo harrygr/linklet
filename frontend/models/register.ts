@@ -23,9 +23,7 @@ const model = () => {
     },
 
     reducers: {
-      resetForm () {
-        return {form: form()}
-      },
+      resetForm: () => ({form: form()}),
     },
 
     effects: {
@@ -48,8 +46,6 @@ const model = () => {
             url: '/users',
             data: state.form,
             onSuccess: response => {
-              console.log(response)
-              send('register:resetForm', null, done)
               send('location:set', '/login', done)
               send('alert:growl', {
                 message: 'Welcome aboard! Login with your credentials.',

@@ -31,9 +31,7 @@ const model = ({
     },
 
     reducers: {
-      resetForm () {
-        return {form: form()}
-      },
+      resetForm: () => ({form: form()}),
       setLoggedIn: () => ({isLoggedIn: true}),
       setLoggedOut: () => ({isLoggedIn: false}),
     },

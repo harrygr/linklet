@@ -2,6 +2,10 @@ import html from 'choo/html'
 import TextField from '../components/textfield'
 
 export default (state, prev, send) => {
+  const onunload = () => {
+    send('auth:resetValidator')
+    send('auth:resetForm')
+  }
   const updateForm = key => value => send('auth:setAndValidate', {key, value})
   const submitForm = (e) => {
     e.preventDefault()
@@ -9,7 +13,7 @@ export default (state, prev, send) => {
   }
 
   return html`
-    <section class="container">
+    <section class="container" id="login-page" onunload=${onunload}>
     <div class="columns is-vcentered">
       <div class="column is-4 is-offset-4">
         <h1 class="title">
