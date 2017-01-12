@@ -7,6 +7,8 @@ defmodule Pheddit.Link do
     field :title
     field :url
 
+    belongs_to :user, Pheddit.User
+
     timestamps
   end
 
