@@ -1,4 +1,4 @@
-const decorateFormModel = require('../utils/decorate-form-model')
+import decorateFormModel from '../utils/decorate-form-model'
 
 const form = () => ({
   email: '',
@@ -61,7 +61,7 @@ const model = ({
         send('auth:validate', null, login)
       },
 
-      check (state, payload, send, done) {
+      init (state, payload, send, done) {
         console.log('checking for a token')
         const tokenJson = storage.getItem('tokens')
         if (tokenJson) {
@@ -100,7 +100,7 @@ const model = ({
   }
 }
 
-module.exports = decorateFormModel({
+export default decorateFormModel({
   model: model(),
   constraints: constraints()
 })

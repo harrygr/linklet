@@ -1,12 +1,22 @@
-const html = require('choo/html')
-const map = require('lodash/fp/map')
+import html from 'choo/html'
+import * as map from 'lodash/fp/map'
+
+interface TextFieldProps {
+  type?: string
+  label?: string
+  id?: string
+  errors?: Array<string>
+  value?: string
+  oninput?: Function
+  placeholder?: string
+}
 
 const renderError = (error) => {
   return html`<span class="help is-danger">${error}</span>`
 }
 const errorMessages = map(renderError)
 
-module.exports = ({
+export default ({
   type = 'text',
   label = '',
   id = '',
@@ -14,7 +24,7 @@ module.exports = ({
   value = '',
   oninput = () => {},
   placeholder = ''
-}) => {
+}: TextFieldProps) => {
   return html`
   <p class="control">
     <label class="label" for=${id}>${label}</label>

@@ -1,7 +1,7 @@
-const html = require('choo/html')
-const moment = require('moment')
+import html from 'choo/html'
+import * as moment from 'moment'
 
-module.exports = (link) => {
+export default (link) => {
   return html`
   <div class="box">
     <article class="media">

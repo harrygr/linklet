@@ -29,7 +29,7 @@ const makeDefaultReducers = (defaultErrors, constraints) => {
   }
 }
 
-module.exports = ({
+export default ({
   model,
   constraints
 }) => () => {

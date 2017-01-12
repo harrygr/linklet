@@ -1,4 +1,4 @@
-const http = require('axios')
+import http from 'axios'
 
 const client = () => {
   return http.create({
@@ -14,8 +14,8 @@ const getHeaders = (token) => {
 }
 
 const handleResponse = (promise, {
-  onSuccess = () => {},
-  onFailure = () => {}
+  onSuccess = (response) => {},
+  onFailure = (response) => {}
 } = {}) => {
   promise.then(response => {
     console.log('handling a succussful response')
@@ -25,7 +25,7 @@ const handleResponse = (promise, {
   })
 }
 
-module.exports = () => {
+export default () => {
   return {
     namespace: 'http',
 

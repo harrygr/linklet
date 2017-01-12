@@ -1,7 +1,7 @@
-const html = require('choo/html')
-const TextField = require('../../components/textfield')
+import html from 'choo/html'
+import TextField from '../../components/textfield'
 
-module.exports = (state, prev, send) => {
+export default (state, prev, send) => {
   const submitForm = (e) => {
     e.preventDefault()
     send('links:store')

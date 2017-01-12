@@ -1,4 +1,4 @@
-const html = require('choo/html')
+import html from 'choo/html'
 
 const redirectIfAuthenticated = page => (state, prev, send) => {
   if (state.user) {
@@ -26,4 +26,4 @@ const redirectIfGuest = page => (state, prev, send) => {
   return page(state, prev, send)
 }
 
-module.exports = { redirectIfAuthenticated, redirectIfGuest }
+export default { redirectIfAuthenticated, redirectIfGuest }

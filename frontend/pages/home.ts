@@ -1,6 +1,6 @@
-const html = require('choo/html')
+import html from 'choo/html'
 
-module.exports = (state, prev, send) => {
+export default (state, prev, send) => {
   const setUser = () => send('setUser', 'Bobby')
   const growl = () => send('alert:growl', {message: 'Hey there!'})
   const growlDanger = () => send('alert:growl', {message: 'Something ain\'t right!', type: 'danger', timeout: 99999})
