@@ -1,13 +1,10 @@
-const html = require('choo/html')
-const navMenu = require('./layout/nav-menu')
-const notification = require('./components/notification')
+import html from 'choo/html'
+import navMenu from './layout/nav-menu'
+import notification from './components/notification'
 
-module.exports = (page, {hero = false} = {}) => (state, prev, send) => {
+export default (page, {hero = false} = {}) => (state, prev, send) => {
   const checkAuth = () => {
-    if (!state.http.accessToken) {
-      return send('auth:check')
-    }
-    console.log('not checking for a token in storage as we already have one in state')
+    return send('auth:init')
   }
 
   return html`
