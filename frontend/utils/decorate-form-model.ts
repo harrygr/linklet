@@ -18,11 +18,8 @@ const makeDefaultReducers = (defaultErrors, constraints) => {
       }
       return {errors: defaultErrors, valid: true}
     },
-    setSubmitted (state) {
-      return {
-        submitted: true
-      }
-    },
+    resetValidator: (state) => ({errors: []}),
+    setSubmitted: (state) => ({submitted: true }),
     setField (state, {key, value}) {
       return {form: {...state.form, [key]: value}}
     }

@@ -2,6 +2,11 @@ import html from 'choo/html'
 import TextField from '../../components/textfield'
 
 export default (state, prev, send) => {
+  const onunload = () => {
+    send('links:resetValidator')
+    send('links:resetForm')
+  }
+
   const submitForm = (e) => {
     e.preventDefault()
     send('links:store')
@@ -9,7 +14,7 @@ export default (state, prev, send) => {
   const updateForm = key => value => send('links:setAndValidate', {key, value})
 
   return html`
-    <section>
+    <section onunload=${onunload}>
     <h1 class="title">New Link</h1>
 
     <form class="box" onsubmit=${submitForm} novalidate>

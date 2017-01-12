@@ -13,7 +13,7 @@ const protectedView = compose(middleware.redirectIfGuest, layout)
 
 const linkRoutes = () => [
   ['/', layout(listLinks)],
-  ['/new', layout(createLink)]
+  ['/new', protectedView(createLink)]
 ]
 
 export default () => [

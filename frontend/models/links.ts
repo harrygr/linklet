@@ -20,6 +20,7 @@ const model = () => {
     },
 
     reducers: {
+      resetForm: () => ({form: form()}),
       set(state, links) {
         return {links}
       }

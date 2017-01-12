@@ -20,11 +20,14 @@ const model = ({
 }: AuthDependencies = {
   storage: window.localStorage
 }) => {
+  const isLoggedIn = storage.getItem('tokens') ? true : false
+
   return {
     namespace: 'auth',
 
     state: {
-      form: form()
+      form: form(),
+      isLoggedIn
     },
 
     reducers: {

@@ -14,7 +14,7 @@ const redirectIfAuthenticated = page => (state, prev, send) => {
 }
 
 const redirectIfGuest = page => (state, prev, send) => {
-  if (!state.user) {
+  if (!state.auth.isLoggedIn) {
     send('location:set', '/')
     send('alert:growl', {
       message: 'You must be logged in to go here',
