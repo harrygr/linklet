@@ -39,14 +39,14 @@ defmodule Pheddit.LinkControllerTest do
 
   test "#create adds a new link" do
     link = %{title: "A wonderful link", url: "http://reddit.com"}
-
     conn = post get_authenticated_conn(), "/api/links", link
 
     response = json_response(conn, :created) |> Poison.encode! |> Poison.decode!
 
-    %{"title" => returned_title, "url" => returned_url} = response
+    %{"title" => returned_title, "url" => returned_url, "user" => user} = response
 
     assert link == %{title: returned_title, url: returned_url}
+    assert user["id"] > 0
   end
 
   test "#create authenticates before creating a link" do
