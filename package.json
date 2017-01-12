@@ -11,10 +11,11 @@
   "scripts": {
     "setenv": "source ./.env 2> /dev/null",
     "dev": "npm run setenv && mix phoenix.server & npm run watchify",
-    "browserify": "browserify frontend/index.js -o priv/static/js/app.bundle.js --debug --verbose -t babelify -t yo-yoify",
-    "watchify": "watchify frontend/index.js -o priv/static/js/app.bundle.js --debug --verbose -t babelify -t yo-yoify",
-    "build": "npm run browserify && npm run uglify",
-    "uglify": "uglifyjs --compress --mangle -o priv/static/js/app.bundle.min.js priv/static/js/app.bundle.js"
+    "browserify": "browserify frontend/index.ts -o priv/static/js/app.bundle.js --debug --verbose -p tsify -t yo-yoify",
+    "watchify": "watchify frontend/index.ts -o priv/static/js/app.bundle.js --debug --verbose -p tsify -t yo-yoify",
+    "uglify": "uglifyjs --compress --mangle -o priv/static/js/app.bundle.min.js priv/static/js/app.bundle.js",
+    "build": "mkdir -p priv/static/js && npm run browserify && npm run uglify",
+    "test": "mocha --opts mocha.opts"
   },
   "devDependencies": {
     "babel-core": "^6.21.0",
