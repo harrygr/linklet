@@ -34,6 +34,8 @@ const model = ({
       resetForm () {
         return {form: form()}
       },
+      setLoggedIn: () => ({isLoggedIn: true}),
+      setLoggedOut: () => ({isLoggedIn: false}),
     },
 
     effects: {
@@ -95,6 +97,7 @@ const model = ({
         send('auth:resetForm', null, done)
         send('auth:storeTokens', payload, done)
         send('http:setToken', payload.jwt, done)
+        send('auth:setLoggedIn', done)
         send('setUser', payload.user, done)
         send('location:set', '/', done)
         send('alert:growl', {message: 'Successfully logged in!', type: 'success'}, done)
@@ -103,6 +106,7 @@ const model = ({
       logout (state, payload, send, done) {
         send('auth:forgetTokens', null, done)
         send('setUser', null, done)
+        send('auth:setLoggedOut', done)
         send('location:set', '/', done)
         send('alert:growl', {message: 'You are now logged out!', type: 'success'}, done)
       }

@@ -12,7 +12,8 @@
     "setenv": "source ./.env 2> /dev/null",
     "dev": "npm run setenv && mix phoenix.server & npm run watchify",
     "browserify": "browserify frontend/index.ts -o priv/static/js/app.bundle.js -p tsify -t yo-yoify --debug --verbose",
-    "watchify": "watchify frontend/index.ts -o priv/static/js/app.bundle.js -p tsify -t yo-yoify --debug --verbose"
+    "watchify": "watchify frontend/index.ts -o priv/static/js/app.bundle.js -p tsify -t yo-yoify --debug --verbose",
+    "test": "mocha --opts mocha.opts"
   },
   "devDependencies": {
     "babel-core": "^6.21.0",
@@ -22,14 +23,18 @@
     "choo-log": "^3.0.0"
   },
   "dependencies": {
+    "@types/mocha": "^2.2.37",
     "@types/node": "^7.0.0",
     "axios": "^0.15.3",
     "babel-preset-es2015-nostrict": "^6.6.2",
     "babelify": "^7.3.0",
     "browserify": "^13.3.0",
+    "chai": "^3.5.0",
     "cjs-to-es6": "^1.0.1",
     "lodash": "^4.17.4",
+    "mocha": "^3.2.0",
     "moment": "^2.17.1",
+    "ts-node": "^2.0.0",
     "tsify": "^3.0.0",
     "typescript": "^2.1.5",
     "validate.js": "^0.11.1",

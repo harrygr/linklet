@@ -41,7 +41,7 @@ const model = () => {
         const onCreateLink = link => {
           send('location:set', '/links', done)
           send('alert:growl', {message: 'Link created', type: 'success'}, done)
-          send('links:set', {form: form()}, done)
+          send('links:resetForm', done)
         }
 
         const submit = (_, globalState) => {
