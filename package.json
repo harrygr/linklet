@@ -1,0 +1,46 @@
+{
+  "name": "Pheddit",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": {
+    "url": "https://github.com/harrygr/Pheddit.git",
+    "type": "git"
+  },
+  "author": "harrygr <harry@grumbar.me>",
+  "license": "MIT",
+  "scripts": {
+    "setenv": "source ./.env 2> /dev/null",
+    "dev": "npm run setenv && mix phoenix.server & npm run watchify",
+    "browserify": "browserify frontend/index.js -o priv/static/js/app.bundle.js --debug --verbose -t babelify -t yo-yoify",
+    "watchify": "watchify frontend/index.js -o priv/static/js/app.bundle.js --debug --verbose -t babelify -t yo-yoify",
+    "build": "npm run browserify && npm run uglify",
+    "uglify": "uglifyjs --compress --mangle -o priv/static/js/app.bundle.min.js priv/static/js/app.bundle.js"
+  },
+  "devDependencies": {
+    "babel-core": "^6.21.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "choo": "^4.0.3",
+    "choo-log": "^3.0.0"
+  },
+  "dependencies": {
+    "@types/mocha": "^2.2.37",
+    "@types/node": "^7.0.0",
+    "axios": "^0.15.3",
+    "babel-preset-es2015-nostrict": "^6.6.2",
+    "babelify": "^7.3.0",
+    "browserify": "^13.3.0",
+    "chai": "^3.5.0",
+    "cjs-to-es6": "^1.0.1",
+    "lodash": "^4.17.4",
+    "mocha": "^3.2.0",
+    "moment": "^2.17.1",
+    "ts-node": "^2.0.0",
+    "tsify": "^3.0.0",
+    "typescript": "^2.1.5",
+    "uglify-js": "^2.7.5",
+    "validate.js": "^0.11.1",
+    "watchify": "^3.8.0",
+    "yo-yoify": "^3.5.0"
+  }
+}

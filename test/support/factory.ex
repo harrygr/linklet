@@ -4,7 +4,8 @@ defmodule Pheddit.Factory do
   def link_factory do
     %Pheddit.Link{
       title: "A handy site to find stuff on the internet",
-      url: "http://google.com"
+      url: "http://google.com",
+      user: user_factory
     }
   end
 

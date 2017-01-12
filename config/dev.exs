@@ -35,8 +35,8 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :pheddit, Pheddit.Repo,
   adapter: Ecto.Adapters.MySQL,
-  username: "root",
-  password: "password",
-  database: "pheddit_dev",
-  hostname: "127.0.0.1",
+  username: System.get_env("DB_USER") || "root",
+  password: System.get_env("DB_PASSWORD") || "password",
+  database: System.get_env("DB_DATABASE") || "pheddit_dev",
+  hostname: System.get_env("DB_HOST") || "127.0.0.1",
   pool_size: 10

@@ -15,7 +15,8 @@ defmodule Pheddit.LinkView do
       title: link.title,
       url: link.url,
       inserted_at: link.inserted_at,
-      updated_at: link.updated_at
+      updated_at: link.updated_at,
+      user: Pheddit.UserView.user_json(link.user)
     }
   end
 end

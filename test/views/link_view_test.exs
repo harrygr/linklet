@@ -2,6 +2,7 @@ defmodule Pheddit.LinkViewTest do
   use Pheddit.ConnCase
   import Pheddit.Factory
   alias Pheddit.LinkView
+  alias Pheddit.UserView
 
   test "link_json" do
     link = insert(:link)
@@ -13,7 +14,8 @@ defmodule Pheddit.LinkViewTest do
       title: link.title,
       url: link.url,
       inserted_at: link.inserted_at,
-      updated_at: link.updated_at
+      updated_at: link.updated_at,
+      user: UserView.user_json(link.user)
     }
   end
 
