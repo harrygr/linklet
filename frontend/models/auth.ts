@@ -10,9 +10,16 @@ const constraints = () => ({
   password: {presence: true, length: {min: 6}}
 })
 
+
+interface AuthDependencies {
+  storage?: any
+}
+
 const model = ({
-  storage = window.localStorage
-} = {}) => {
+  storage
+}: AuthDependencies = {
+  storage: window.localStorage
+}) => {
   return {
     namespace: 'auth',
 

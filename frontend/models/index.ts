@@ -10,10 +10,13 @@ import links from './links'
  * @type {Array}
  */
 export default [
+  // domain
   app(),
   http(),
-  alert(),
-  register(),
   auth(),
   links(),
+  register(),
+
+  // components
+  alert(),
 ]

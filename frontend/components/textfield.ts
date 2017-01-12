@@ -11,10 +11,12 @@ interface TextFieldProps {
   placeholder?: string
 }
 
-const renderError = (error) => {
+const renderError = (error: string): HTMLElement => {
   return html`<span class="help is-danger">${error}</span>`
 }
-const errorMessages = map(renderError)
+
+type ArrayOfStringsToHtml = (errors: Array<string>) => Array<HTMLElement>
+const errorMessages: ArrayOfStringsToHtml = map(renderError)
 
 export default ({
   type = 'text',
