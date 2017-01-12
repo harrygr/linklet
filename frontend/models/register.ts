@@ -1,4 +1,4 @@
-const decorateFormModel = require('../utils/decorate-form-model')
+import decorateFormModel from '../utils/decorate-form-model'
 
 const form = () => ({
   username: '',
@@ -71,7 +71,7 @@ const model = () => {
   }
 }
 
-module.exports = decorateFormModel({
+export default decorateFormModel({
   model: model(),
   constraints: constraints()
 })

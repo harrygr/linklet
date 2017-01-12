@@ -1,4 +1,4 @@
-const html = require('choo/html')
+import html from 'choo/html'
 
 const redirectIfAuthenticated = page => (state, prev, send) => {
   if (state.user) {
@@ -14,7 +14,7 @@ const redirectIfAuthenticated = page => (state, prev, send) => {
 }
 
 const redirectIfGuest = page => (state, prev, send) => {
-  if (!state.user) {
+  if (!state.auth.isLoggedIn) {
     send('location:set', '/')
     send('alert:growl', {
       message: 'You must be logged in to go here',
@@ -26,4 +26,4 @@ const redirectIfGuest = page => (state, prev, send) => {
   return page(state, prev, send)
 }
 
-module.exports = { redirectIfAuthenticated, redirectIfGuest }
+export default { redirectIfAuthenticated, redirectIfGuest }

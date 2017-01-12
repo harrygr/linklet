@@ -1,4 +1,4 @@
-const decorateFormModel = require('../utils/decorate-form-model')
+import decorateFormModel from '../utils/decorate-form-model'
 
 const form = () => ({
   url: '',
@@ -20,6 +20,7 @@ const model = () => {
     },
 
     reducers: {
+      resetForm: () => ({form: form()}),
       set(state, links) {
         return {links}
       }
@@ -40,7 +41,7 @@ const model = () => {
         const onCreateLink = link => {
           send('location:set', '/links', done)
           send('alert:growl', {message: 'Link created', type: 'success'}, done)
-          send('links:set', {form: form()}, done)
+          send('links:resetForm', done)
         }
 
         const submit = (_, globalState) => {
@@ -75,7 +76,7 @@ const model = () => {
   }
 }
 
-module.exports = decorateFormModel({
+export default decorateFormModel({
   model: model(),
   constraints: constraints()
 })

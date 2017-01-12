@@ -1,7 +1,8 @@
-const html = require('choo/html')
-const moment = require('moment')
+import html from 'choo/html'
+import * as moment from 'moment'
+import parseUrl from '../utils/url-parser'
 
-module.exports = (link) => {
+export default (link) => {
   return html`
   <div class="box">
     <article class="media">
@@ -13,8 +14,9 @@ module.exports = (link) => {
       <div class="media-content">
         <div class="content">
           <p>
-          <a href=${link.url}>${link.title}</a>
-          <small>${moment(link.inserted_at).fromNow()}</small>
+          <h4><a href=${link.url}>${link.title}</a> <small>(${parseUrl(link.url)})</small></h4>
+
+          <span>${moment(link.inserted_at).fromNow()} by ${link.user.username}</span>
           </p>
         </div>
       </div>

@@ -1,4 +1,4 @@
-const decorateFormModel = require('../utils/decorate-form-model')
+import decorateFormModel from '../utils/decorate-form-model'
 
 const form = () => ({
   email: '',
@@ -10,20 +10,32 @@ const constraints = () => ({
   password: {presence: true, length: {min: 6}}
 })
 
+
+interface AuthDependencies {
+  storage?: any
+}
+
 const model = ({
-  storage = window.localStorage
-} = {}) => {
+  storage
+}: AuthDependencies = {
+  storage: window.localStorage
+}) => {
+  const isLoggedIn = storage.getItem('tokens') ? true : false
+
   return {
     namespace: 'auth',
 
     state: {
-      form: form()
+      form: form(),
+      isLoggedIn
     },
 
     reducers: {
       resetForm () {
         return {form: form()}
       },
+      setLoggedIn: () => ({isLoggedIn: true}),
+      setLoggedOut: () => ({isLoggedIn: false}),
     },
 
     effects: {
@@ -61,7 +73,7 @@ const model = ({
         send('auth:validate', null, login)
       },
 
-      check (state, payload, send, done) {
+      init (state, payload, send, done) {
         console.log('checking for a token')
         const tokenJson = storage.getItem('tokens')
         if (tokenJson) {
@@ -85,6 +97,7 @@ const model = ({
         send('auth:resetForm', null, done)
         send('auth:storeTokens', payload, done)
         send('http:setToken', payload.jwt, done)
+        send('auth:setLoggedIn', done)
         send('setUser', payload.user, done)
         send('location:set', '/', done)
         send('alert:growl', {message: 'Successfully logged in!', type: 'success'}, done)
@@ -93,6 +106,7 @@ const model = ({
       logout (state, payload, send, done) {
         send('auth:forgetTokens', null, done)
         send('setUser', null, done)
+        send('auth:setLoggedOut', done)
         send('location:set', '/', done)
         send('alert:growl', {message: 'You are now logged out!', type: 'success'}, done)
       }
@@ -100,7 +114,7 @@ const model = ({
   }
 }
 
-module.exports = decorateFormModel({
+export default decorateFormModel({
   model: model(),
   constraints: constraints()
 })

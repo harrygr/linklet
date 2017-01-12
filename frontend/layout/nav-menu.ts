@@ -1,4 +1,4 @@
-const html = require('choo/html')
+import html from 'choo/html'
 
 const navMenuItem = (state, {
   href = '',
@@ -13,7 +13,7 @@ const navMenuItem = (state, {
   `
 }
 
-module.exports = (state, prev, send) => {
+export default (state, prev, send) => {
   const menuItems = [
     {href: '/', content: 'Home'},
     {href: '/links', content: 'Links'},
