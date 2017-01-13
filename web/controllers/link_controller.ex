@@ -8,7 +8,11 @@ defmodule Pheddit.LinkController do
 
 
   def index(conn, _params) do
-    links = Link |> Repo.all |> Repo.preload([:user])
+    links = Link
+    |> Link.ordered
+    |> Repo.all
+    |> Repo.preload([:user])
+
     render conn, "index.json", links: links
   end
 

@@ -17,4 +17,9 @@ defmodule Pheddit.Link do
     |> cast(params, [:title, :url])
     |> validate_required([:title, :url])
   end
+
+  def ordered(query) do
+    query
+    |> order_by([l], [desc: l.inserted_at])
+  end
 end
