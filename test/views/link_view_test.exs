@@ -28,11 +28,11 @@ defmodule Pheddit.LinkViewTest do
   end
 
   test "show.json" do
-    link = insert(:link)
+    link = insert(:link) |> Repo.preload([:user, [comments: :user]])
 
     rendered_link = LinkView.render("show.json", %{link: link})
 
-    assert rendered_link == LinkView.link_json(link)
+    assert rendered_link == LinkView.link_with_comments_json(link)
   end
 
 end

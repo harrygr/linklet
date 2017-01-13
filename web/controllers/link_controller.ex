@@ -8,16 +8,23 @@ defmodule Pheddit.LinkController do
 
 
   def index(conn, _params) do
-    links = Link
+    result = Link
     |> Link.ordered
+    # |> Link.count_comments
     |> Repo.all
     |> Repo.preload([:user])
 
-    render conn, "index.json", links: links
+    IO.inspect result
+    # {links, count} = result
+
+    render conn, "index.json", links: result
   end
 
   def show(conn, %{"id" => id}) do
-    link = Link |> Repo.get(id) |> Repo.preload([:user])
+    link = Link
+    |> Repo.get(id)
+    |> Repo.preload([:user, [comments: :user]])
+
     case link do
       nil ->
         conn
@@ -37,7 +44,7 @@ defmodule Pheddit.LinkController do
       {:ok, link} ->
          conn
          |> put_status(:created)
-         |> render("show.json", link: Repo.preload(link, [:user]))
+         |> render("show.json", link: Repo.preload(link, [:user, [comments: :user]]))
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
