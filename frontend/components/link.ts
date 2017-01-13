@@ -16,7 +16,7 @@ export default (link) => {
           <p>
           <h4><a href=${link.url}>${link.title}</a> <small>(${parseUrl(link.url)})</small></h4>
 
-          <span>${moment(link.inserted_at).fromNow()} by ${link.user.username}</span>
+          <span>by <strong>${link.user.username}</strong> ${moment(link.inserted_at).fromNow()}</span>
           </p>
         </div>
       </div>

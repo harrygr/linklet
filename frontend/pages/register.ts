@@ -1,5 +1,6 @@
 import html from 'choo/html'
 import TextField from '../components/textfield'
+import LoadingButton from '../components/loading-button'
 
 export default (state, prev, send) => {
   const onunload = () => {
@@ -63,7 +64,7 @@ export default (state, prev, send) => {
 
           <hr>
           <p class="control">
-            <button class="button is-primary is-fullwidth" type="submit">Register</button>
+            ${LoadingButton('Sign Up', state.transition)}
           </p>
         </form>
         <p class="has-text-centered">

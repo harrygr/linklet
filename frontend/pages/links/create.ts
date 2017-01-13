@@ -1,5 +1,6 @@
 import html from 'choo/html'
 import TextField from '../../components/textfield'
+import LoadingButton from '../../components/loading-button'
 
 export default (state, prev, send) => {
   const onunload = () => {
@@ -40,7 +41,7 @@ export default (state, prev, send) => {
       })}
 
       <p class="control">
-        <button class="button is-primary" type="submit">Create Link</button>
+        ${LoadingButton('Create Link', state.transition)}
       </p>
       </form>
     </section>
