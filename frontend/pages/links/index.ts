@@ -4,6 +4,12 @@ import * as map from 'lodash/fp/map'
 
 const links = map(link)
 
+const renderIf = function(condition: boolean, content) {
+  if (condition) {
+    return content
+  }
+}
+
 export default (state, prev, send) => {
   const onload = () => send('links:fetchAll')
   const onunload = () => send('links:set', [])
@@ -12,8 +18,13 @@ export default (state, prev, send) => {
     <section id="links-index-page" onload=${onload} onunload=${onunload}>
     <a class="button is-primary is-outlined is-pulled-right" href="/links/new">New Link</a>
     <h1 class="title">Links</h1>
+    <p class="loading-indicator ${state.transition}">Loading...</p>
 
-    ${links(state.links.links)}
+    ${state.transition == '' ? html`
+    <div class="box-list">
+      ${links(state.links.links)}
+    </div>
+    ` : ''}
     </section>
   `
 }

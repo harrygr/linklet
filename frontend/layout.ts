@@ -10,6 +10,8 @@ export default (page, {hero = false} = {}) => (state, prev, send) => {
   return html`
   <div onload=${checkAuth}>
   ${notification(state.alert)}
+
+
   <nav class="nav has-shadow" id="top" style="position:fixed; right: 0; left: 0">
     <div class="container">
       <div class="nav-left">
@@ -49,7 +51,41 @@ export default (page, {hero = false} = {}) => (state, prev, send) => {
     .snackbar.visible {
       transform: translate(0, 0);
     }
+
+
+    /** TRANSITIONS **/
+    .loading-indicator {
+      opacity: 0;
+      visibility: hidden;
+    }
+    .loading-indicator:not(.fadeIn):not(.fadeOut) {
+      display: none;
+    }
+    .fadeIn {
+      visibility: visible;
+      opacity: 1;
+      transition: visibility 0s linear 0s, opacity 700ms;
+    }
+    .fadeOut {
+      visibility: hidden;
+      opacity: 0;
+      transition: visibility 0s linear 300ms, opacity 300ms;
+    }
+
+    /** BOX LIST */
+    .box-list .box {
+      margin-bottom: 0;
+    }
+    .box-list .box:not(:first-of-type) {
+      border-top-right-radius: 0;
+      border-top-left-radius: 0;
+    }
+    .box-list .box:not(:last-of-type) {
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+    }
   </style>
+
   </div>
   `
 }
