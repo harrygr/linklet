@@ -7,6 +7,7 @@ import register from './pages/register'
 import login from './pages/login'
 import listLinks from './pages/links/index'
 import createLink from './pages/links/create'
+import showLink from './pages/links/show'
 import notFound from './pages/not-found'
 
 const guestView = compose(middleware.redirectIfAuthenticated, layout)
@@ -14,7 +15,8 @@ const protectedView = compose(middleware.redirectIfGuest, layout)
 
 const linkRoutes = () => [
   ['/', layout(listLinks)],
-  ['/new', protectedView(createLink)]
+  ['/new', protectedView(createLink)],
+  ['/:id', layout(showLink)],
 ]
 
 export default () => [

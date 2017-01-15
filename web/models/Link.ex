@@ -8,6 +8,7 @@ defmodule Pheddit.Link do
     field :url
 
     belongs_to :user, Pheddit.User
+    has_many :comments, Pheddit.Comment
 
     timestamps
   end
@@ -21,5 +22,12 @@ defmodule Pheddit.Link do
   def ordered(query) do
     query
     |> order_by([l], [desc: l.inserted_at])
+  end
+
+  def count_comments(query) do
+    from l in query,
+      left_join: c in assoc(l, :comments),
+      select: {l, count(c.id)},
+      group_by: l.id
   end
 end

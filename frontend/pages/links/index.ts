@@ -4,15 +4,9 @@ import * as map from 'lodash/fp/map'
 
 const links = map(link)
 
-const renderIf = function(condition: boolean, content) {
-  if (condition) {
-    return content
-  }
-}
-
 export default (state, prev, send) => {
   const onload = () => send('links:fetchAll')
-  const onunload = () => send('links:set', [])
+  const onunload = () => send('links:setLinks', [])
 
   return html`
     <section id="links-index-page" onload=${onload} onunload=${onunload}>
