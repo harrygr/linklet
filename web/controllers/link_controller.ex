@@ -10,14 +10,16 @@ defmodule Pheddit.LinkController do
   def index(conn, _params) do
     result = Link
     |> Link.ordered
-    # |> Link.count_comments
+    |> Link.count_comments
     |> Repo.all
+    |> Enum.map(&attach_comments_count/1)
     |> Repo.preload([:user])
 
-    IO.inspect result
-    # {links, count} = result
-
     render conn, "index.json", links: result
+  end
+
+  defp attach_comments_count({link, count}) do
+    Map.put(link, :comments_count, count)
   end
 
   def show(conn, %{"id" => id}) do

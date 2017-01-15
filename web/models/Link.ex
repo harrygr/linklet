@@ -25,11 +25,9 @@ defmodule Pheddit.Link do
   end
 
   def count_comments(query) do
-
-    q = from l in query,
+    from l in query,
       left_join: c in assoc(l, :comments),
       select: {l, count(c.id)},
       group_by: l.id
-    q
   end
 end

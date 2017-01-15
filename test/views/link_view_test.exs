@@ -15,7 +15,8 @@ defmodule Pheddit.LinkViewTest do
       url: link.url,
       inserted_at: link.inserted_at,
       updated_at: link.updated_at,
-      user: UserView.user_json(link.user)
+      user: UserView.user_json(link.user),
+      comments_count: 0
     }
   end
 

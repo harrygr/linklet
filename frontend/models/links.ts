@@ -10,20 +10,28 @@ const constraints = () => ({
   title: {presence: true},
 })
 
+const emptyLink = () => {
+  return {
+    url: '',
+    title: ''
+  }
+}
+
 const model = () => {
   return {
     namespace: 'links',
 
     state: {
       links: [],
-      form: form()
+      link: null,
+      linkNotFound: false,
+      form: form(),
     },
 
     reducers: {
       resetForm: () => ({form: form()}),
-      set(state, links) {
-        return {links}
-      }
+      setLinks: (state, links) => ({links}),
+      setLink: (state, link) => ({link}),
     },
 
     effects: {
@@ -64,12 +72,26 @@ const model = () => {
       fetchAll (state, payload, send, done) {
         send('http:get', {
           url: '/links',
-          auth: true,
-          onSuccess: links => send('links:set', links, done),
+          auth: false,
+          onSuccess: links => send('links:setLinks', links, done),
           onFailure: response => send('alert:growl', {
             message: 'Could not fetch links: ' + JSON.stringify(response),
             type: 'danger'
           }, done)
+        }, done)
+      },
+
+      fetch (state, {id}, send, done) {
+        send('http:get', {
+          url: `/links/${id}`,
+          auth: false,
+          onSuccess: link => send('links:setLink', link, done),
+          onFailure: response => {
+            send('alert:growl', {
+              message: `Could not find link: ${JSON.stringify(response)}`,
+              type: 'danger',
+            }, done)
+          }
         }, done)
       }
     }
