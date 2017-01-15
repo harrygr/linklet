@@ -5,8 +5,8 @@ import * as map from 'lodash/fp/map'
 const links = map(link)
 
 export default (state, prev, send) => {
-  const onload = () => send('links:fetchAll')
-  const onunload = () => send('links:setLinks', [])
+  const onload = () => send('link:fetchAll')
+  const onunload = () => send('link:setLinks', [])
 
   return html`
     <section id="links-index-page" onload=${onload} onunload=${onunload}>
@@ -16,7 +16,7 @@ export default (state, prev, send) => {
 
     ${state.transition == '' ? html`
     <div class="box-list">
-      ${links(state.links.links)}
+      ${links(state.link.links)}
     </div>
     ` : ''}
     </section>

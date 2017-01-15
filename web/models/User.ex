@@ -8,6 +8,7 @@ defmodule Pheddit.User do
     field :password_hash, :string
 
     has_many :links, Pheddit.Link
+    has_many :comments, Pheddit.Comment
 
     timestamps()
   end

@@ -30,6 +30,16 @@ export default ({
   return html`
   <p class="control">
     <label class="label" for=${id}>${label}</label>
+
+    ${type === 'textarea' ? html`
+    <textarea
+    class="textarea ${errors.length ? 'is-danger' : ''}"
+    id=${id}
+    oninput=${e => oninput(e.target.value)}
+    cols="30"
+    rows="10"
+    >${value}</textarea>
+    ` : html`
     <input
       class="input ${errors.length ? 'is-danger' : ''}"
       type=${type}
@@ -38,6 +48,7 @@ export default ({
       id=${id}
       oninput=${e => oninput(e.target.value)}
     >
+    `}
     ${errorMessages(errors)}
   </p>
   `

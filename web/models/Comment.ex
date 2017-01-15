@@ -15,8 +15,8 @@ defmodule Pheddit.Comment do
 
   def changeset(model, params \\ %{}) do
     model
-    |> cast(params, [:body])
-    |> validate_required([:body])
+    |> cast(params, [:body, :link_id])
+    |> validate_required([:body, :link_id])
   end
 
   def ordered(query) do
