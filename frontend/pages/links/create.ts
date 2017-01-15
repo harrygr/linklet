@@ -4,15 +4,15 @@ import LoadingButton from '../../components/loading-button'
 
 export default (state, prev, send) => {
   const onunload = () => {
-    send('links:resetValidator')
-    send('links:resetForm')
+    send('link:resetValidator')
+    send('link:resetForm')
   }
 
   const submitForm = (e) => {
     e.preventDefault()
-    send('links:store')
+    send('link:store')
   }
-  const updateForm = key => value => send('links:setAndValidate', {key, value})
+  const updateForm = key => value => send('link:setAndValidate', {key, value})
 
   return html`
     <section id="links-create-page" onunload=${onunload}>
@@ -25,9 +25,9 @@ export default (state, prev, send) => {
         id: 'url',
         placeholder: 'http://foo.com',
         type: 'url',
-        value: state.links.form.url,
+        value: state.link.form.url,
         oninput: updateForm('url'),
-        errors: state.links.errors.url
+        errors: state.link.errors.url
       })}
 
       ${TextField({
@@ -35,9 +35,9 @@ export default (state, prev, send) => {
         id: 'title',
         placeholder: 'Some sort of description',
         type: 'title',
-        value: state.links.form.title,
+        value: state.link.form.title,
         oninput: updateForm('title'),
-        errors: state.links.errors.title
+        errors: state.link.errors.title
       })}
 
       <p class="control">

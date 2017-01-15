@@ -3,7 +3,8 @@ import http from './http'
 import alert from './alert'
 import register from './register'
 import auth from './auth'
-import links from './links'
+import link from './link'
+import comment from './comment'
 
 /**
  * Register your models here
@@ -14,7 +15,8 @@ export default [
   app(),
   http(),
   auth(),
-  links(),
+  link(),
+  comment(),
   register(),
 
   // components

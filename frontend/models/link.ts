@@ -19,7 +19,7 @@ const emptyLink = () => {
 
 const model = () => {
   return {
-    namespace: 'links',
+    namespace: 'link',
 
     state: {
       links: [],
@@ -36,20 +36,20 @@ const model = () => {
 
     effects: {
       setAndValidate (state, payload, send, done) {
-        send('links:setField', payload, () => {
+        send('link:setField', payload, () => {
           if (state.submitted) {
-            send('links:validate', done)
+            send('link:validate', done)
           }
         })
       },
 
       store (state, payload, send, done) {
-        send('links:setSubmitted', done)
+        send('link:setSubmitted', done)
 
         const onCreateLink = link => {
           send('location:set', '/links', done)
           send('alert:growl', {message: 'Link created', type: 'success'}, done)
-          send('links:resetForm', done)
+          send('link:resetForm', done)
         }
 
         const submit = (_, globalState) => {
@@ -66,16 +66,16 @@ const model = () => {
             onFailure: () => send('alert:growl', {message: 'Link creation failed', type: 'danger'}, done)
           }, done)
         }
-        send('links:validate', submit)
+        send('link:validate', submit)
       },
 
       fetchAll (state, payload, send, done) {
         send('http:get', {
           url: '/links',
           auth: false,
-          onSuccess: links => send('links:setLinks', links, done),
+          onSuccess: links => send('link:setLinks', links, done),
           onFailure: response => send('alert:growl', {
-            message: 'Could not fetch links: ' + JSON.stringify(response),
+            message: 'Could not fetch links: ' + response,
             type: 'danger'
           }, done)
         }, done)
@@ -85,10 +85,10 @@ const model = () => {
         send('http:get', {
           url: `/links/${id}`,
           auth: false,
-          onSuccess: link => send('links:setLink', link, done),
+          onSuccess: link => send('link:setLink', link, done),
           onFailure: response => {
             send('alert:growl', {
-              message: `Could not find link: ${JSON.stringify(response)}`,
+              message: `Could not find link: ${response}`,
               type: 'danger',
             }, done)
           }
