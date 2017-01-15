@@ -11,7 +11,7 @@ defmodule Pheddit.Factory do
 
   def user_factory do
     %Pheddit.User{
-      username: "joebloggs",
+      username: "joebloggs2",
       email: "joe@bloggs.com",
       password: "password",
       password_hash: "$2b$12$0vG0N2eQwwMZYTPtFXGKA.VoTI0JNlPRP.mG44DEFJmCuKKsiZObi"

@@ -29,6 +29,7 @@ defmodule Pheddit.Router do
     resources "/auth", SessionController, only: [:create]
     resources "/users", UserController, only: [:create]
     resources "/links", LinkController, only: [:index, :show, :create]
+    resources "/comments", CommentController, only: [:create]
   end
 
   scope "/", Pheddit do

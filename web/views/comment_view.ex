@@ -15,6 +15,7 @@ defmodule Pheddit.CommentView do
       body: comment.body,
       inserted_at: comment.inserted_at,
       updated_at: comment.updated_at,
+      link_id: comment.link_id,
       user: Pheddit.UserView.user_json(comment.user)
     }
   end
