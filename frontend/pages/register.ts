@@ -64,7 +64,7 @@ export default (state, prev, send) => {
 
           <hr>
           <p class="control">
-            ${LoadingButton('Sign Up', state.transition)}
+            ${LoadingButton('Sign Up', state.transition.button)}
           </p>
         </form>
         <p class="has-text-centered">

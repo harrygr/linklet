@@ -61,6 +61,7 @@ const model = () => {
           send('http:post', {
             url: '/links',
             data: state.form,
+            domain: 'button',
             auth: true,
             onSuccess: onCreateLink,
             onFailure: () => send('alert:growl', {message: 'Link creation failed', type: 'danger'}, done)
@@ -73,6 +74,7 @@ const model = () => {
         send('http:get', {
           url: '/links',
           auth: false,
+          domain: 'link',
           onSuccess: links => send('link:setLinks', links, done),
           onFailure: response => send('alert:growl', {
             message: 'Could not fetch links: ' + response,
@@ -85,6 +87,7 @@ const model = () => {
         send('http:get', {
           url: `/links/${id}`,
           auth: false,
+          domain: 'link',
           onSuccess: link => send('link:setLink', link, done),
           onFailure: response => {
             send('alert:growl', {

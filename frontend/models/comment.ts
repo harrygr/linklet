@@ -16,14 +16,36 @@ const model = () => {
   return {
     namespace: 'comment',
     state: {
-      form: form()
+      form: form(),
+      comments: []
     },
 
     reducers: {
       resetForm: () => ({form: form()}),
+      setComments (state, comments) {
+        return {comments}
+      },
+      prepend (state, comment) {
+        return {comments: [comment].concat(state.comments)}
+      }
     },
 
     effects: {
+      fetch (state, {linkId}, send, done) {
+        send('http:get', {
+          url: `/links/${linkId}/comments`,
+          auth: false,
+          domain: 'comment',
+          onSuccess: comments => send('comment:setComments', comments, done),
+          onFailure: response => {
+            send('alert:growl', {
+              message: `Could not load comments: ${response}`,
+              type: 'danger',
+            }, done)
+          }
+        }, done)
+      },
+
       setAndValidate (state, payload, send, done) {
         send('comment:setField', payload, () => {
           if (state.submitted) {
@@ -35,9 +57,10 @@ const model = () => {
       store (state, payload, send, done) {
         send('comment:setSubmitted', done)
 
-        const onCreateComment = link => {
+        const onCreateComment = comment => {
           send('alert:growl', {message: 'Comment posted!', type: 'success'}, done)
           send('comment:resetForm', done)
+          send('comment:prepend', comment, done)
         }
 
         const submit = (_, globalState) => {
@@ -46,15 +69,16 @@ const model = () => {
             return
           }
 
+          const linkId = globalState.link.link.id
+
           send('http:post', {
-            url: '/comments',
-            data: {...state.form, link_id: globalState.link.link.id},
+            url: `links/${linkId}/comments`,
+            data: state.form,
             auth: true,
+            domain: 'button',
             onSuccess: onCreateComment,
             onFailure: (response) => send('alert:growl', {message: 'Comment creation failed: ' + response, type: 'danger'}, done)
-          }, () => {
-            send('link:fetch', {id: globalState.link.link.id}, done)
-          })
+          }, done)
         }
         send('comment:validate', submit)
       },

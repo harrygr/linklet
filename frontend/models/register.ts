@@ -45,6 +45,7 @@ const model = () => {
           send('http:post', {
             url: '/users',
             data: state.form,
+            domain: 'button',
             onSuccess: response => {
               send('location:set', '/login', done)
               send('alert:growl', {

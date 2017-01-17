@@ -5,6 +5,7 @@ import register from './register'
 import auth from './auth'
 import link from './link'
 import comment from './comment'
+import transition from './transition'
 
 /**
  * Register your models here
@@ -18,6 +19,7 @@ export default [
   link(),
   comment(),
   register(),
+  transition(),
 
   // components
   alert(),

@@ -19,8 +19,13 @@ defmodule Pheddit.Comment do
     |> validate_required([:body, :link_id])
   end
 
+  def for_link(query, link_id) do
+    query
+    |> where([c], c.link_id == ^link_id)
+  end
+
   def ordered(query) do
     query
-    |> order_by([l], [desc: l.inserted_at])
+    |> order_by([c], [desc: c.inserted_at])
   end
 end

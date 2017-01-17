@@ -7,7 +7,7 @@ defmodule Pheddit.LinkView do
   end
 
   def render("show.json", %{link: link}) do
-    link_with_comments_json link
+    link_json link
   end
 
   def link_json(link) do
@@ -21,18 +21,6 @@ defmodule Pheddit.LinkView do
       updated_at: link.updated_at,
       user: Pheddit.UserView.user_json(link.user),
       comments_count: comments_count
-    }
-  end
-
-  def link_with_comments_json(link) do
-    %{
-      id: link.id,
-      title: link.title,
-      url: link.url,
-      inserted_at: link.inserted_at,
-      updated_at: link.updated_at,
-      user: Pheddit.UserView.user_json(link.user),
-      comments: render_many(link.comments, Pheddit.CommentView, "show.json")
     }
   end
 end
