@@ -53,7 +53,7 @@ const model = () => {
         }
 
         const submit = (_, globalState) => {
-          if (!globalState.links.valid) {
+          if (!globalState.link.valid) {
             console.log('not creating link due to invalid form')
             return
           }

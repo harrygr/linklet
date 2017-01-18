@@ -41,7 +41,7 @@ export default (state, prev, send) => {
       })}
 
       <p class="control">
-        ${LoadingButton('Create Link', state.transition)}
+        ${LoadingButton('Create Link', state.transition.button)}
       </p>
       </form>
     </section>
