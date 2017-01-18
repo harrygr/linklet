@@ -33,7 +33,7 @@ defmodule Pheddit.LinkViewTest do
 
     rendered_link = LinkView.render("show.json", %{link: link})
 
-    assert rendered_link == LinkView.link_with_comments_json(link)
+    assert rendered_link == LinkView.link_json(link)
   end
 
 end

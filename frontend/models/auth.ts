@@ -55,6 +55,7 @@ const model = ({
           send('http:post', {
             url: '/auth',
             data: state.form,
+            domain: 'button',
             onSuccess: response => {
               send('auth:login', response, done)
             },

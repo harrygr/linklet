@@ -1,15 +1,11 @@
 export default () => {
   return {
     state: {
-      user: null,
-      transition: '',
+      user: null
     },
     reducers: {
       setUser (state, data) {
         return {user: data}
-      },
-      setTransition(state, transition) {
-        return {transition}
       }
     }
   }

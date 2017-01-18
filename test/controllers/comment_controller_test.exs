@@ -15,7 +15,7 @@ defmodule Pheddit.CommentControllerTest do
 
     comment = %{body: "A wonderful comment", link_id: link.id}
 
-    conn = post get_authenticated_conn(link.user), "/api/comments", comment
+    conn = post get_authenticated_conn(link.user), "/api/links/#{link.id}/comments", comment
 
     response = json_response(conn, :created) |> Poison.encode! |> Poison.decode!
 
@@ -30,7 +30,7 @@ defmodule Pheddit.CommentControllerTest do
 
     conn = build_conn()
 
-    response = post conn, "/api/comments", comment
+    response = post conn, "/api/links/1/comments", comment
     assert response.status == 401
   end
 

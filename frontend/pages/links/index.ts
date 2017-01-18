@@ -12,9 +12,9 @@ export default (state, prev, send) => {
     <section id="links-index-page" onload=${onload} onunload=${onunload}>
     <a class="button is-primary is-outlined is-pulled-right" href="/links/new">New Link</a>
     <h1 class="title">Links</h1>
-    <p class="loading-indicator ${state.transition}">Loading...</p>
+    <p class="loading-indicator ${state.transition.link}">Loading...</p>
 
-    ${state.transition == '' ? html`
+    ${state.transition.link == '' ? html`
     <div class="box-list">
       ${links(state.link.links)}
     </div>

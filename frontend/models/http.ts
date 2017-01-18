@@ -6,6 +6,7 @@ interface HttpPayload {
   onFailure?: Function
   auth?: boolean
   data?: Object
+  domain?: string
 }
 
 const client = () => {
@@ -26,26 +27,26 @@ interface ResponseHandlers {
   onFailure?: Function
 }
 
-const handleResponse = (promise, handlers: ResponseHandlers, send) => {
+const handleResponse = (promise, payload, send) => {
   const removeTransition = () => {
     setTimeout(() => {
-      send('setTransition', '', () => {})
+      send('transition:complete', payload.domain, () => {})
     }, 200)
   }
 
   const fadeOutLoader = () => {
     setTimeout(() => {
-      send('setTransition', 'fadeOut', removeTransition)
+      send('transition:fadeOut', payload.domain, removeTransition)
     }, 200)
   }
 
   promise.then(response => {
     console.log('handling a succussful response')
-    handlers.onSuccess(response.data)
+    payload.onSuccess(response.data)
     fadeOutLoader()
 
   }).catch(response => {
-    handlers.onFailure(response.response.data)
+    payload.onFailure(response.response.data)
     fadeOutLoader()
   })
 }
@@ -67,7 +68,7 @@ export default () => {
 
     effects: {
       get (state, payload: HttpPayload, send, done) {
-        send('setTransition', 'fadeIn', done)
+        send('transition:fadeIn', payload.domain, done)
         const options = {
           headers: payload.auth ? getHeaders(state.accessToken) : {}
         }
@@ -75,7 +76,7 @@ export default () => {
       },
 
       post (state, payload: HttpPayload, send, done) {
-        send('setTransition', 'fadeIn', done)
+        send('transition:fadeIn', payload.domain, done)
         const options = {
           headers: payload.auth ? getHeaders(state.accessToken) : {}
         }

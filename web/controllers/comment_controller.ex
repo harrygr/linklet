@@ -5,8 +5,17 @@ defmodule Pheddit.CommentController do
 
   alias Pheddit.Comment
 
-  def create(conn, params) do
+  def index(conn, %{"link_id" => link_id}) do
+    comments = Comment
+    |> Comment.for_link(link_id)
+    |> Comment.ordered
+    |> Repo.all
+    |> Repo.preload([:user])
 
+    render conn, "index.json", comments: comments
+  end
+
+  def create(conn, params) do
     changeset = Guardian.Plug.current_resource(conn)
     |> build_assoc(:comments)
     |> Comment.changeset(params)
