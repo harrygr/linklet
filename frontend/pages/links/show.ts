@@ -14,7 +14,9 @@ export default (state, prev, send) => {
   }
 
   const onload = () => {
-     send('link:fetch', {id: linkId})
+     if (!state.link.link) {
+       send('link:fetch', {id: linkId})
+     }
      send('comment:fetch', {linkId})
   }
 
@@ -24,7 +26,7 @@ export default (state, prev, send) => {
     <section id="links-show-page" onload=${onload} onunload=${onunload}>
     <p class="loading-indicator ${state.transition.link}">Loading...</p>
     ${link ? [
-      state.transition.link == '' ? linkBox(link, {single: true}) : '',
+      state.transition.link == '' ? linkBox(link, send, {single: true}) : '',
       commentForm(state, prev, send),
       html`<p>${state.comment.comments.length} Comments</p>`,
       comments(state)
