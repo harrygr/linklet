@@ -2,7 +2,11 @@ import html from 'choo/html'
 import * as moment from 'moment'
 import parseUrl from '../utils/url-parser'
 
-export default (link, {single = false} = {}) => {
+export default (link, send, {single = false} = {}) => {
+  const setLink = e => {
+    send('link:setLink', link)
+  }
+
   return html`
   <div class="box">
     <article class="media">
@@ -16,7 +20,7 @@ export default (link, {single = false} = {}) => {
           `}
           <span>
           by <strong>${link.user.username}</strong> ${moment(link.inserted_at).fromNow()}
-          ${!single ? ['| ', html`<a href="/links/${link.id}">${link.comments_count} comments</a>`] : ''}
+          ${!single ? ['| ', html`<a href="/links/${link.id}" onclick=${setLink}>${link.comments_count} comments</a>`] : ''}
           </span>
           </p>
         </div>

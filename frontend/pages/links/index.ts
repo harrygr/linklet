@@ -2,9 +2,10 @@ import html from 'choo/html'
 import link from '../../components/link'
 import * as map from 'lodash/fp/map'
 
-const links = map(link)
 
 export default (state, prev, send) => {
+
+  const links = map(l => link(l, send, {single: false}))
   const onload = () => send('link:fetchAll')
   const onunload = () => send('link:setLinks', [])
 
