@@ -29,7 +29,7 @@ const makeDefaultReducers = (defaultErrors, constraints) => {
 export default ({
   model,
   constraints
-}) => () => {
+}) => (deps: any = {}) => {
   const defaultErrors = makeDefaultErrors(constraints)
   const defaultReducers = {
     ...model.reducers,

@@ -16,7 +16,6 @@ const navMenuItem = (state, {
 export default (state, prev, send) => {
   const menuItems = [
     {href: '/', content: 'Home'},
-    {href: '/links', content: 'Links'},
   ].map(item => navMenuItem(state, item))
 
   const logout = () => send('auth:logout')

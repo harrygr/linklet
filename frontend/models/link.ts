@@ -1,6 +1,7 @@
 import decorateFormModel from '../utils/decorate-form-model'
+import {ModelDependencies} from './'
 
-const form = () => ({
+const defaultForm = () => ({
   url: '',
   title: ''
 })
@@ -17,91 +18,55 @@ const emptyLink = () => {
   }
 }
 
-const model = () => {
+const model = ({transport, form}: Partial<ModelDependencies>) => {
+  const formModel = form('link', constraints(), defaultForm)
   return {
     namespace: 'link',
 
     state: {
+      ...formModel.state,
       links: [],
       link: null,
       linkNotFound: false,
-      form: form(),
     },
 
     reducers: {
-      resetForm: () => ({form: form()}),
+      ...formModel.reducers,
       setLinks: (state, links) => ({links}),
       setLink: (state, link) => ({link}),
     },
 
     effects: {
-      setAndValidate (state, payload, send, done) {
-        send('link:setField', payload, () => {
-          if (state.submitted) {
-            send('link:validate', done)
-          }
-        })
-      },
+      ...formModel.effects,
 
       store (state, payload, send, done) {
-        send('link:setSubmitted', done)
-
-        const onCreateLink = link => {
-          send('location:set', '/links', done)
-          send('alert:growl', {message: 'Link created', type: 'success'}, done)
-          send('link:resetForm', done)
-        }
-
-        const submit = (_, globalState) => {
-          if (!globalState.link.valid) {
-            console.log('not creating link due to invalid form')
-            return
-          }
-
-          send('http:post', {
+        send('link:setSubmitted')
+        .then(response => {
+          return transport.post({
             url: '/links',
             data: state.form,
-            domain: 'button',
-            auth: true,
-            onSuccess: onCreateLink,
-            onFailure: () => send('alert:growl', {message: 'Link creation failed', type: 'danger'}, done)
-          }, done)
-        }
-        send('link:validate', submit)
+            token: response.auth.tokens.jwt
+          })
+        })
+        .then(response => send('alert:growl', {message: 'Link created', type: 'success'}))
+        .then(response => send('link:resetForm'))
+        .then(response => send('location:set', '/links'))
+        .catch(err => send('alert:growl', {message: `Link creation failed ${err}`, type: 'danger'}))
       },
 
       fetchAll (state, payload, send, done) {
-        send('http:get', {
-          url: '/links',
-          auth: false,
-          domain: 'link',
-          onSuccess: links => send('link:setLinks', links, done),
-          onFailure: response => send('alert:growl', {
-            message: 'Could not fetch links: ' + response,
-            type: 'danger'
-          }, done)
-        }, done)
+        return transport.get({url: '/links'})
+        .then(links => send('link:setLinks', links))
+        .catch(response => send('alert:growl', {message: 'Could not fetch links: ' + response, type: 'danger'}))
       },
 
       fetch (state, {id}, send, done) {
-        send('http:get', {
-          url: `/links/${id}`,
-          auth: false,
-          domain: 'link',
-          onSuccess: link => send('link:setLink', link, done),
-          onFailure: response => {
-            send('alert:growl', {
-              message: `Could not find link: ${response}`,
-              type: 'danger',
-            }, done)
-          }
-        }, done)
+        return transport.get({url: `/links/${id}`})
+        .then(link => send('link:setLink', link))
+        .catch(response => send('alert:growl', {message: 'Could not find link: ' + response, type: 'danger'}))
       }
     }
   }
 }
 
-export default decorateFormModel({
-  model: model(),
-  constraints: constraints()
-})
+export default model

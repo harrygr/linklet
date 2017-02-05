@@ -1,6 +1,8 @@
 import decorateFormModel from '../utils/decorate-form-model'
+import {Transport} from '../transport/types'
+import {FormConstructor} from './form'
 
-const form = () => ({
+const defaultForm = () => ({
   email: '',
   password: ''
 })
@@ -12,108 +14,97 @@ const constraints = () => ({
 
 
 interface AuthDependencies {
+  transport: Transport
   storage?: any
+  form: FormConstructor
 }
 
+
 const model = ({
-  storage
-}: AuthDependencies = {
-  storage: window.localStorage
-}) => {
-  const isLoggedIn = storage.getItem('tokens') ? true : false
+  form,
+  transport,
+  storage,
+}: AuthDependencies) => {
+  const namespace = 'auth'
+  const tokens = storage.getItem('tokens')
+  const formModel = form(namespace, constraints(), defaultForm)
 
   return {
-    namespace: 'auth',
+    namespace,
 
     state: {
-      form: form(),
-      isLoggedIn
+      ...formModel.state,
+      isLoggedIn: !!tokens,
+      tokens: tokens ? JSON.parse(tokens) : null,
     },
 
     reducers: {
-      resetForm: () => ({form: form()}),
+      ...formModel.reducers,
+      setTokens: (state, tokens) => ({tokens}),
       setLoggedIn: () => ({isLoggedIn: true}),
       setLoggedOut: () => ({isLoggedIn: false}),
     },
 
     effects: {
-      setAndValidate (state, payload, send, done) {
-        send('auth:setField', payload, () => {
-          if (state.submitted) {
-            send('auth:validate', done)
+      ...formModel.effects,
+      getToken (state, payload, send, done) {
+        return send('auth:setSubmitted')
+        .then(() => send('auth:validate', null))
+        .then(response => {
+          if (!response.auth.valid) {
+            throw new Error('not logging in due to invalid form')
           }
+          return transport.post({
+            url: '/auth',
+            data: state.form
+          })
+          .then(response => send('auth:login', response))
+          .catch(err => {
+            return send('alert:growl', {message: 'Invalid Credentials', type: 'danger'})
+          })
         })
       },
 
-      getToken (state, payload, send, done) {
-        send('auth:setSubmitted', done)
-        const login = (_, globalState) => {
-          if (!globalState.auth.valid) {
-            console.log('not logging in due to invalid form')
-            return
-          }
-          send('http:post', {
-            url: '/auth',
-            data: state.form,
-            domain: 'button',
-            onSuccess: response => {
-              send('auth:login', response, done)
-            },
-            onFailure: response => {
-              send('alert:growl', {
-                message: 'Login Failed',
-                type: 'danger'
-              }, done)
-              console.log(response)
-            },
-          }, done)
-        }
-
-        send('auth:validate', null, login)
-      },
-
       init (state, payload, send, done) {
-        console.log('checking for a token')
         const tokenJson = storage.getItem('tokens')
+        console.log('checking for a token')
         if (tokenJson) {
           const tokens = JSON.parse(tokenJson)
-          console.log('found', tokens)
-          send('http:setToken', tokens.jwt, done)
-          send('setUser', tokens.user, done)
+          return send('setUser', tokens.user)
         }
       },
 
-      storeTokens (state, payload, send, done) {
-        storage.setItem('tokens', JSON.stringify(payload))
+      storeTokens (state, tokens, send, done) {
+        storage.setItem('tokens', JSON.stringify(tokens))
+        return send('auth:setTokens', tokens)
       },
 
       forgetTokens (state, payload, send, done) {
         storage.removeItem('tokens')
-        send('http:setToken', null, done)
+        return send('auth:setTokens', null)
       },
 
       login (state, payload, send, done) {
-        send('auth:resetForm', null, done)
-        send('auth:storeTokens', payload, done)
-        send('http:setToken', payload.jwt, done)
-        send('auth:setLoggedIn', done)
-        send('setUser', payload.user, done)
-        send('location:set', '/', done)
-        send('alert:growl', {message: 'Successfully logged in!', type: 'success'}, done)
+        return send('auth:resetForm', null)
+        .then(response => {
+          send('location:set', '/')
+          return response
+        })
+        .then(() => send('auth:storeTokens', payload))
+        .then(() => send('auth:setLoggedIn'))
+        .then(() => send('setUser', payload.user))
+        .then(() => send('alert:growl', {message: 'Successfully logged in!', type: 'success'}))
       },
 
       logout (state, payload, send, done) {
-        send('auth:forgetTokens', null, done)
-        send('setUser', null, done)
-        send('auth:setLoggedOut', done)
-        send('location:set', '/', done)
-        send('alert:growl', {message: 'You are now logged out!', type: 'success'}, done)
+        return send('auth:forgetTokens', null)
+        .then(() => send('setUser', null))
+        .then(() => send('auth:setLoggedOut'))
+        .then(() => send('alert:growl', {message: 'You are now logged out!', type: 'success'}))
+        .then(() => send('location:set', '/'))
       }
     }
   }
 }
 
-export default decorateFormModel({
-  model: model(),
-  constraints: constraints()
-})
+export default model

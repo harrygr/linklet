@@ -14,13 +14,12 @@ const guestView = compose(middleware.redirectIfAuthenticated, layout)
 const protectedView = compose(middleware.redirectIfGuest, layout)
 
 const linkRoutes = () => [
-  ['/', layout(listLinks)],
   ['/new', protectedView(createLink)],
   ['/:id', layout(showLink)],
 ]
 
 export default () => [
-  ['/', layout(home)],
+  ['/', layout(listLinks)],
   ['/register', guestView(register, {hero: true})],
   ['/login', guestView(login, {hero: true})],
   ['/links', linkRoutes()],

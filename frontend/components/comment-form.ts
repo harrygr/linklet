@@ -8,7 +8,9 @@ export default (state, prev, send) => {
     send('comment:store')
   }
 
-  const updateForm = key => value => send('comment:setAndValidate', {key, value})
+  const updateForm = key => value => {
+    return send('comment:setAndValidate', {key, value})
+  }
 
   return html`
   <form class="box" onsubmit=${submitForm} novalidate>

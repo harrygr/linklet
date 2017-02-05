@@ -4,8 +4,11 @@ export default () => {
       user: null
     },
     reducers: {
-      setUser (state, data) {
-        return {user: data}
+      noop (state) {
+        return state
+      },
+      setUser (state, user) {
+        return {user}
       }
     }
   }

@@ -4,7 +4,7 @@ import LoadingButton from '../components/loading-button'
 
 export default (state, prev, send) => {
   const onunload = () => {
-    send('auth:resetValidator')
+    // send('auth:resetValidator')
     send('auth:resetForm')
   }
   const updateForm = key => value => send('auth:setAndValidate', {key, value})

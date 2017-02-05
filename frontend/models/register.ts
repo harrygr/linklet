@@ -1,6 +1,7 @@
 import decorateFormModel from '../utils/decorate-form-model'
+import {ModelDependencies} from './'
 
-const form = () => ({
+const defaultForm = () => ({
   username: '',
   email: '',
   password: '',
@@ -14,61 +15,42 @@ const constraints = () => ({
   password_confirmation: {equality: 'password'}
 })
 
-const model = () => {
+const model = ({form, transport}: Partial<ModelDependencies>) => {
+  const namespace = 'register'
+  const formModel = form(namespace, constraints(), defaultForm)
+
   return {
     namespace: 'register',
 
     state: {
-      form: form()
+      ...formModel.state,
     },
 
     reducers: {
-      resetForm: () => ({form: form()}),
+      ...formModel.reducers,
     },
 
     effects: {
-      setAndValidate (state, payload, send, done) {
-        send('register:setField', payload, () => {
-          if (state.submitted) {
-            send('register:validate', done)
-          }
-        })
-      },
-
+      ...formModel.effects,
       submitForm (state, payload, send, done) {
-        send('auth:setSubmitted', done)
-        const submit = (_, globalState) => {
-          if (!globalState.register.valid) {
-            console.log('not registering due to invalid form')
-            return
+        send('register:setSubmitted')
+        .then(() => send('register:validate'))
+        .then(response => {
+          if (!response.register.valid) {
+            throw new Error('Form is not valid')
           }
-          send('http:post', {
+          return transport.post({
             url: '/users',
-            data: state.form,
-            domain: 'button',
-            onSuccess: response => {
-              send('location:set', '/login', done)
-              send('alert:growl', {
-                message: 'Welcome aboard! Login with your credentials.',
-                type: 'success'
-              }, done)
-            },
-            onFailure: response => {
-              send('alert:growl', {
-                message: 'Registration failed!',
-                type: 'danger'
-              }, done)
-              console.log(response)
-            }
-          }, done)
-        }
-        send('register:validate', submit)
+            data: state.form
+          })
+        })
+        .then(response => send('alert:growl', {message: 'Welcome aboard', type: 'success'}))
+        .then(response => send('location:set', '/login'))
+        .catch(response => send('alert:growl', {message: 'Registration failed!', type: 'danger'}))
       }
     }
   }
 }
 
-export default decorateFormModel({
-  model: model(),
-  constraints: constraints()
-})
+export default model
+
