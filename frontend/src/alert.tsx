@@ -1,20 +1,34 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { State } from './store'
+import { State, AlertLevel } from './store'
+import styled from 'react-emotion'
 
 interface Props {
-  alert: State['ui']['alert']
+  message: string
+  level: AlertLevel
 }
 
-function Alert({ alert }: Props) {
-  if (alert.level === 'none') {
+function Alert({ message, level }: Props) {
+  if (level === 'none') {
     return <div />
   }
-  return <div>{alert.message}</div>
+
+  const Container = styled('div')`
+    background: ${getBackground(level)};
+    color: #fff;
+    padding: 15px;
+  `
+
+  return <Container>{message}</Container>
 }
 
 function mapStateToProps(state: State) {
-  return { alert: state.ui.alert }
+  return state.ui.alert
 }
 
 export default connect(mapStateToProps)(Alert)
+
+function getBackground(level: AlertLevel): string {
+  const bgs = { danger: 'red', warning: 'orange', success: 'green' }
+  return bgs[level] || 'transparent'
+}
