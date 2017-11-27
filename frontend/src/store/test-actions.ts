@@ -15,4 +15,6 @@ export function ReceiveText(text: string): ReceiveText {
   return { type: 'RECEIVE_TEXT', text }
 }
 
+export default { ReceiveText, RequestText }
+
 export type TestAction = RequestText | ReceiveText

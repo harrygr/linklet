@@ -1,12 +1,12 @@
 import * as React from 'react'
 import { connect, Dispatch } from 'react-redux'
-import { State, Link } from './store'
+import { State } from './store'
 import { Action, AddLink } from './store/actions'
 import LinkAdder from './link-adder'
 import { Link as RouterLink } from 'react-router-dom'
 
 interface Props {
-  links: Link[]
+  links: State['links']
   setLinks: () => void
 }
 
@@ -15,9 +15,9 @@ function LinkList({ links, setLinks }: Props) {
     <div>
       <LinkAdder />
       <ul>
-        {links.map((l, i) => (
-          <li key={i}>
-            <RouterLink to={`/links/${l.id}`}>{l.title}</RouterLink>
+        {Object.keys(links).map(id => (
+          <li key={id}>
+            <RouterLink to={`/links/${id}`}>{links[id].title}</RouterLink>
           </li>
         ))}
       </ul>

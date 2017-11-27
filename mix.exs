@@ -40,7 +40,7 @@ defmodule Pheddit.Mixfile do
      {:ex_machina, "~> 1.0", only: :test},
      {:comeonin, "~> 3.0"},
      {:guardian, "~> 0.13.0"},
-     {:corsica, "~> 0.5"},
+     {:corsica, "~> 1.0"},
      {:cowboy, "~> 1.0"}]
   end
 

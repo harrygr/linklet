@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 
-import { State, Link } from '../../store'
+import { State } from '../../store'
 import { RouteComponentProps } from 'react-router'
 import NotFound from '../404'
 
@@ -10,11 +10,11 @@ interface Params {
 }
 
 interface Props extends RouteComponentProps<Params> {
-  links: Link[]
+  links: State['links']
 }
 
 export function ShowLink({ match, links }: Props) {
-  const link = links.find(l => l.id === match.params.id)
+  const link = links[match.params.id]
   if (!link) {
     return NotFound()
   }
