@@ -1,4 +1,5 @@
 import { Link } from './index'
+import { TestAction } from './test-actions'
 
 interface SetLinks {
   type: 'SET_LINKS'
@@ -36,4 +37,4 @@ export function AddLink(title: string): AddLink {
   }
 }
 
-export type Action = SetLinks | AddLink | SetLink
+export type Action = SetLinks | AddLink | SetLink | TestAction

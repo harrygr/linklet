@@ -9,6 +9,7 @@ import store from './store'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import Home from './pages/home'
 import NotFound from './pages/404'
+import TestPage from './pages/test'
 import ShowLink from './pages/links/show'
 import { Switch } from 'react-router'
 
@@ -22,6 +23,7 @@ ReactDOM.render(
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/links/:id" component={ShowLink} />
+          <Route path="/test" component={TestPage} />
           <Route component={NotFound} />
         </Switch>
       </div>
