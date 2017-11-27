@@ -4,6 +4,7 @@ import actions, { Action } from '../store/actions'
 
 import api from '../api'
 import { AlertLevel } from './ui/reducer'
+import { State } from './index'
 
 export function fetchLinks() {
   return async (dispatch: Dispatch<Action>) => {
@@ -16,6 +17,14 @@ export function fetchLinks() {
         dispatch(flashAlert(err.message, 'danger'))
       })
     dispatch(actions.SetLoading(false))
+  }
+}
+
+export function fetchLinksIfNeeded() {
+  return (dispatch: Dispatch<Action>, getState: () => State) => {
+    if (Object.keys(getState().links.items).length === 0) {
+      dispatch(fetchLinks())
+    }
   }
 }
 

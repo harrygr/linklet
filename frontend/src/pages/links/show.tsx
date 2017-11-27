@@ -5,8 +5,7 @@ import { State } from '../../store'
 import { RouteComponentProps } from 'react-router'
 import NotFound from '../404'
 import { Link } from '../../api/links'
-import { fetchLinks } from '../../store/effects'
-import { Action } from '../../store/actions'
+import { fetchLinksIfNeeded } from '../../store/effects'
 
 interface Params {
   id: string
@@ -52,10 +51,8 @@ function mapStateToProps({ links, ui }: State) {
   return { links: links.items, loading: ui.loading }
 }
 
-function mapDispatchToProps(dispatch: Dispatch<Action>) {
-  return {
-    loadLinks: () => dispatch(fetchLinks()),
-  }
+function mapDispatchToProps(dispatch: Dispatch<any>) {
+  return { loadLinks: () => dispatch(fetchLinksIfNeeded()) }
 }
 
 export default connect<StateMappedToProps, DispatchMappedToProps>(

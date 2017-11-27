@@ -2,8 +2,7 @@ import * as React from 'react'
 import LinkList from '../link-list'
 import { connect, Dispatch } from 'react-redux'
 import { State } from '../store'
-import { Action } from '../store/actions'
-import { fetchLinks } from '../store/effects'
+import { fetchLinksIfNeeded } from '../store/effects'
 
 interface StateMappedToProps {}
 interface DispatchMappedToProps {
@@ -33,10 +32,8 @@ function mapStateToProps(s: State) {
   return {}
 }
 
-function mapDispatchToProps(dispatch: Dispatch<Action>) {
-  return {
-    loadLinks: () => dispatch(fetchLinks()),
-  }
+function mapDispatchToProps(dispatch: Dispatch<any>) {
+  return { loadLinks: () => dispatch(fetchLinksIfNeeded()) }
 }
 
 export default connect<StateMappedToProps, DispatchMappedToProps>(
