@@ -1,34 +1,64 @@
 import * as React from 'react'
-import { connect } from 'react-redux'
+import { connect, Dispatch } from 'react-redux'
 
 import { State } from '../../store'
 import { RouteComponentProps } from 'react-router'
 import NotFound from '../404'
+import { Link } from '../../api/links'
+import { fetchLinks } from '../../store/effects'
+import { Action } from '../../store/actions'
 
 interface Params {
   id: string
 }
 
-interface Props extends RouteComponentProps<Params> {
-  links: State['links']
+interface StateMappedToProps {
+  links: Record<string, Link>
+  loading: boolean
+}
+interface DispatchMappedToProps {
+  loadLinks: () => void
 }
 
-export function ShowLink({ match, links }: Props) {
-  const link = links[match.params.id]
-  if (!link) {
-    return NotFound()
+interface Props
+  extends StateMappedToProps,
+    DispatchMappedToProps,
+    RouteComponentProps<Params> {}
+
+export class ShowLink extends React.Component<Props> {
+  componentDidMount() {
+    this.props.loadLinks()
   }
 
-  return (
-    <div>
-      <h1>Link</h1>
-      <p>This is the link: {link.id}</p>
-    </div>
-  )
+  render() {
+    if (this.props.loading) {
+      return <div />
+    }
+
+    const link = this.props.links[this.props.match.params.id]
+    if (!link) {
+      return NotFound()
+    }
+
+    return (
+      <div>
+        <h1>Link</h1>
+        <p>This is the link: {link.title}</p>
+      </div>
+    )
+  }
+}
+function mapStateToProps({ links, ui }: State) {
+  return { links: links.items, loading: ui.loading }
 }
 
-function mapStateToProps({ links }: State) {
-  return { links }
+function mapDispatchToProps(dispatch: Dispatch<Action>) {
+  return {
+    loadLinks: () => dispatch(fetchLinks()),
+  }
 }
 
-export default connect(mapStateToProps)(ShowLink)
+export default connect<StateMappedToProps, DispatchMappedToProps>(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ShowLink)

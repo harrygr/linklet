@@ -5,19 +5,28 @@ import { State } from '../store'
 import { Action } from '../store/actions'
 import { fetchLinks } from '../store/effects'
 
-interface Props {
+interface StateMappedToProps {}
+interface DispatchMappedToProps {
   loadLinks: () => void
 }
 
-export function Home({ loadLinks }: Props) {
-  return (
-    <div>
-      <h1>Home</h1>
-      <p>Welcome</p>
-      <button onClick={loadLinks}>Load links</button>
-      <LinkList />
-    </div>
-  )
+interface Props extends StateMappedToProps, DispatchMappedToProps {}
+
+export class Home extends React.Component<Props> {
+  componentDidMount() {
+    this.props.loadLinks()
+  }
+  render() {
+    const { loadLinks } = this.props
+    return (
+      <div>
+        <h1>Home</h1>
+        <p>Welcome</p>
+        <button onClick={loadLinks}>Load links</button>
+        <LinkList />
+      </div>
+    )
+  }
 }
 
 function mapStateToProps(s: State) {
@@ -30,4 +39,7 @@ function mapDispatchToProps(dispatch: Dispatch<Action>) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home)
+export default connect<StateMappedToProps, DispatchMappedToProps>(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Home)
