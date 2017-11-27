@@ -21,7 +21,7 @@ export function Home({ loadLinks }: Props) {
 }
 
 function mapStateToProps(s: State) {
-  return { text: s.test.text, loading: s.test.loading }
+  return {}
 }
 
 function mapDispatchToProps(dispatch: Dispatch<Action>) {

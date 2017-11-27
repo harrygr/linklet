@@ -1,12 +1,13 @@
 import * as React from 'react'
 import { connect, Dispatch } from 'react-redux'
 import { State } from './store'
-import { Action, AddLink } from './store/actions'
+import actions, { Action } from './store/actions'
 import LinkAdder from './link-adder'
 import { Link as RouterLink } from 'react-router-dom'
+import { Link } from './api/links'
 
 interface Props {
-  links: State['links']
+  links: Record<string, Link>
   setLinks: () => void
 }
 
@@ -26,12 +27,12 @@ function LinkList({ links, setLinks }: Props) {
 }
 
 function mapStateToProps({ links }: State) {
-  return { links }
+  return { links: links.items }
 }
 
 function mapDispatchToProps(dispatch: Dispatch<Action>) {
   return {
-    setLinks: () => dispatch(AddLink('foo' + new Date())),
+    setLinks: () => dispatch(actions.AddLink('foo' + new Date())),
   }
 }
 

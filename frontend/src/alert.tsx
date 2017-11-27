@@ -1,7 +1,8 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { State, AlertLevel } from './store'
+import { State } from './store'
 import styled from 'react-emotion'
+import { AlertLevel } from './store/ui/reducer'
 
 interface Props {
   message: string

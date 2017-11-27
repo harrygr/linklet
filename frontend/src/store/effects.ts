@@ -1,19 +1,9 @@
 import { Dispatch } from 'react-redux'
 
 import actions, { Action } from '../store/actions'
-import { RequestText, ReceiveText } from '../store/test-actions'
+
 import api from '../api'
-import { AlertLevel } from './index'
-
-export function fetchText() {
-  return (dispatch: Dispatch<Action>) => {
-    dispatch(RequestText())
-
-    setTimeout(() => {
-      dispatch(ReceiveText(`new text ${new Date().toLocaleTimeString()}`))
-    }, 2000)
-  }
-}
+import { AlertLevel } from './ui/reducer'
 
 export function fetchLinks() {
   return async (dispatch: Dispatch<Action>) => {
