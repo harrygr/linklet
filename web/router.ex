@@ -17,7 +17,7 @@ defmodule Pheddit.Router do
 
   pipeline :api do
     plug :accepts, ["json", "json-api"]
-    plug Corsica, origins: "*"
+
     plug Guardian.Plug.VerifyHeader, realm: "Bearer" # Looks in the Authorization header for the token
     plug Guardian.Plug.LoadResource
   end

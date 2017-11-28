@@ -10,9 +10,9 @@ defmodule Pheddit.ChangesetView do
     Ecto.Changeset.traverse_errors(changeset, &translate_error/1)
   end
 
-  def render("error.json", %{changeset: changeset}) do
+  def render("error.json", %{changeset: changeset, message: message}) do
     # When encoded, the changeset returns its errors
     # as a JSON object. So we just pass it forward.
-    %{errors: translate_errors(changeset)}
+    %{errors: translate_errors(changeset), message: message}
   end
 end

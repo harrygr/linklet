@@ -2,6 +2,7 @@ import axios, { AxiosInstance, AxiosPromise, AxiosRequestConfig } from 'axios'
 import { Result, Ok, Err } from 'space-lift'
 import { deriveError, ApiError } from './errors'
 import links from './links'
+import auth from './auth'
 
 export const servicesType = getReturnType(wrapClient)
 export type Client = typeof servicesType
@@ -9,12 +10,14 @@ export type Client = typeof servicesType
 export default function api() {
   const client = wrapClient(
     axios.create({
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+      },
       baseURL: `http://localhost:4000/api`,
     }),
   )
 
-  return { links: links(client) }
+  return { links: links(client), auth: auth(client) }
 }
 
 function wrapClient(client: AxiosInstance) {

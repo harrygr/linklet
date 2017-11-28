@@ -14,10 +14,17 @@ defmodule Pheddit.SessionController do
         |> put_resp_header("authorization", "Bearer #{jwt}")
         |> put_resp_header("x-expires", "#{claims["exp"]}")
         |> render("login.json", Map.merge(%{"user" => user, "jwt" => jwt}, claims))
-      {:error, changeset} ->
-        conn
-        |> put_status(401)
-        |> render(Pheddit.ChangesetView, "error.json", changeset: changeset)
+      {:error, changeset, message} ->
+        case message do
+          :invalid_creds -> 
+            conn
+            |> put_status(401)
+            |> render(Pheddit.ChangesetView, "error.json", [changeset: changeset, message: "Invalid credentials"])
+          :invalid_form -> 
+            conn
+            |> put_status(400)
+            |> render(Pheddit.ChangesetView, "error.json", [changeset: changeset, message: "Invalid form"])
+        end
     end
   end
 
@@ -26,6 +33,8 @@ defmodule Pheddit.SessionController do
     |> put_status(401)
     |> render(Pheddit.ErrorView, "401.json")
   end
+
+
 
   defp get_claims(conn) do
     case Guardian.Plug.claims(conn) do

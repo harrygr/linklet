@@ -38,5 +38,6 @@ defmodule Pheddit.Endpoint do
     key: "_pheddit_key",
     signing_salt: "n1+mnGZr"
 
+  plug CORSPlug
   plug Pheddit.Router
 end

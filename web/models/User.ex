@@ -41,9 +41,9 @@ defmodule Pheddit.User do
       %{valid?: true, changes: credentials} ->
         case Pheddit.Authenticator.authenticate(credentials) do
           {:ok, user} -> {:ok, user}
-          {:error, reason} -> {:error, add_error(changeset, :auth, reason)}
+          {:error, reason} -> {:error, add_error(changeset, :auth, reason), :invalid_creds}
         end
-      _ -> {:error, changeset}
+      _ -> {:error, changeset, :invalid_form}
     end
   end
 

@@ -1,3 +1,5 @@
+import { Dispatch } from 'react-redux'
+
 export type AlertLevel = 'danger' | 'warning' | 'success' | 'none'
 
 export interface Alert {
@@ -27,7 +29,16 @@ export function SetLoading(loading: boolean): SetLoading {
   return { type: 'SET_LOADING', loading }
 }
 
-export const Action = { SetLoading, SetAlert }
+export function flashAlert(alert: string, level?: AlertLevel) {
+  return async (dispatch: Dispatch<Action>) => {
+    dispatch(SetAlert(alert, level))
+    setTimeout(() => {
+      dispatch(SetAlert('', 'none'))
+    }, 2000)
+  }
+}
+
+export const Action = { SetLoading, SetAlert, flashAlert }
 export type Action = SetAlert | SetLoading
 
 export interface State {

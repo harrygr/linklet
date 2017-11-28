@@ -17,8 +17,8 @@ defmodule Pheddit.ErrorView do
     "Unauthorized"
   end
 
-  def render("error.json", reason) do
-    %{error: reason}
+  def render("error.json", errors) do
+    %{error: errors}
   end
 
   # In case no render clause matches or no

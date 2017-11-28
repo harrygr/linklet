@@ -8,7 +8,7 @@ export function deriveError(err: AxiosError): ApiError {
     return ServerError(err.response.status)
   }
   if (err.response.status > 399 && err.response.status < 500) {
-    return ClientError(err.response.status, err.response.data)
+    return ClientError(err.response.status, err.response.data.message)
   }
 
   return UnknownError('An unknown error occurred')
