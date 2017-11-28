@@ -46,7 +46,7 @@ export function Login({ requestLogin, isLoggedIn }: Props) {
 }
 
 function mapStateToProps(state: State) {
-  return { isLoggedIn: state.auth.token === null }
+  return { isLoggedIn: state.auth.token !== null }
 }
 
 function mapDispatchToProps(dispatch: Dispatch<any>) {

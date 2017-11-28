@@ -14,6 +14,7 @@ import { Switch } from 'react-router'
 import Alert from './alert'
 import Loader from './loader'
 import Login from './pages/login'
+import NewLink from './pages/links/new'
 import Navbar from './navbar'
 
 ReactDOM.render(
@@ -26,6 +27,7 @@ ReactDOM.render(
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />
+          <Route path="/links/new" component={NewLink} />
           <Route path="/links/:id" component={ShowLink} />
           <Route component={NotFound} />
         </Switch>

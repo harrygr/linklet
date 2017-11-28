@@ -21,6 +21,9 @@ export default function Navbar() {
           <Link to="/">Home</Link>
         </li>
         <li className={linkClass}>
+          <Link to="/links/new">New Link</Link>
+        </li>
+        <li className={linkClass}>
           <Link to="/login">Login</Link>
         </li>
       </LinkList>
