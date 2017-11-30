@@ -8,7 +8,7 @@ interface SetToken {
   token: string
 }
 
-export function SetToken(token: string) {
+export function SetToken(token: string | null) {
   return {
     type: 'SET_TOKEN',
     token,

@@ -16,12 +16,20 @@ import Loader from './loader'
 import Login from './pages/login'
 import NewLink from './pages/links/new'
 import Navbar from './navbar'
+import actions from './store/actions'
 
 ReactDOM.render(
   <Provider store={store}>
     <Router>
       <div>
-        <Navbar />
+        <Navbar
+          logout={() => {
+            store.dispatch(actions.SetToken(null))
+            store.dispatch(
+              actions.flashAlert('You are now logged out', 'success'),
+            )
+          }}
+        />
         <Alert />
         <Loader />
         <Switch>

@@ -13,7 +13,11 @@ const linkClass = css`
   padding: 5px 10px;
 `
 
-export default function Navbar() {
+interface Props {
+  logout: () => any
+}
+
+export default function Navbar({ logout }: Props) {
   return (
     <nav>
       <LinkList>
@@ -26,6 +30,7 @@ export default function Navbar() {
         <li className={linkClass}>
           <Link to="/login">Login</Link>
         </li>
+        <button onClick={logout}>Logout</button>
       </LinkList>
     </nav>
   )

@@ -3,7 +3,7 @@ import * as React from 'react'
 import { State } from '../../store/index'
 
 import { Dispatch, connect } from 'react-redux'
-// import { Redirect } from 'react-router'
+import { Redirect } from 'react-router'
 import { reduxForm, SubmitHandler, Field } from 'redux-form'
 import { saveLink } from '../../store/effects'
 
@@ -45,9 +45,9 @@ interface DispatchMappedToProps {
 interface Props extends StateMappedToProps, DispatchMappedToProps {}
 
 export function Login({ isLoggedIn, saveLink }: Props) {
-  // if (!isLoggedIn) {
-  //   return <Redirect to="/login" />
-  // }
+  if (!isLoggedIn) {
+    return <Redirect to="/login" />
+  }
 
   return (
     <div>
