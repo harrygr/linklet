@@ -17,15 +17,7 @@ interface AddLink {
   link: Link
 }
 
-export function AddLink(title: string): AddLink {
-  const link: Link = {
-    id: new Date().valueOf(),
-    title,
-    url: '',
-    updated_at: new Date().toISOString(),
-    inserted_at: new Date().toISOString(),
-  }
-
+export function AddLink(link: Link): AddLink {
   return {
     type: 'ADD_LINK',
     link,

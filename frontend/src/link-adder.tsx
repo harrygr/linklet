@@ -1,6 +1,4 @@
 import * as React from 'react'
-import { connect, Dispatch } from 'react-redux'
-import actions, { Action } from './store/actions'
 
 interface Props {
   addLink: (link: string) => void
@@ -27,10 +25,4 @@ function LinkAdder({ addLink }: Props) {
   )
 }
 
-function mapDispatchToProps(dispatch: Dispatch<Action>) {
-  return {
-    addLink: (link: string) => dispatch(actions.AddLink(link)),
-  }
-}
-
-export default connect(() => ({}), mapDispatchToProps)(LinkAdder)
+export default LinkAdder

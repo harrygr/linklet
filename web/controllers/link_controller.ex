@@ -50,7 +50,7 @@ defmodule Pheddit.LinkController do
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
-        |> render(Pheddit.ChangesetView, "error.json", changeset: changeset)
+        |> render(Pheddit.ChangesetView, "error.json", [changeset: changeset, message: "Invalid form"])
     end
   end
 end

@@ -8,10 +8,22 @@ export interface Link {
   updated_at: string
 }
 
-export default function links({ get }: Client) {
+export interface CreateLink {
+  title: string
+  url: string
+}
+
+export default function links({ get, post }: Client) {
   return {
     fetch() {
       return get<Link[]>('/links')
+    },
+    create(token: string, link: CreateLink) {
+      return post<Link>('/links', link, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
     },
   }
 }
