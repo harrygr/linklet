@@ -41,7 +41,8 @@ defmodule Pheddit.Mixfile do
      {:comeonin, "~> 3.0"},
      {:guardian, "~> 0.13.0"},
      {:cors_plug, "~> 1.2"},
-     {:cowboy, "~> 1.0"}]
+     {:cowboy, "~> 1.0"},
+     {:plug_static_index_html, "~> 1.0"}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

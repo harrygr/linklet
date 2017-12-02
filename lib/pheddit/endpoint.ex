@@ -7,9 +7,10 @@ defmodule Pheddit.Endpoint do
   #
   # You should set gzip to true if you are running phoenix.digest
   # when deploying your static files in production.
+  plug Plug.Static.IndexHtml, at: ""
   plug Plug.Static,
-    at: "/", from: :pheddit, gzip: false,
-    only: ~w(css fonts images js favicon.ico robots.txt)
+    at: "/", from: "frontend/build", gzip: false
+    # only: ~w(index.html favicon.ico static service-worker.js manifest.json)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
