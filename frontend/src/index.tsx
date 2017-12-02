@@ -5,42 +5,13 @@ import registerServiceWorker from './registerServiceWorker'
 
 import { Provider } from 'react-redux'
 
+import './index.css'
 import store from './store'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
-import Home from './pages/home'
-import NotFound from './pages/404'
-import ShowLink from './pages/links/show'
-import { Switch } from 'react-router'
-import Alert from './alert'
-import Loader from './loader'
-import Login from './pages/login'
-import NewLink from './pages/links/new'
-import Navbar from './navbar'
-import actions from './store/actions'
+import App from './app'
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router>
-      <div>
-        <Navbar
-          logout={() => {
-            store.dispatch(actions.SetToken(null))
-            store.dispatch(
-              actions.flashAlert('You are now logged out', 'success'),
-            )
-          }}
-        />
-        <Alert />
-        <Loader />
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/login" component={Login} />
-          <Route path="/links/new" component={NewLink} />
-          <Route path="/links/:id" component={ShowLink} />
-          <Route component={NotFound} />
-        </Switch>
-      </div>
-    </Router>
+    <App />
   </Provider>,
   document.getElementById('root') as HTMLElement,
 )

@@ -15,9 +15,10 @@ const linkClass = css`
 
 interface Props {
   logout: () => any
+  isLoggedIn: boolean
 }
 
-export default function Navbar({ logout }: Props) {
+export default function Navbar({ logout, isLoggedIn }: Props) {
   return (
     <nav>
       <LinkList>
@@ -27,10 +28,13 @@ export default function Navbar({ logout }: Props) {
         <li className={linkClass}>
           <Link to="/links/new">New Link</Link>
         </li>
-        <li className={linkClass}>
-          <Link to="/login">Login</Link>
-        </li>
-        <button onClick={logout}>Logout</button>
+        {isLoggedIn ? (
+          <button onClick={logout}>Logout</button>
+        ) : (
+          <li className={linkClass}>
+            <Link to="/login">Login</Link>
+          </li>
+        )}
       </LinkList>
     </nav>
   )
