@@ -2,7 +2,7 @@ import * as React from 'react'
 import LinkList from '../link-list'
 import { connect, Dispatch } from 'react-redux'
 import { State } from '../store'
-import { fetchLinksIfNeeded, fetchLinks } from '../store/effects'
+import { fetchLinksIfNeeded, fetchLinks } from '../store/links/thunks'
 
 interface StateMappedToProps {}
 interface DispatchMappedToProps {

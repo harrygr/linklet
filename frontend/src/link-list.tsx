@@ -3,7 +3,7 @@ import { connect, Dispatch } from 'react-redux'
 import { State } from './store'
 
 import { Link as RouterLink } from 'react-router-dom'
-import { Link } from './api/links'
+import { Link } from './api/types'
 
 interface Props {
   links: Record<string, Link>

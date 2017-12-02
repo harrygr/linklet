@@ -9,6 +9,7 @@
     "@types/redux-form": "^7.0.9",
     "@types/redux-logger": "^3.0.5",
     "axios": "^0.17.1",
+    "date-fns": "^1.29.0",
     "emotion": "^8.0.11",
     "lodash": "^4.17.4",
     "react": "^16.1.1",

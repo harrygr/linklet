@@ -1,4 +1,4 @@
-import { Link } from '../../api/links'
+import { Link } from '../../api/types'
 
 interface SetLinks {
   type: 'SET_LINKS'

@@ -5,7 +5,7 @@ import { State } from '../../store/index'
 import { Dispatch, connect } from 'react-redux'
 import { Redirect } from 'react-router'
 import { reduxForm, SubmitHandler, Field } from 'redux-form'
-import { saveLink } from '../../store/effects'
+import { saveLink } from '../../store/links/thunks'
 
 interface FormProps {
   handleSubmit: SubmitHandler<Fields, {}>

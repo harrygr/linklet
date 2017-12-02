@@ -25,7 +25,7 @@ defmodule Pheddit.LinkController do
   def show(conn, %{"id" => id}) do
     link = Link
     |> Repo.get(id)
-    |> Repo.preload([:user])
+    |> Repo.preload([:user, comments: :user])
 
     case link do
       nil ->

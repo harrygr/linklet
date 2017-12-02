@@ -4,8 +4,12 @@ import { connect, Dispatch } from 'react-redux'
 import { State } from '../../store'
 import { RouteComponentProps } from 'react-router'
 import NotFound from '../404'
-import { Link } from '../../api/links'
-import { fetchLinksIfNeeded } from '../../store/effects'
+import { Link, Comment } from '../../api/types'
+
+import { fetchLinksIfNeeded } from '../../store/links/thunks'
+import { fetchComments } from '../../store/comments/thunks'
+import { values } from 'lodash'
+import CommentList from '../../components/comment-list'
 
 interface Params {
   id: string
@@ -13,10 +17,12 @@ interface Params {
 
 interface StateMappedToProps {
   links: Record<string, Link>
+  comments: Record<string, Comment>
   loading: boolean
 }
 interface DispatchMappedToProps {
-  loadLinks: () => void
+  fetchLinksIfNeeded: () => void
+  fetchComments: (linkId: string) => void
 }
 
 interface Props
@@ -26,7 +32,8 @@ interface Props
 
 export class ShowLink extends React.Component<Props> {
   componentDidMount() {
-    this.props.loadLinks()
+    this.props.fetchLinksIfNeeded()
+    this.props.fetchComments(this.props.match.params.id)
   }
 
   render() {
@@ -41,18 +48,27 @@ export class ShowLink extends React.Component<Props> {
 
     return (
       <div>
-        <h1>Link</h1>
-        <p>This is the link: {link.title}</p>
+        <h2>
+          <a href={link.url} target="_blank">
+            {link.title}
+          </a>
+        </h2>
+        <p>{link.url}</p>
+        <h3>Comments</h3>
+        <CommentList comments={values(this.props.comments)} />
       </div>
     )
   }
 }
-function mapStateToProps({ links, ui }: State) {
-  return { links: links.items, loading: ui.loading }
+function mapStateToProps({ links, ui, comments }: State) {
+  return { links: links.items, comments: comments.items, loading: ui.loading }
 }
 
 function mapDispatchToProps(dispatch: Dispatch<any>) {
-  return { loadLinks: () => dispatch(fetchLinksIfNeeded()) }
+  return {
+    fetchLinksIfNeeded: () => dispatch(fetchLinksIfNeeded()),
+    fetchComments: (linkId: string) => dispatch(fetchComments(linkId)),
+  }
 }
 
 export default connect<StateMappedToProps, DispatchMappedToProps>(

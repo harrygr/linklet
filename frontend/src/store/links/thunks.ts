@@ -1,16 +1,16 @@
 import { Dispatch } from 'react-redux'
 
-import actions, { Action } from '../store/actions'
+import actions, { Action } from '../../store/actions'
 
-import api from '../api'
+import api from '../../api'
 
-import { State } from './index'
-import { CreateLink } from '../api/links'
+import { State } from '../index'
+import { CreateLink } from '../../api/types'
 
 export function fetchLinks() {
   return async (dispatch: Dispatch<Action>) => {
     dispatch(actions.SetLoading(true))
-    ;(await api().links.fetch())
+    ;(await api().links.all())
       .map(links => {
         dispatch(actions.SetLinks(links))
       })
