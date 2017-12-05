@@ -10,7 +10,7 @@ defmodule Linklet.Comment do
     belongs_to :user, Linklet.User
     belongs_to :link, Linklet.Link
 
-    timestamps
+    timestamps()
   end
 
   def changeset(model, params \\ %{}) do

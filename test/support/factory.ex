@@ -5,7 +5,7 @@ defmodule Linklet.Factory do
     %Linklet.Link{
       title: "A handy site to find stuff on the internet",
       url: "http://google.com",
-      user: user_factory
+      user: user_factory()
     }
   end
 

@@ -12,8 +12,6 @@ defmodule Linklet.LinkView do
 
 
   def multi_link_json(link) do
-    comments_count = if (Map.has_key?(link, :comments_count)), do: link.comments_count, else: 0
-
     %{
       id: link.id,
       title: link.title,
