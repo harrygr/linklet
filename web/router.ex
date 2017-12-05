@@ -1,5 +1,5 @@
-defmodule Pheddit.Router do
-  use Pheddit.Web, :router
+defmodule Linklet.Router do
+  use Linklet.Web, :router
 
   pipeline :api do
     plug :accepts, ["json", "json-api"]
@@ -9,7 +9,7 @@ defmodule Pheddit.Router do
   end
 
   # Here be the API routes
-  scope "/api", Pheddit do
+  scope "/api", Linklet do
     pipe_through :api
 
     resources "/auth", SessionController, only: [:create]
@@ -19,7 +19,7 @@ defmodule Pheddit.Router do
     end
   end
 
-  scope "/", Pheddit do
+  scope "/", Linklet do
     get "/", PageController, :index
     get "/*path", PageController, :index
   end

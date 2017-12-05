@@ -1,5 +1,5 @@
-defmodule Pheddit.Link do
-  use Pheddit.Web, :model
+defmodule Linklet.Link do
+  use Linklet.Web, :model
 
   @timestamps_opts [usec: false]
 
@@ -7,8 +7,8 @@ defmodule Pheddit.Link do
     field :title
     field :url
 
-    belongs_to :user, Pheddit.User
-    has_many :comments, Pheddit.Comment
+    belongs_to :user, Linklet.User
+    has_many :comments, Linklet.Comment
 
     timestamps
   end

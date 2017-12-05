@@ -1,10 +1,10 @@
-defmodule Pheddit.ChangesetView do
-  use Pheddit.Web, :view
+defmodule Linklet.ChangesetView do
+  use Linklet.Web, :view
 
   @doc """
   Traverses and translates changeset errors.
   See `Ecto.Changeset.traverse_errors/2` and
-  `Pheddit.ErrorHelpers.translate_error/1` for more details.
+  `Linklet.ErrorHelpers.translate_error/1` for more details.
   """
   def translate_errors(changeset) do
     Ecto.Changeset.traverse_errors(changeset, &translate_error/1)

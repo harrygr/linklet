@@ -1,7 +1,7 @@
-defmodule Pheddit.LinkControllerTest do
-  use Pheddit.ConnCase
+defmodule Linklet.LinkControllerTest do
+  use Linklet.ConnCase
 
-  alias Pheddit.LinkView
+  alias Linklet.LinkView
 
   def get_authenticated_conn() do
     user = insert(:user)

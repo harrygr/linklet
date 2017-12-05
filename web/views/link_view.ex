@@ -1,6 +1,6 @@
-defmodule Pheddit.LinkView do
-  use Pheddit.Web, :view
-  alias Pheddit.CommentView
+defmodule Linklet.LinkView do
+  use Linklet.Web, :view
+  alias Linklet.CommentView
 
   def render("index.json", %{links: links}) do
     Enum.map(links, &multi_link_json/1)
@@ -20,7 +20,7 @@ defmodule Pheddit.LinkView do
       url: link.url,
       inserted_at: link.inserted_at,
       updated_at: link.updated_at,
-      user: Pheddit.UserView.user_json(link.user),
+      user: Linklet.UserView.user_json(link.user),
       comments_count: link.comments_count,
     }
   end
@@ -32,7 +32,7 @@ defmodule Pheddit.LinkView do
       url: link.url,
       inserted_at: link.inserted_at,
       updated_at: link.updated_at,
-      user: Pheddit.UserView.user_json(link.user),
+      user: Linklet.UserView.user_json(link.user),
       comments: Enum.map(link.comments, &CommentView.comment_json/1)
     }
   end

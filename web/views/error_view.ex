@@ -1,5 +1,5 @@
-defmodule Pheddit.ErrorView do
-  use Pheddit.Web, :view
+defmodule Linklet.ErrorView do
+  use Linklet.Web, :view
 
   def render("404.html", _assigns) do
     "Page not found"

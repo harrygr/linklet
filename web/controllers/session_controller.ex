@@ -1,7 +1,7 @@
-defmodule Pheddit.SessionController do
-  use Pheddit.Web, :controller
+defmodule Linklet.SessionController do
+  use Linklet.Web, :controller
 
-  alias Pheddit.User
+  alias Linklet.User
 
   def create(conn, params) do
     case User.find_and_confirm_password(%User{}, params) do
@@ -16,14 +16,14 @@ defmodule Pheddit.SessionController do
         |> render("login.json", Map.merge(%{"user" => user, "jwt" => jwt}, claims))
       {:error, changeset, message} ->
         case message do
-          :invalid_creds -> 
+          :invalid_creds ->
             conn
             |> put_status(401)
-            |> render(Pheddit.ChangesetView, "error.json", [changeset: changeset, message: "Invalid credentials"])
-          :invalid_form -> 
+            |> render(Linklet.ChangesetView, "error.json", [changeset: changeset, message: "Invalid credentials"])
+          :invalid_form ->
             conn
             |> put_status(400)
-            |> render(Pheddit.ChangesetView, "error.json", [changeset: changeset, message: "Invalid form"])
+            |> render(Linklet.ChangesetView, "error.json", [changeset: changeset, message: "Invalid form"])
         end
     end
   end
@@ -31,7 +31,7 @@ defmodule Pheddit.SessionController do
   def unauthenticated(conn, _) do
     conn
     |> put_status(401)
-    |> render(Pheddit.ErrorView, "401.json")
+    |> render(Linklet.ErrorView, "401.json")
   end
 
 

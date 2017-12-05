@@ -1,5 +1,5 @@
-defmodule Pheddit.PageController do
-  use Pheddit.Web, :controller
+defmodule Linklet.PageController do
+  use Linklet.Web, :controller
 
   def index(conn, _params) do
     # render conn, "index.html"

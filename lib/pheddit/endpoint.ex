@@ -1,7 +1,7 @@
-defmodule Pheddit.Endpoint do
-  use Phoenix.Endpoint, otp_app: :pheddit
+defmodule Linklet.Endpoint do
+  use Phoenix.Endpoint, otp_app: :linklet
 
-  socket "/socket", Pheddit.UserSocket
+  socket "/socket", Linklet.UserSocket
 
   # Serve at "/" the static files from "priv/static" directory.
   #
@@ -36,9 +36,9 @@ defmodule Pheddit.Endpoint do
   # Set :encryption_salt if you would also like to encrypt it.
   plug Plug.Session,
     store: :cookie,
-    key: "_pheddit_key",
+    key: "_linklet_key",
     signing_salt: "n1+mnGZr"
 
   plug CORSPlug
-  plug Pheddit.Router
+  plug Linklet.Router
 end

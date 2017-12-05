@@ -1,7 +1,7 @@
-defmodule Pheddit.UserController do
-  use Pheddit.Web, :controller
+defmodule Linklet.UserController do
+  use Linklet.Web, :controller
 
-  alias Pheddit.User
+  alias Linklet.User
 
   def create(conn, user_params) do
     changeset = User.registration_changeset(%User{}, user_params)
@@ -14,7 +14,7 @@ defmodule Pheddit.UserController do
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
-        |> render(Pheddit.ChangesetView, "error.json", changeset: changeset)
+        |> render(Linklet.ChangesetView, "error.json", changeset: changeset)
     end
   end
 end

@@ -1,5 +1,5 @@
-defmodule Pheddit.UserView do
-  use Pheddit.Web, :view
+defmodule Linklet.UserView do
+  use Linklet.Web, :view
 
   def render("show.json", %{user: user}) do
     user_json(user)

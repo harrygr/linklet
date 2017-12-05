@@ -1,4 +1,4 @@
-defmodule Pheddit.ModelCase do
+defmodule Linklet.ModelCase do
   @moduledoc """
   This module defines the test case to be used by
   model tests.
@@ -16,20 +16,20 @@ defmodule Pheddit.ModelCase do
 
   using do
     quote do
-      alias Pheddit.Repo
+      alias Linklet.Repo
 
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
-      import Pheddit.ModelCase
+      import Linklet.ModelCase
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Pheddit.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Linklet.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Pheddit.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Linklet.Repo, {:shared, self()})
     end
 
     :ok
@@ -59,7 +59,7 @@ defmodule Pheddit.ModelCase do
   """
   def errors_on(struct, data) do
     struct.__struct__.changeset(struct, data)
-    |> Ecto.Changeset.traverse_errors(&Pheddit.ErrorHelpers.translate_error/1)
+    |> Ecto.Changeset.traverse_errors(&Linklet.ErrorHelpers.translate_error/1)
     |> Enum.flat_map(fn {key, errors} -> for msg <- errors, do: {key, msg} end)
   end
 end

@@ -7,7 +7,7 @@ services:
     image: mysql
     restart: always
     environment:
-      MYSQL_DATABASE: pheddit_dev
+      MYSQL_DATABASE: linklet_dev
       MYSQL_ROOT_PASSWORD: password
     ports:
       - 3306:3306

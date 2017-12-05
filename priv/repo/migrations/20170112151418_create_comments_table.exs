@@ -1,4 +1,4 @@
-defmodule Pheddit.Repo.Migrations.AddLinksTable do
+defmodule Linklet.Repo.Migrations.AddLinksTable do
   use Ecto.Migration
 
   def change do

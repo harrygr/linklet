@@ -1,8 +1,8 @@
-defmodule Pheddit.GuardianSerializer do
+defmodule Linklet.GuardianSerializer do
   @behaviour Guardian.Serializer
 
-  alias Pheddit.Repo
-  alias Pheddit.User
+  alias Linklet.Repo
+  alias Linklet.User
 
   def for_token(user = %User{}), do: { :ok, "User:#{user.id}" }
   def for_token(_), do: { :error, "Unknown resource type" }

@@ -1,5 +1,5 @@
-defmodule Pheddit.CommentControllerTest do
-  use Pheddit.ConnCase
+defmodule Linklet.CommentControllerTest do
+  use Linklet.ConnCase
 
   def get_authenticated_conn(user \\ nil) do
     user =  if (user == nil), do: insert(:user), else: user

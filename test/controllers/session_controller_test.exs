@@ -1,5 +1,5 @@
-defmodule Pheddit.SessionControllerTest do
-  use Pheddit.ConnCase
+defmodule Linklet.SessionControllerTest do
+  use Linklet.ConnCase
 
   test "obtains a token for a registered user" do
     user = insert(:user)

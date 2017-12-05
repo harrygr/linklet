@@ -1,4 +1,4 @@
-defmodule Pheddit.Repo.Migrations.CreateUsersTable do
+defmodule Linklet.Repo.Migrations.CreateUsersTable do
   use Ecto.Migration
 
   def change do

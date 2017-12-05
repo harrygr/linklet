@@ -1,8 +1,8 @@
-defmodule Pheddit.LinkViewTest do
-  use Pheddit.ConnCase
-  import Pheddit.Factory
-  alias Pheddit.LinkView
-  alias Pheddit.UserView
+defmodule Linklet.LinkViewTest do
+  use Linklet.ConnCase
+  import Linklet.Factory
+  alias Linklet.LinkView
+  alias Linklet.UserView
 
   test "link_json" do
     link = insert(:link)

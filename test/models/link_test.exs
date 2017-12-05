@@ -1,7 +1,7 @@
-defmodule Pheddit.LinkTest do
-  use Pheddit.ModelCase
+defmodule Linklet.LinkTest do
+  use Linklet.ModelCase
 
-  alias Pheddit.Link
+  alias Linklet.Link
 
   @valid_attrs %{title: "A really great link", url: "http://example.com"}
 

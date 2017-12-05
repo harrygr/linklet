@@ -1,14 +1,14 @@
-defmodule Pheddit.Comment do
-  use Pheddit.Web, :model
+defmodule Linklet.Comment do
+  use Linklet.Web, :model
 
   @timestamps_opts [usec: false]
 
   schema "comments" do
     field :body
 
-    belongs_to :comment, Pheddit.Comment
-    belongs_to :user, Pheddit.User
-    belongs_to :link, Pheddit.Link
+    belongs_to :comment, Linklet.Comment
+    belongs_to :user, Linklet.User
+    belongs_to :link, Linklet.Link
 
     timestamps
   end
