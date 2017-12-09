@@ -1,3 +1,3 @@
-defmodule Pheddit.PageViewTest do
-  use Pheddit.ConnCase, async: true
+defmodule Linklet.PageViewTest do
+  use Linklet.ConnCase, async: true
 end

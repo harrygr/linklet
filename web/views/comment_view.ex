@@ -1,5 +1,5 @@
-defmodule Pheddit.CommentView do
-  use Pheddit.Web, :view
+defmodule Linklet.CommentView do
+  use Linklet.Web, :view
 
   def render("index.json", %{comments: comments}) do
     Enum.map(comments, &comment_json/1)
@@ -16,7 +16,7 @@ defmodule Pheddit.CommentView do
       inserted_at: comment.inserted_at,
       updated_at: comment.updated_at,
       link_id: comment.link_id,
-      user: Pheddit.UserView.user_json(comment.user)
+      user: Linklet.UserView.user_json(comment.user)
     }
   end
 end

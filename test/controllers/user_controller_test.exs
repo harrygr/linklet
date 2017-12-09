@@ -1,7 +1,7 @@
-defmodule Pheddit.UserControllerTest do
-  use Pheddit.ConnCase
+defmodule Linklet.UserControllerTest do
+  use Linklet.ConnCase
 
-  alias Pheddit.User
+  alias Linklet.User
 
   @valid_attrs %{username: "joebloggs", email: "foo@bar.com", password: "s3cr3t123"}
   @invalid_attrs %{}

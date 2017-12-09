@@ -1,15 +1,16 @@
-defmodule Pheddit.Endpoint do
-  use Phoenix.Endpoint, otp_app: :pheddit
+defmodule Linklet.Endpoint do
+  use Phoenix.Endpoint, otp_app: :linklet
 
-  socket "/socket", Pheddit.UserSocket
+  socket "/socket", Linklet.UserSocket
 
   # Serve at "/" the static files from "priv/static" directory.
   #
   # You should set gzip to true if you are running phoenix.digest
   # when deploying your static files in production.
+  plug Plug.Static.IndexHtml, at: ""
   plug Plug.Static,
-    at: "/", from: :pheddit, gzip: false,
-    only: ~w(css fonts images js favicon.ico robots.txt)
+    at: "/", from: "frontend/build", gzip: false
+    # only: ~w(index.html favicon.ico static service-worker.js manifest.json)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
@@ -35,8 +36,9 @@ defmodule Pheddit.Endpoint do
   # Set :encryption_salt if you would also like to encrypt it.
   plug Plug.Session,
     store: :cookie,
-    key: "_pheddit_key",
+    key: "_linklet_key",
     signing_salt: "n1+mnGZr"
 
-  plug Pheddit.Router
+  plug CORSPlug
+  plug Linklet.Router
 end

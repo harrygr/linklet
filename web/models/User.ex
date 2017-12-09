@@ -1,5 +1,5 @@
-defmodule Pheddit.User do
-  use Pheddit.Web, :model
+defmodule Linklet.User do
+  use Linklet.Web, :model
 
   schema "users" do
     field :username, :string
@@ -7,8 +7,8 @@ defmodule Pheddit.User do
     field :password, :string, virtual: true
     field :password_hash, :string
 
-    has_many :links, Pheddit.Link
-    has_many :comments, Pheddit.Comment
+    has_many :links, Linklet.Link
+    has_many :comments, Linklet.Comment
 
     timestamps()
   end
@@ -39,11 +39,11 @@ defmodule Pheddit.User do
 
     case changeset do
       %{valid?: true, changes: credentials} ->
-        case Pheddit.Authenticator.authenticate(credentials) do
+        case Linklet.Authenticator.authenticate(credentials) do
           {:ok, user} -> {:ok, user}
-          {:error, reason} -> {:error, add_error(changeset, :auth, reason)}
+          {:error, reason} -> {:error, add_error(changeset, :auth, reason), :invalid_creds}
         end
-      _ -> {:error, changeset}
+      _ -> {:error, changeset, :invalid_form}
     end
   end
 

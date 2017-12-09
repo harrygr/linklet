@@ -1,10 +1,10 @@
-defmodule Pheddit.LinkController do
-  use Pheddit.Web, :controller
+defmodule Linklet.LinkController do
+  use Linklet.Web, :controller
   # use Guardian.Phoenix.Controller
 
-  alias Pheddit.Link
+  alias Linklet.Link
 
-  plug Guardian.Plug.EnsureAuthenticated, [handler: Pheddit.SessionController] when action in [:create]
+  plug Guardian.Plug.EnsureAuthenticated when action in [:create]
 
 
   def index(conn, _params) do
@@ -25,13 +25,13 @@ defmodule Pheddit.LinkController do
   def show(conn, %{"id" => id}) do
     link = Link
     |> Repo.get(id)
-    |> Repo.preload([:user])
+    |> Repo.preload([:user, comments: :user])
 
     case link do
       nil ->
         conn
         |> put_status(404)
-        |> render(Pheddit.ErrorView, "404.json")
+        |> render(Linklet.ErrorView, "404.json")
       link ->
         render conn, "show.json", link: link
     end
@@ -50,7 +50,7 @@ defmodule Pheddit.LinkController do
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
-        |> render(Pheddit.ChangesetView, "error.json", changeset: changeset)
+        |> render(Linklet.ChangesetView, "error.json", [changeset: changeset, message: "Invalid form"])
     end
   end
 end

@@ -1,3 +1,0 @@
---compilers ts:ts-node/register
---watch-extensions ts
-frontend/**/*.spec.ts

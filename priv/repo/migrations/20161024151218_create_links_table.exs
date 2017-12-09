@@ -1,4 +1,4 @@
-defmodule Pheddit.Repo.Migrations.AddLinksTable do
+defmodule Linklet.Repo.Migrations.CreateLinksTable do
   use Ecto.Migration
 
   def change do
@@ -7,7 +7,7 @@ defmodule Pheddit.Repo.Migrations.AddLinksTable do
       add :url, :string
       add :user_id, references(:users)
 
-      timestamps
+      timestamps()
     end
   end
 end

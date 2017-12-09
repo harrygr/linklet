@@ -1,7 +1,7 @@
-defmodule Pheddit.UserTest do
-  use Pheddit.ModelCase
+defmodule Linklet.UserTest do
+  use Linklet.ModelCase
 
-  alias Pheddit.User
+  alias Linklet.User
 
   @valid_attrs %{email: "bar@baz.com", password: "s3cr3ted", username: "joebloggs"}
 

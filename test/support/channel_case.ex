@@ -1,4 +1,4 @@
-defmodule Pheddit.ChannelCase do
+defmodule Linklet.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -20,22 +20,22 @@ defmodule Pheddit.ChannelCase do
       # Import conveniences for testing with channels
       use Phoenix.ChannelTest
 
-      alias Pheddit.Repo
+      alias Linklet.Repo
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
 
 
       # The default endpoint for testing
-      @endpoint Pheddit.Endpoint
+      @endpoint Linklet.Endpoint
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Pheddit.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Linklet.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Pheddit.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Linklet.Repo, {:shared, self()})
     end
 
     :ok

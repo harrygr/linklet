@@ -2,5 +2,5 @@
 
 ExUnit.start
 
-Ecto.Adapters.SQL.Sandbox.mode(Pheddit.Repo, :manual)
+Ecto.Adapters.SQL.Sandbox.mode(Linklet.Repo, :manual)
 

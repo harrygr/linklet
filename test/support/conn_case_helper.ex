@@ -1,4 +1,4 @@
-defmodule Pheddit.ConnCaseHelper do
+defmodule Linklet.ConnCaseHelper do
   def render_json(view, template, assigns) do
     view.render(template, assigns)
     |> format_json

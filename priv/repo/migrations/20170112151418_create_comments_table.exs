@@ -1,4 +1,4 @@
-defmodule Pheddit.Repo.Migrations.AddLinksTable do
+defmodule Linklet.Repo.Migrations.CreateCommentsTable do
   use Ecto.Migration
 
   def change do
@@ -9,7 +9,7 @@ defmodule Pheddit.Repo.Migrations.AddLinksTable do
       add :comment_id, references(:comments), null: true
       add :link_id, references(:links)
 
-      timestamps
+      timestamps()
     end
   end
 end

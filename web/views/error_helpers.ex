@@ -1,4 +1,4 @@
-defmodule Pheddit.ErrorHelpers do
+defmodule Linklet.ErrorHelpers do
   @moduledoc """
   Conveniences for translating and building error messages.
   """
@@ -32,9 +32,9 @@ defmodule Pheddit.ErrorHelpers do
     #     dgettext "errors", "is invalid"
     #
     if count = opts[:count] do
-      Gettext.dngettext(Pheddit.Gettext, "errors", msg, msg, count, opts)
+      Gettext.dngettext(Linklet.Gettext, "errors", msg, msg, count, opts)
     else
-      Gettext.dgettext(Pheddit.Gettext, "errors", msg, opts)
+      Gettext.dgettext(Linklet.Gettext, "errors", msg, opts)
     end
   end
 end

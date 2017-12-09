@@ -1,12 +1,12 @@
-defmodule Pheddit.Web do
+defmodule Linklet.Web do
   @moduledoc """
   A module that keeps using definitions for controllers,
   views and so on.
 
   This can be used in your application as:
 
-      use Pheddit.Web, :controller
-      use Pheddit.Web, :view
+      use Linklet.Web, :controller
+      use Linklet.Web, :view
 
   The definitions below will be executed for every view,
   controller, etc, so keep them short and clean, focused
@@ -30,12 +30,12 @@ defmodule Pheddit.Web do
     quote do
       use Phoenix.Controller
 
-      alias Pheddit.Repo
+      alias Linklet.Repo
       import Ecto
       import Ecto.Query
 
-      import Pheddit.Router.Helpers
-      import Pheddit.Gettext
+      import Linklet.Router.Helpers
+      import Linklet.Gettext
     end
   end
 
@@ -49,9 +49,9 @@ defmodule Pheddit.Web do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
-      import Pheddit.Router.Helpers
-      import Pheddit.ErrorHelpers
-      import Pheddit.Gettext
+      import Linklet.Router.Helpers
+      import Linklet.ErrorHelpers
+      import Linklet.Gettext
     end
   end
 
@@ -65,10 +65,10 @@ defmodule Pheddit.Web do
     quote do
       use Phoenix.Channel
 
-      alias Pheddit.Repo
+      alias Linklet.Repo
       import Ecto
       import Ecto.Query
-      import Pheddit.Gettext
+      import Linklet.Gettext
     end
   end
 

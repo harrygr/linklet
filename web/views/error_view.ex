@@ -1,5 +1,5 @@
-defmodule Pheddit.ErrorView do
-  use Pheddit.Web, :view
+defmodule Linklet.ErrorView do
+  use Linklet.Web, :view
 
   def render("404.html", _assigns) do
     "Page not found"
@@ -17,8 +17,8 @@ defmodule Pheddit.ErrorView do
     "Unauthorized"
   end
 
-  def render("error.json", reason) do
-    %{error: reason}
+  def render("error.json", errors) do
+    %{error: errors}
   end
 
   # In case no render clause matches or no

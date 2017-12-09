@@ -1,13 +1,13 @@
-defmodule Pheddit.LinkViewTest do
-  use Pheddit.ConnCase
-  import Pheddit.Factory
-  alias Pheddit.LinkView
-  alias Pheddit.UserView
+defmodule Linklet.LinkViewTest do
+  use Linklet.ConnCase
+  import Linklet.Factory
+  alias Linklet.LinkView
+  alias Linklet.UserView
 
   test "link_json" do
-    link = insert(:link)
+    link = insert(:link) |> Repo.preload([:user, [comments: :user]])
 
-    rendered_link = LinkView.link_json(link)
+    rendered_link = LinkView.single_link_json(link)
 
     assert rendered_link == %{
       id: link.id,
@@ -16,7 +16,7 @@ defmodule Pheddit.LinkViewTest do
       inserted_at: link.inserted_at,
       updated_at: link.updated_at,
       user: UserView.user_json(link.user),
-      comments_count: 0
+      comments: []
     }
   end
 
@@ -25,7 +25,7 @@ defmodule Pheddit.LinkViewTest do
 
     rendered_links = LinkView.render("index.json", %{links: [link]})
 
-    assert rendered_links == [LinkView.link_json(link)]
+    assert rendered_links == [LinkView.multi_link_json(link)]
   end
 
   test "show.json" do
@@ -33,7 +33,7 @@ defmodule Pheddit.LinkViewTest do
 
     rendered_link = LinkView.render("show.json", %{link: link})
 
-    assert rendered_link == LinkView.link_json(link)
+    assert rendered_link == LinkView.single_link_json(link)
   end
 
 end

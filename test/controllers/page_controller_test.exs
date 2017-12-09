@@ -1,5 +1,5 @@
-defmodule Pheddit.PageControllerTest do
-  use Pheddit.ConnCase
+defmodule Linklet.PageControllerTest do
+  use Linklet.ConnCase
 
   test "GET /", %{conn: conn} do
     conn = get conn, "/"

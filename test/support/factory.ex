@@ -1,16 +1,16 @@
-defmodule Pheddit.Factory do
-  use ExMachina.Ecto, repo: Pheddit.Repo
+defmodule Linklet.Factory do
+  use ExMachina.Ecto, repo: Linklet.Repo
 
   def link_factory do
-    %Pheddit.Link{
+    %Linklet.Link{
       title: "A handy site to find stuff on the internet",
       url: "http://google.com",
-      user: user_factory
+      user: user_factory()
     }
   end
 
   def user_factory do
-    %Pheddit.User{
+    %Linklet.User{
       username: "joebloggs2",
       email: "joe@bloggs.com",
       password: "password",

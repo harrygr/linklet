@@ -1,29 +1,14 @@
-defmodule Pheddit.Router do
-  use Pheddit.Web, :router
-
-  pipeline :browser do
-    plug :accepts, ["html"]
-    plug :fetch_session
-    plug :fetch_flash
-    plug :protect_from_forgery
-    plug :put_secure_browser_headers
-  end
-
-  pipeline :spa do
-    plug :put_layout, false
-    plug :accepts, ["html"]
-    plug :put_secure_browser_headers
-  end
+defmodule Linklet.Router do
+  use Linklet.Web, :router
 
   pipeline :api do
     plug :accepts, ["json", "json-api"]
-    plug Corsica, origins: "*"
-    plug Guardian.Plug.VerifyHeader, realm: "Bearer" # Looks in the Authorization header for the token
-    plug Guardian.Plug.LoadResource
+
+    plug Linklet.Auth.Pipeline
   end
 
   # Here be the API routes
-  scope "/api", Pheddit do
+  scope "/api", Linklet do
     pipe_through :api
 
     resources "/auth", SessionController, only: [:create]
@@ -33,9 +18,7 @@ defmodule Pheddit.Router do
     end
   end
 
-  scope "/", Pheddit do
-    pipe_through :spa # Use the SPA browser stack
-
+  scope "/", Linklet do
     get "/", PageController, :index
     get "/*path", PageController, :index
   end

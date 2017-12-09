@@ -6,7 +6,7 @@ use Mix.Config
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we use it
 # with brunch.io to recompile .js and .css sources.
-config :pheddit, Pheddit.Endpoint,
+config :linklet, Linklet.Endpoint,
   http: [port: 4000],
   debug_errors: true,
   code_reloader: true,
@@ -15,7 +15,7 @@ config :pheddit, Pheddit.Endpoint,
 
 
 # Watch static and templates for browser reloading.
-config :pheddit, Pheddit.Endpoint,
+config :linklet, Linklet.Endpoint,
   live_reload: [
     patterns: [
       ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
@@ -33,10 +33,10 @@ config :logger, :console, format: "[$level] $message\n"
 config :phoenix, :stacktrace_depth, 20
 
 # Configure your database
-config :pheddit, Pheddit.Repo,
+config :linklet, Linklet.Repo,
   adapter: Ecto.Adapters.MySQL,
   username: System.get_env("DB_USER") || "root",
   password: System.get_env("DB_PASSWORD") || "password",
-  database: System.get_env("DB_DATABASE") || "pheddit_dev",
+  database: System.get_env("DB_DATABASE") || "linklet_dev",
   hostname: System.get_env("DB_HOST") || "127.0.0.1",
   pool_size: 10

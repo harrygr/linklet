@@ -1,0 +1,13 @@
+# Use root/example as user/password credentials
+version: '3.1'
+
+services:
+
+  db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: linklet_dev
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - 3306:3306

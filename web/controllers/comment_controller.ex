@@ -1,9 +1,9 @@
-defmodule Pheddit.CommentController do
-  use Pheddit.Web, :controller
+defmodule Linklet.CommentController do
+  use Linklet.Web, :controller
 
-  plug Guardian.Plug.EnsureAuthenticated, [handler: Pheddit.SessionController] when action in [:create]
+  plug Guardian.Plug.EnsureAuthenticated, [handler: Linklet.SessionController] when action in [:create]
 
-  alias Pheddit.Comment
+  alias Linklet.Comment
 
   def index(conn, %{"link_id" => link_id}) do
     comments = Comment
@@ -28,7 +28,7 @@ defmodule Pheddit.CommentController do
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
-        |> render(Pheddit.ChangesetView, "error.json", changeset: changeset)
+        |> render(Linklet.ChangesetView, "error.json", changeset: changeset)
     end
   end
 end

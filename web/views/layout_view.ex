@@ -1,3 +1,3 @@
-defmodule Pheddit.LayoutView do
-  use Pheddit.Web, :view
+defmodule Linklet.LayoutView do
+  use Linklet.Web, :view
 end

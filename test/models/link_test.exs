@@ -1,7 +1,7 @@
-defmodule Pheddit.LinkTest do
-  use Pheddit.ModelCase
+defmodule Linklet.LinkTest do
+  use Linklet.ModelCase
 
-  alias Pheddit.Link
+  alias Linklet.Link
 
   @valid_attrs %{title: "A really great link", url: "http://example.com"}
 
@@ -13,6 +13,7 @@ defmodule Pheddit.LinkTest do
     |> Repo.all
 
     links = Enum.map(result, &attach_count/1)
+    assert List.first(links).comments_count == 0
   end
 
   def attach_count({link, count}) do

@@ -1,8 +1,8 @@
-defmodule Pheddit.Authenticator do
-  alias Pheddit.User
+defmodule Linklet.Authenticator do
+  alias Linklet.User
 
   def authenticate(%{email: email, password: password}) do
-    user = Pheddit.Repo.get_by(User, email: String.downcase(email))
+    user = Linklet.Repo.get_by(User, email: String.downcase(email))
 
     case user do
       nil ->

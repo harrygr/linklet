@@ -1,4 +1,4 @@
-defmodule Pheddit.ConnCase do
+defmodule Linklet.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -20,25 +20,25 @@ defmodule Pheddit.ConnCase do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
 
-      alias Pheddit.Repo
+      alias Linklet.Repo
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
 
-      import Pheddit.Router.Helpers
-      import Pheddit.Factory
-      import Pheddit.ConnCaseHelper
+      import Linklet.Router.Helpers
+      import Linklet.Factory
+      import Linklet.ConnCaseHelper
 
       # The default endpoint for testing
-      @endpoint Pheddit.Endpoint
+      @endpoint Linklet.Endpoint
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Pheddit.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Linklet.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Pheddit.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Linklet.Repo, {:shared, self()})
     end
 
     {:ok, conn: Phoenix.ConnTest.build_conn()}

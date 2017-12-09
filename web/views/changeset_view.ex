@@ -1,18 +1,18 @@
-defmodule Pheddit.ChangesetView do
-  use Pheddit.Web, :view
+defmodule Linklet.ChangesetView do
+  use Linklet.Web, :view
 
   @doc """
   Traverses and translates changeset errors.
   See `Ecto.Changeset.traverse_errors/2` and
-  `Pheddit.ErrorHelpers.translate_error/1` for more details.
+  `Linklet.ErrorHelpers.translate_error/1` for more details.
   """
   def translate_errors(changeset) do
     Ecto.Changeset.traverse_errors(changeset, &translate_error/1)
   end
 
-  def render("error.json", %{changeset: changeset}) do
+  def render("error.json", %{changeset: changeset, message: message}) do
     # When encoded, the changeset returns its errors
     # as a JSON object. So we just pass it forward.
-    %{errors: translate_errors(changeset)}
+    %{errors: translate_errors(changeset), message: message}
   end
 end
