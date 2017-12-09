@@ -6,7 +6,7 @@ defmodule Linklet.LinkControllerTest do
   def get_authenticated_conn() do
     user = insert(:user)
 
-    {:ok, jwt, _full_claims} = Guardian.encode_and_sign(user)
+    {:ok, jwt, _full_claims} = Guardian.encode_and_sign(Linklet.Auth.Guardian, user)
 
     build_conn()
     |> put_req_header("authorization", "Bearer #{jwt}")

@@ -4,7 +4,7 @@ defmodule Linklet.CommentControllerTest do
   def get_authenticated_conn(user \\ nil) do
     user =  if (user == nil), do: insert(:user), else: user
 
-    {:ok, jwt, _full_claims} = Guardian.encode_and_sign(user)
+    {:ok, jwt, _full_claims} = Guardian.encode_and_sign(Linklet.Auth.Guardian, user)
 
     build_conn()
     |> put_req_header("authorization", "Bearer #{jwt}")
@@ -19,7 +19,7 @@ defmodule Linklet.CommentControllerTest do
 
     response = json_response(conn, :created) |> Poison.encode! |> Poison.decode!
 
-    %{"body" => body, "link_id" => link_id, "user" => user} = response
+    %{"body" => body, "user" => user} = response
 
     assert comment.body == body
     assert user["id"] > 0

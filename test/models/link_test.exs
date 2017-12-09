@@ -13,6 +13,7 @@ defmodule Linklet.LinkTest do
     |> Repo.all
 
     links = Enum.map(result, &attach_count/1)
+    assert List.first(links).comments_count == 0
   end
 
   def attach_count({link, count}) do

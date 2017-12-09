@@ -14,7 +14,7 @@ defmodule Linklet.UserController do
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
-        |> render(Linklet.ChangesetView, "error.json", changeset: changeset)
+        |> render(Linklet.ChangesetView, "error.json", [changeset: changeset, message: "Invalid form"])
     end
   end
 end

@@ -30,14 +30,9 @@ config :linklet, Linklet.Repo,
   hostname: System.get_env("DB_HOST") || "127.0.0.1",
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "8")
 
-config :guardian, Guardian,
-  allowed_algos: ["HS512"], # optional
-  verify_module: Guardian.JWT,  # optional
-  issuer: "Linklet",
-  ttl: { 30, :days },
-  verify_issuer: true, # optional
-  secret_key: "YgUaD9Y3TWSJN5EAoOprSt5BhMUDjY03bafIuBacKruCWdy84UNsvWArjxfWQsAB",
-  serializer: Linklet.GuardianSerializer
+config :linklet, Linklet.Auth.Guardian,
+  issuer: "linklet",
+  secret_key: "A4qJSen6YCjOa7snk8Xk3MSnnPOxDBG86MDnVt+4A1vhow8ceYASpDD7Lrp4K4Vr"
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

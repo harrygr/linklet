@@ -4,8 +4,7 @@ defmodule Linklet.Router do
   pipeline :api do
     plug :accepts, ["json", "json-api"]
 
-    plug Guardian.Plug.VerifyHeader, realm: "Bearer" # Looks in the Authorization header for the token
-    plug Guardian.Plug.LoadResource
+    plug Linklet.Auth.Pipeline
   end
 
   # Here be the API routes

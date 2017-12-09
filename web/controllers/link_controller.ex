@@ -4,7 +4,7 @@ defmodule Linklet.LinkController do
 
   alias Linklet.Link
 
-  plug Guardian.Plug.EnsureAuthenticated, [handler: Linklet.SessionController] when action in [:create]
+  plug Guardian.Plug.EnsureAuthenticated when action in [:create]
 
 
   def index(conn, _params) do
