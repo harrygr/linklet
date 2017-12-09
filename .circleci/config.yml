@@ -4,15 +4,49 @@ version: 2
 jobs:
   build:
     docker:
-      # specify the version here
-      - image: circleci/elixir:1.4
-
+      - image: joeellis/elixir-phoenix-node:1.0
+        environment:
+          - MIX_ENV=test
+          - DB_USER=linklet
+          - DB_PASSWORD=secret
+          - DB_DATABASE=linklet
+      - image: mysql:8
+        environment:
+          - MYSQL_USER=linklet
+          - MYSQL_PASSWORD=secret
+          - MYSQL_DATABASE=linklet
 
     working_directory: ~/repo
     steps:
       - checkout
-      - run: cd frontend; yarn install
-      - run: cd frontend; yarn build
-      - run: mix deps.get
-      - run: mix ecto.create
+      - restore_cache:
+          keys:
+            - v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+            - v1-mix-cache-{{ .Branch }}
+            - v1-mix-cache
+      - restore_cache:
+          keys:
+            - v1-build-cache-{{ .Branch }}
+            - v1-build-cache
+      - run: mix do deps.get, compile
+      - save_cache:
+          key: v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+          paths: "deps"
+      - save_cache:
+          key: v1-mix-cache-{{ .Branch }}
+          paths: "deps"
+      - save_cache:
+          key: v1-mix-cache
+          paths: "deps"
+      - save_cache:
+          key: v1-build-cache-{{ .Branch }}
+          paths: "_build"
+      - save_cache:
+          key: v1-build-cache
+          paths: "_build"
+      - run:
+          working_directory: frontend
+          command: yarn install && yarn test
+      - run: mix ecto.create && mix ecto.migrate
+      - run: mix phoenix.digest
       - run: mix test
