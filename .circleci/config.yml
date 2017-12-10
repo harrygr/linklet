@@ -50,7 +50,6 @@ jobs:
           - MYSQL_PASSWORD=secret
           - MYSQL_DATABASE=linklet
           - MYSQL_ROOT_PASSWORD=secret
-
     working_directory: ~/repo
     steps:
       - checkout
