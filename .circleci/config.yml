@@ -9,6 +9,10 @@ workflows:
       - deploy-frontend:
           requires:
             - frontend
+          filters:
+              branches:
+                only:
+                  - master
       - deploy-api:
           requires:
             - api
