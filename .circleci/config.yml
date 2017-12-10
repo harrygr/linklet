@@ -98,7 +98,7 @@ jobs:
       - run: mix ecto.create && mix ecto.migrate
       - run: mix test
 
-  deploy_build:
+  deploy-frontend:
     docker:
       - image: node:latest
     working_directory: ~/app
