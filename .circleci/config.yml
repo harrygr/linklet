@@ -50,11 +50,15 @@ jobs:
           - MYSQL_PASSWORD=secret
           - MYSQL_DATABASE=linklet
           - MYSQL_ROOT_PASSWORD=secret
+
     working_directory: ~/repo
     steps:
       - checkout
-      - run: mix local.hex --force
-      - run: mix local.rebar —-force
+      - run:
+          name: Install hex deps
+          command: |
+            mix local.hex --force
+            mix local.rebar --force
       - restore_cache:
           keys:
             - mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
