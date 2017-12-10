@@ -83,6 +83,6 @@ jobs:
       - save_cache:
           key: build-cache
           paths: "_build"
-      - run: dockerize -wait tcp://localhost:3306 -timeout 1m
+      - run: nc -z 127.0.0.1 3306
       - run: mix ecto.create && mix ecto.migrate
       - run: mix test
