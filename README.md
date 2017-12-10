@@ -34,7 +34,7 @@ To run locally:
 Now you can visit [`localhost:3000`](http://localhost:3000) from your browser.
 The Phoenix server runs on [`localhost:4000`](http://localhost:4000)
 
-There is a live deployment at (http://linklet.surge.sh)[http://linklet.surge.sh]
+There is a live deployment at [http://linklet.surge.sh](http://linklet.surge.sh)
 
 [1]: http://www.phoenixframework.org
 [2]: https://choo.io/
