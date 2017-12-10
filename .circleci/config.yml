@@ -38,7 +38,7 @@ jobs:
 
   api:
     docker:
-      - image: circleci/elixir
+      - image: bitwalker/alpine-elixir
         environment:
           - MIX_ENV=test
           - DB_USER=linklet
