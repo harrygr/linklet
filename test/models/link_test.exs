@@ -3,8 +3,6 @@ defmodule Linklet.LinkTest do
 
   alias Linklet.Link
 
-  @valid_attrs %{title: "A really great link", url: "http://example.com"}
-
   test "counts comments for a link" do
     Repo.insert(%Link{title: "A really great link", url: "http://example.com"})
 

@@ -20,6 +20,5 @@ defmodule Linklet.Router do
 
   scope "/", Linklet do
     get "/", PageController, :index
-    get "/*path", PageController, :index
   end
 end

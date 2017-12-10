@@ -1,10 +1,59 @@
-# Elixir CircleCI 2.0 configuration file
-
 version: 2
+
+workflows:
+  version: 2
+  linklet_workflow:
+    jobs:
+      - frontend
+      - api
+      - deploy-frontend:
+          requires:
+            - frontend
+          filters:
+              branches:
+                only:
+                  - master
+      - deploy-api:
+          requires:
+            - api
+          filters:
+              branches:
+                only:
+                  - master
+
+
 jobs:
-  build:
+  frontend:
     docker:
-      - image: joeellis/elixir-phoenix-node:1.0
+      - image: node:latest
+    working_directory: ~/repo/frontend
+    steps:
+      - checkout:
+          path: ~/repo
+      - restore_cache:
+          key: yarn-cache-{{ checksum "yarn.lock" }}
+      - run:
+          name: install-dependencies
+          command: yarn install
+      - run:
+          name: run-tests
+          command: yarn test --coverage
+      - run:
+          name: build-bundle
+          command: yarn build --production
+      - persist_to_workspace:
+          root: ./
+          paths:
+            -  coverage/lcov-report
+            -  build
+      - save_cache:
+          key: yarn-cache-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
+
+  api:
+    docker:
+      - image: elixir:1.5.2
         environment:
           - MIX_ENV=test
           - DB_USER=linklet
@@ -16,37 +65,68 @@ jobs:
           - MYSQL_PASSWORD=secret
           - MYSQL_DATABASE=linklet
           - MYSQL_ROOT_PASSWORD=secret
-
     working_directory: ~/repo
     steps:
       - checkout
+      - run:
+          name: Install hex deps
+          command: |
+            mix local.hex --force
+            mix local.rebar --force
       - restore_cache:
           keys:
-            - v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
-            - v1-mix-cache-{{ .Branch }}
-            - v1-mix-cache
+            - mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+            - mix-cache-{{ .Branch }}
+            - mix-cache
       - restore_cache:
           keys:
-            - v1-build-cache-{{ .Branch }}
-            - v1-build-cache
+            - build-cache-{{ .Branch }}
+            - build-cache
       - run: mix do deps.get, compile
       - save_cache:
-          key: v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+          key: mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
           paths: "deps"
       - save_cache:
-          key: v1-mix-cache-{{ .Branch }}
+          key: mix-cache-{{ .Branch }}
           paths: "deps"
       - save_cache:
-          key: v1-mix-cache
+          key: mix-cache
           paths: "deps"
       - save_cache:
-          key: v1-build-cache-{{ .Branch }}
+          key: build-cache-{{ .Branch }}
           paths: "_build"
       - save_cache:
-          key: v1-build-cache
+          key: build-cache
           paths: "_build"
-      - run:
-          working_directory: frontend
-          command: yarn install && yarn test && yarn build
+      - run: sleep 5
       - run: mix ecto.create && mix ecto.migrate
       - run: mix test
+
+  deploy-frontend:
+    docker:
+      - image: node:latest
+    working_directory: ~/app
+    steps:
+      - attach_workspace:
+          at: ./
+      - run:
+          name: deploy-build
+          command: npx surge --project=./build --domain=linklet.surge.sh
+
+  deploy-api:
+    docker:
+      - image: circleci/elixir
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run:
+          name: Run setup script
+          command: bash .circleci/setup-heroku.sh
+      - add_ssh_keys:
+          fingerprints:
+            - "6f:a2:49:3c:99:39:74:46:9b:d1:82:99:1d:8f:66:c7"
+      - run:
+          name: Deploy Master to Heroku
+          command: |
+            git push --force git@heroku.com:$HEROKU_APP_NAME.git HEAD:refs/heads/master
+            heroku run "mix ecto.migrate" --app=$HEROKU_APP_NAME
