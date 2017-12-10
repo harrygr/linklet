@@ -109,6 +109,7 @@ jobs:
     steps:
       - attach_workspace:
           at: ./
+      - run: cp ./build/index.html ./build/200.html
       - run:
           name: deploy-build
           command: npx surge --project=./build --domain=linklet.surge.sh
