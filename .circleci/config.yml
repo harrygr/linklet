@@ -6,12 +6,17 @@ workflows:
     jobs:
       - frontend
       - api
+      - deploy-frontend:
+          requires:
+            - frontend
       - deploy-api:
+          requires:
+            - api
           filters:
               branches:
                 only:
                   - master
-                  - feature/split-frontend
+
 
 jobs:
   frontend:
@@ -92,6 +97,17 @@ jobs:
       - run: sleep 5
       - run: mix ecto.create && mix ecto.migrate
       - run: mix test
+
+  deploy_build:
+    docker:
+      - image: node:latest
+    working_directory: ~/app
+    steps:
+      - attach_workspace:
+          at: ./
+      - run:
+          name: deploy-build
+          command: npx surge --project=./build --domain=linklet.surge.sh
 
   deploy-api:
     docker:

@@ -4,6 +4,7 @@ import { deriveError, ApiError } from './errors'
 import links from './links'
 import comments from './comments'
 import auth from './auth'
+import config from '../config'
 
 export const servicesType = getReturnType(wrapClient)
 export type Client = typeof servicesType
@@ -14,7 +15,7 @@ export default function api() {
       headers: {
         'Content-Type': 'application/json',
       },
-      baseURL: `http://localhost:4000/api`,
+      baseURL: config.apiDomain,
     }),
   )
 
