@@ -1,10 +1,44 @@
-# Elixir CircleCI 2.0 configuration file
-
 version: 2
+
+workflows:
+  version: 2
+  linklet_workflow:
+    jobs:
+      - frontend
+      - api
+
 jobs:
-  build:
+  frontend:
     docker:
-      - image: joeellis/elixir-phoenix-node:1.0
+      - image: node:latest
+    working_directory: ~/repo/frontend
+    steps:
+      - checkout:
+          path: ~/repo
+      - restore_cache:
+          key: yarn-cache-{{ checksum "yarn.lock" }}
+      - run:
+          name: install-dependencies
+          command: yarn install
+      - run:
+          name: run-tests
+          command: yarn test --coverage
+      - run:
+          name: build-bundle
+          command: yarn build --production
+      - persist_to_workspace:
+          root: ./
+          paths:
+            -  coverage/lcov-report
+            -  build
+      - save_cache:
+          key: yarn-cache-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
+
+  api:
+    docker:
+      - image: circleci/elixir
         environment:
           - MIX_ENV=test
           - DB_USER=linklet
@@ -22,31 +56,28 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
-            - v1-mix-cache-{{ .Branch }}
-            - v1-mix-cache
+            - mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+            - mix-cache-{{ .Branch }}
+            - mix-cache
       - restore_cache:
           keys:
-            - v1-build-cache-{{ .Branch }}
-            - v1-build-cache
+            - build-cache-{{ .Branch }}
+            - build-cache
       - run: mix do deps.get, compile
       - save_cache:
-          key: v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+          key: mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
           paths: "deps"
       - save_cache:
-          key: v1-mix-cache-{{ .Branch }}
+          key: mix-cache-{{ .Branch }}
           paths: "deps"
       - save_cache:
-          key: v1-mix-cache
+          key: mix-cache
           paths: "deps"
       - save_cache:
-          key: v1-build-cache-{{ .Branch }}
+          key: build-cache-{{ .Branch }}
           paths: "_build"
       - save_cache:
-          key: v1-build-cache
+          key: build-cache
           paths: "_build"
-      - run:
-          working_directory: frontend
-          command: yarn install && yarn test && yarn build
       - run: mix ecto.create && mix ecto.migrate
       - run: mix test
