@@ -6,6 +6,12 @@ workflows:
     jobs:
       - frontend
       - api
+      - deploy-api:
+          filters:
+              branches:
+                only:
+                  - master
+                  - feature/split-frontend
 
 jobs:
   frontend:
@@ -86,3 +92,21 @@ jobs:
       - run: sleep 5
       - run: mix ecto.create && mix ecto.migrate
       - run: mix test
+
+  deploy-api:
+    docker:
+      - image: elixir:1.5.2
+    working_directory: ~/repo
+    steps:
+      - run:
+          name: Run setup script
+          command: bash .circleci/setup-heroku.sh
+      - add_ssh_keys:
+          fingerprints:
+            - "6f:a2:49:3c:99:39:74:46:9b:d1:82:99:1d:8f:66:c7"
+      - run:
+          name: Deploy Master to Heroku
+          command: |
+            git push --force git@heroku.com:$HEROKU_APP_NAME.git HEAD:refs/heads/master
+            heroku run "mix ecto.migrate"
+            heroku restart
