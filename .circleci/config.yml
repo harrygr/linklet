@@ -38,7 +38,7 @@ jobs:
 
   api:
     docker:
-      - image: bitwalker/alpine-elixir
+      - image: elixir:1.5.2
         environment:
           - MIX_ENV=test
           - DB_USER=linklet
@@ -50,10 +50,14 @@ jobs:
           - MYSQL_PASSWORD=secret
           - MYSQL_DATABASE=linklet
           - MYSQL_ROOT_PASSWORD=secret
-
     working_directory: ~/repo
     steps:
       - checkout
+      - run:
+          name: Install hex deps
+          command: |
+            mix local.hex --force
+            mix local.rebar —-force
       - restore_cache:
           keys:
             - mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
