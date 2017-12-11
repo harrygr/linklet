@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { connect, Dispatch } from 'react-redux'
+import { Option } from 'space-lift'
 
 import { State } from '../../store'
 import { RouteComponentProps } from 'react-router'
@@ -10,6 +11,7 @@ import { fetchLinksIfNeeded } from '../../store/links/thunks'
 import { fetchComments, deleteComment } from '../../store/comments/thunks'
 import { values } from 'lodash'
 import CommentList from '../../components/comment-list'
+import { getUserIdFromToken } from '../../utils/auth'
 
 interface Params {
   id: string
@@ -19,6 +21,7 @@ interface StateMappedToProps {
   links: Record<string, Link>
   comments: Record<string, Comment>
   loading: boolean
+  userId: Option<number>
 }
 interface DispatchMappedToProps {
   fetchLinksIfNeeded: () => void
@@ -63,16 +66,18 @@ export class ShowLink extends React.Component<Props> {
         <CommentList
           comments={values(this.props.comments)}
           onDelete={onDeleteComment}
+          userId={this.props.userId}
         />
       </div>
     )
   }
 }
-function mapStateToProps({ links, ui, comments }: State) {
+function mapStateToProps({ links, ui, comments, auth }: State) {
   return {
     links: links.items,
     comments: comments.items,
     loading: ui.loading,
+    userId: getUserIdFromToken(auth.token),
   }
 }
 
