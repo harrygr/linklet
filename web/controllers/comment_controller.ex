@@ -33,10 +33,14 @@ defmodule Linklet.CommentController do
   end
 
   def delete(conn, %{"id" => id}) do
-    Repo.get!(Comment, id)
-    |> Repo.delete!
+    user = Guardian.Plug.current_resource(conn)
+    comment = Repo.get!(Comment, id)
 
-    conn
-    |> text("comment deleted")
+    if comment.user_id == user.id do
+      comment |> Repo.delete!()
+      conn |> text("comment deleted")
+    else
+      conn |> put_status(:forbidden) |> text("unauthorized")
+    end
   end
 end

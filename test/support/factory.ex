@@ -10,9 +10,10 @@ defmodule Linklet.Factory do
   end
 
   def user_factory do
+    username = sequence("username")
     %Linklet.User{
-      username: "joebloggs2",
-      email: "joe@bloggs.com",
+      username: username,
+      email: "#{username}@example.com",
       password: "password",
       password_hash: "$2b$12$0vG0N2eQwwMZYTPtFXGKA.VoTI0JNlPRP.mG44DEFJmCuKKsiZObi"
     }
