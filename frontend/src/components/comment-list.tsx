@@ -1,12 +1,15 @@
 import * as React from 'react'
 import { Comment } from '../api/types'
 import { distanceInWordsToNow } from 'date-fns'
+import { Option } from 'space-lift'
 
 interface Props {
   comments: Comment[]
+  onDelete: (commentId: number) => any
+  userId: Option<number>
 }
 
-export default function CommentList({ comments }: Props) {
+export default function CommentList({ comments, onDelete, userId }: Props) {
   return (
     <ul>
       {comments.map(comment => (
@@ -18,6 +21,19 @@ export default function CommentList({ comments }: Props) {
             })}
           </p>
           {comment.body}
+
+          {userId
+            .map(
+              id =>
+                id === comment.user.id ? (
+                  <p>
+                    <button onClick={() => onDelete(comment.id)}>
+                      Delete Comment
+                    </button>
+                  </p>
+                ) : null,
+            )
+            .get()}
         </li>
       ))}
     </ul>

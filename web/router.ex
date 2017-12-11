@@ -14,7 +14,7 @@ defmodule Linklet.Router do
     resources "/auth", SessionController, only: [:create]
     resources "/users", UserController, only: [:create]
     resources "/links", LinkController, only: [:index, :show, :create] do
-      resources "/comments", CommentController, only: [:index, :create]
+      resources "/comments", CommentController, only: [:index, :create, :delete]
     end
   end
 

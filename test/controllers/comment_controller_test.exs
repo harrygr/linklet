@@ -1,6 +1,8 @@
 defmodule Linklet.CommentControllerTest do
   use Linklet.ConnCase
 
+  alias Linklet.Comment
+
   def get_authenticated_conn(user \\ nil) do
     user =  if (user == nil), do: insert(:user), else: user
 
@@ -34,4 +36,30 @@ defmodule Linklet.CommentControllerTest do
     assert response.status == 401
   end
 
+  test "#delete deletes a comment" do
+    user = insert(:user)
+    link = insert(:link, user: user)
+    comment = insert(:comment, user: user, link: link)
+
+    response = get_authenticated_conn(user)
+      |> delete("/api/links/#{link.id}/comments/#{comment.id}")
+
+
+    assert response.status == 200
+    assert Repo.get(Comment, comment.id) == nil
+  end
+
+  test "#delete does not allow deleting of another user's comment" do
+    user1 = insert(:user)
+
+    link = insert(:link, user: user1)
+    comment = insert(:comment, user: user1, link: link)
+
+    response = get_authenticated_conn()
+      |> delete("/api/links/#{link.id}/comments/#{comment.id}")
+
+
+    assert response.status == 403
+    assert Repo.get(Comment, comment.id) != nil
+  end
 end

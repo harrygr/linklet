@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { connect, Dispatch } from 'react-redux'
+import { Option } from 'space-lift'
 
 import { State } from '../../store'
 import { RouteComponentProps } from 'react-router'
@@ -7,9 +8,10 @@ import NotFound from '../404'
 import { Link, Comment } from '../../api/types'
 
 import { fetchLinksIfNeeded } from '../../store/links/thunks'
-import { fetchComments } from '../../store/comments/thunks'
+import { fetchComments, deleteComment } from '../../store/comments/thunks'
 import { values } from 'lodash'
 import CommentList from '../../components/comment-list'
+import { getUserIdFromToken } from '../../utils/auth'
 
 interface Params {
   id: string
@@ -19,10 +21,12 @@ interface StateMappedToProps {
   links: Record<string, Link>
   comments: Record<string, Comment>
   loading: boolean
+  userId: Option<number>
 }
 interface DispatchMappedToProps {
   fetchLinksIfNeeded: () => void
   fetchComments: (linkId: string) => void
+  deleteComment: (linkId: string, commentId: string) => void
 }
 
 interface Props
@@ -46,6 +50,10 @@ export class ShowLink extends React.Component<Props> {
       return NotFound()
     }
 
+    const onDeleteComment = (commentId: number) => {
+      this.props.deleteComment(link.id.toString(), commentId.toString())
+    }
+
     return (
       <div>
         <h2>
@@ -55,19 +63,30 @@ export class ShowLink extends React.Component<Props> {
         </h2>
         <p>{link.url}</p>
         <h3>Comments</h3>
-        <CommentList comments={values(this.props.comments)} />
+        <CommentList
+          comments={values(this.props.comments)}
+          onDelete={onDeleteComment}
+          userId={this.props.userId}
+        />
       </div>
     )
   }
 }
-function mapStateToProps({ links, ui, comments }: State) {
-  return { links: links.items, comments: comments.items, loading: ui.loading }
+function mapStateToProps({ links, ui, comments, auth }: State) {
+  return {
+    links: links.items,
+    comments: comments.items,
+    loading: ui.loading,
+    userId: getUserIdFromToken(auth.token),
+  }
 }
 
 function mapDispatchToProps(dispatch: Dispatch<any>) {
   return {
     fetchLinksIfNeeded: () => dispatch(fetchLinksIfNeeded()),
     fetchComments: (linkId: string) => dispatch(fetchComments(linkId)),
+    deleteComment: (linkId: string, commentId: string) =>
+      dispatch(deleteComment(linkId, commentId)),
   }
 }
 

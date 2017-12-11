@@ -17,6 +17,10 @@ defmodule Linklet.ErrorView do
     "Unauthorized"
   end
 
+  def render("403.json", _assigns) do
+    "Forbidden"
+  end
+
   def render("error.json", errors) do
     %{error: errors}
   end
