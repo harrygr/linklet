@@ -1,7 +1,7 @@
 defmodule Linklet.CommentController do
   use Linklet.Web, :controller
 
-  plug Guardian.Plug.EnsureAuthenticated, [handler: Linklet.SessionController] when action in [:create]
+  plug Guardian.Plug.EnsureAuthenticated, [handler: Linklet.SessionController] when action in [:create, :delete]
 
   alias Linklet.Comment
 
@@ -30,5 +30,15 @@ defmodule Linklet.CommentController do
         |> put_status(:unprocessable_entity)
         |> render(Linklet.ChangesetView, "error.json", changeset: changeset)
     end
+  end
+
+  def delete(conn, %{"id" => id}) do
+
+    Repo.get!(Comment, id)
+    |> Repo.delete!
+
+
+    conn
+    |> text("comment deleted")
   end
 end

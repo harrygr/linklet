@@ -17,4 +17,11 @@ defmodule Linklet.Factory do
       password_hash: "$2b$12$0vG0N2eQwwMZYTPtFXGKA.VoTI0JNlPRP.mG44DEFJmCuKKsiZObi"
     }
   end
+
+  def comment_factory do
+    %Linklet.Comment{
+      body: "this is a comment",
+      user: user_factory()
+    }
+  end
 end
