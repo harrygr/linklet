@@ -37,10 +37,10 @@ defmodule Linklet.CommentController do
     comment = Repo.get!(Comment, id)
 
     if user == nil or comment.user_id != user.id do
-      conn |> put_status(:forbidden) |> text("unauthorized")
+      conn |> put_status(:forbidden) |> render(Linklet.ErrorView, "403.json")
     else
       comment |> Repo.delete!()
-      conn |> text("comment deleted")
+      conn |> text("Comment deleted")
     end
   end
 end
