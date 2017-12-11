@@ -7,7 +7,7 @@ import NotFound from '../404'
 import { Link, Comment } from '../../api/types'
 
 import { fetchLinksIfNeeded } from '../../store/links/thunks'
-import { fetchComments } from '../../store/comments/thunks'
+import { fetchComments, deleteComment } from '../../store/comments/thunks'
 import { values } from 'lodash'
 import CommentList from '../../components/comment-list'
 
@@ -23,6 +23,7 @@ interface StateMappedToProps {
 interface DispatchMappedToProps {
   fetchLinksIfNeeded: () => void
   fetchComments: (linkId: string) => void
+  deleteComment: (linkId: string, commentId: string) => void
 }
 
 interface Props
@@ -46,6 +47,10 @@ export class ShowLink extends React.Component<Props> {
       return NotFound()
     }
 
+    const onDeleteComment = (commentId: number) => {
+      this.props.deleteComment(link.id.toString(), commentId.toString())
+    }
+
     return (
       <div>
         <h2>
@@ -55,19 +60,28 @@ export class ShowLink extends React.Component<Props> {
         </h2>
         <p>{link.url}</p>
         <h3>Comments</h3>
-        <CommentList comments={values(this.props.comments)} />
+        <CommentList
+          comments={values(this.props.comments)}
+          onDelete={onDeleteComment}
+        />
       </div>
     )
   }
 }
 function mapStateToProps({ links, ui, comments }: State) {
-  return { links: links.items, comments: comments.items, loading: ui.loading }
+  return {
+    links: links.items,
+    comments: comments.items,
+    loading: ui.loading,
+  }
 }
 
 function mapDispatchToProps(dispatch: Dispatch<any>) {
   return {
     fetchLinksIfNeeded: () => dispatch(fetchLinksIfNeeded()),
     fetchComments: (linkId: string) => dispatch(fetchComments(linkId)),
+    deleteComment: (linkId: string, commentId: string) =>
+      dispatch(deleteComment(linkId, commentId)),
   }
 }
 

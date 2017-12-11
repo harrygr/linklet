@@ -4,9 +4,10 @@ import { distanceInWordsToNow } from 'date-fns'
 
 interface Props {
   comments: Comment[]
+  onDelete: (commentId: number) => any
 }
 
-export default function CommentList({ comments }: Props) {
+export default function CommentList({ comments, onDelete }: Props) {
   return (
     <ul>
       {comments.map(comment => (
@@ -18,6 +19,9 @@ export default function CommentList({ comments }: Props) {
             })}
           </p>
           {comment.body}
+          <p>
+            <button onClick={() => onDelete(comment.id)}>Delete Comment</button>
+          </p>
         </li>
       ))}
     </ul>

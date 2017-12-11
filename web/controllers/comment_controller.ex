@@ -33,10 +33,8 @@ defmodule Linklet.CommentController do
   end
 
   def delete(conn, %{"id" => id}) do
-
     Repo.get!(Comment, id)
     |> Repo.delete!
-
 
     conn
     |> text("comment deleted")
