@@ -17,7 +17,7 @@ interface Fields {
 }
 
 const LinkForm = reduxForm<Fields>({
-  form: 'contact',
+  form: 'link',
 })((props: FormProps) => {
   const { handleSubmit } = props
   return (
