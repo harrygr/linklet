@@ -5,6 +5,7 @@ import actions, { Action } from '../../store/actions'
 import api from '../../api'
 import { State } from '../index'
 import { flashAlert } from '../ui/reducer'
+import { RemoveComment } from './reducer'
 
 export function fetchComments(linkId: string) {
   return async (dispatch: Dispatch<Action>) => {
@@ -33,8 +34,8 @@ export function deleteComment(linkId: string, commentId: string) {
       dispatch(actions.SetLoading(true))
       ;(await api().comments.destroy(token, linkId, commentId))
         .map(response => {
+          dispatch(RemoveComment(parseInt(commentId, 10)))
           dispatch(flashAlert('Comment deleted'))
-          dispatch(fetchComments(linkId))
         })
         .mapError(err => dispatch(actions.flashAlert(err.message, 'danger')))
       dispatch(actions.SetLoading(false))

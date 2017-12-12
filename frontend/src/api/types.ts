@@ -15,7 +15,7 @@ export interface CreateLink {
 
 export interface Comment {
   id: number
-  link_id: number
+  link_id: number | null
   body: string
   inserted_at: string
   updated_at: string

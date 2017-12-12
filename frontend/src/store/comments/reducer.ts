@@ -12,9 +12,18 @@ export function SetComments(comments: Comment[]): SetComments {
   }
 }
 
-export const Action = { SetComments }
+interface RemoveComment {
+  type: 'REMOVE_COMMENT'
+  id: number
+}
 
-export type Action = SetComments
+export function RemoveComment(id: number): RemoveComment {
+  return { type: 'REMOVE_COMMENT', id }
+}
+
+export const Action = { SetComments, RemoveComment }
+
+export type Action = SetComments | RemoveComment
 
 export interface State {
   items: Record<string, Comment>
@@ -26,12 +35,24 @@ function emptyState(): State {
 
 const reducer = (state: State = emptyState(), action: Action): State => {
   switch (action.type) {
-    case 'SET_COMMENTS':
+    case 'SET_COMMENTS': {
       const comments: Record<string, Comment> = action.comments.reduce(
         (prev, comment) => ({ ...prev, [comment.id]: comment }),
         {},
       )
       return { ...state, items: comments }
+    }
+    case 'REMOVE_COMMENT': {
+      const comments: Record<string, Comment> = Object.keys(state.items).reduce(
+        (items, id) => {
+          return parseInt(id, 10) === action.id
+            ? items
+            : { ...items, [id]: state.items[id] }
+        },
+        {},
+      )
+      return { ...state, items: comments }
+    }
     default:
       return state
   }
