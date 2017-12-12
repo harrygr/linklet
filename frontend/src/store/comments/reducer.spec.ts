@@ -1,5 +1,5 @@
 import { comment } from '../../testing/factories'
-import reducer, { SetComments, RemoveComment } from './reducer'
+import reducer, { SetComments, AddComment, RemoveComment } from './reducer'
 
 const comment1 = comment({ id: 1, body: 'comment 1' })
 const comment2 = comment({ id: 2, body: 'comment 2' })
@@ -16,6 +16,16 @@ describe('Comments reducer', () => {
 
     expect(Object.keys(state.items)).toHaveLength(2)
     expect(state.items['1'].body).toBe('comment 1')
+  })
+
+  it('adds a comment to the state', () => {
+    const state = reducer(
+      { items: commentObj },
+      AddComment(comment({ id: 3, body: 'comment 3' })),
+    )
+
+    expect(Object.keys(state.items)).toHaveLength(3)
+    expect(state.items['3'].body).toBe('comment 3')
   })
 
   it('removes a comment from the state', () => {
