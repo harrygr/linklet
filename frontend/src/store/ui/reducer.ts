@@ -15,7 +15,7 @@ interface SetAlert {
 
 export function SetAlert(
   alert: string,
-  level: AlertLevel = 'danger',
+  level: AlertLevel = 'success',
 ): SetAlert {
   return { type: 'SET_ALERT', alert, level }
 }
