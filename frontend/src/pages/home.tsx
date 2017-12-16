@@ -4,7 +4,9 @@ import { connect, Dispatch } from 'react-redux'
 import { State } from '../store'
 import { fetchLinksIfNeeded, fetchLinks } from '../store/links/thunks'
 import { Link } from '../api/types'
-import { values } from 'lodash'
+import { values } from 'ramda'
+import Button from '../components/button'
+import Card from '../components/card'
 
 interface StateMappedToProps {
   links: Link[]
@@ -24,10 +26,12 @@ export class Home extends React.Component<Props> {
     const { fetchLinks, links } = this.props
     return (
       <div>
-        <h1>Home</h1>
-        <p>Welcome</p>
-        <button onClick={fetchLinks}>Load links</button>
-        <LinkList links={links} />
+        <Card style={{ textAlign: 'center', padding: '10px 0' }}>
+          <Button onClick={fetchLinks}>Reload links</Button>
+        </Card>
+        <Card>
+          <LinkList links={links} />
+        </Card>
       </div>
     )
   }

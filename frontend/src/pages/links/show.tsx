@@ -1,22 +1,34 @@
 import * as React from 'react'
 import { connect, Dispatch } from 'react-redux'
 import { Option } from 'catling'
+import styled from 'react-emotion'
 
 import { State } from '../../store'
 import { RouteComponentProps } from 'react-router'
 import NotFound from '../404'
 import { Link, Comment } from '../../api/types'
-
+import { values } from 'ramda'
 import { fetchLinksIfNeeded } from '../../store/links/thunks'
 import {
   fetchComments,
   deleteComment,
   postComment,
 } from '../../store/comments/thunks'
-import { values } from 'lodash'
+
 import CommentList from '../../components/comment-list'
 import { getUserIdFromToken } from '../../utils/auth'
-import { SubmitHandler, reduxForm, Field } from 'redux-form'
+import { SubmitHandler, reduxForm } from 'redux-form'
+import Card from '../../components/card'
+import PaddedCard from '../../components/padded-card'
+import LinkHeading from '../../components/link-heading'
+import Button from '../../components/button'
+import FormInput from '../../components/form-input'
+import Label from '../../components/label'
+import SectionHeading from '../../components/section-heading'
+
+const Heading = styled(LinkHeading)`
+  font-size: 150%;
+`
 
 interface FormProps {
   handleSubmit: SubmitHandler<Fields, {}>
@@ -33,10 +45,10 @@ const CommentForm = reduxForm<Fields>({
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label htmlFor="body">Comment</label>
-        <Field name="body" component="textarea" type="text" />
+        <Label htmlFor="body">Comment</Label>
+        <FormInput name="body" component="textarea" type="text" rows={1} />
       </div>
-      <button type="submit">Post Comment</button>
+      <Button type="submit">Post Comment</Button>
     </form>
   )
 })
@@ -87,22 +99,28 @@ export class ShowLink extends React.Component<Props> {
 
     return (
       <div>
-        <h2>
-          <a href={link.url} target="_blank">
-            {link.title}
-          </a>
-        </h2>
-        <p>{link.url}</p>
-        <h3>Comments</h3>
+        <PaddedCard>
+          <Heading url={link.url} title={link.title} />
+        </PaddedCard>
 
-        <CommentList
-          comments={values(this.props.comments)}
-          onDelete={onDeleteComment}
-          userId={this.props.userId}
-        />
+        <Card>
+          <div style={{ padding: '20px' }}>
+            <SectionHeading>Comments</SectionHeading>
+          </div>
+
+          <CommentList
+            comments={values(this.props.comments)}
+            onDelete={onDeleteComment}
+            userId={this.props.userId}
+          />
+        </Card>
 
         {this.props.userId
-          .map(() => <CommentForm onSubmit={onPostComment} />)
+          .map(() => (
+            <PaddedCard>
+              <CommentForm onSubmit={onPostComment} />
+            </PaddedCard>
+          ))
           .get()}
       </div>
     )

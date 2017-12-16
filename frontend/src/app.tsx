@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
+import styled from 'react-emotion'
 import Home from './pages/home'
 import NotFound from './pages/404'
 import ShowLink from './pages/links/show'
@@ -17,6 +18,17 @@ import { State as UiState } from './store/ui/reducer'
 
 interface Props extends StateMappedToProps, DispatchMappedToProps {}
 
+const AppWrapper = styled('div')`
+  background: #f2f3f5;
+  min-height: 100vh;
+`
+
+const PageContainer = styled('div')`
+  max-width: 800px;
+  margin: 0 auto;
+  border-radius: 2px;
+`
+
 export function App({
   flashAlert,
   setToken,
@@ -26,7 +38,7 @@ export function App({
 }: Props) {
   return (
     <Router>
-      <div>
+      <AppWrapper>
         <Navbar
           isLoggedIn={isLoggedIn}
           logout={() => {
@@ -36,14 +48,16 @@ export function App({
         />
         <Alert message={alert.message} level={alert.level} />
         <Loader loading={loading} />
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/login" component={Login} />
-          <Route path="/links/new" component={NewLink} />
-          <Route path="/links/:id(\\d+)" component={ShowLink} />
-          <Route component={NotFound} />
-        </Switch>
-      </div>
+        <PageContainer>
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/login" component={Login} />
+            <Route path="/links/new" component={NewLink} />
+            <Route path="/links/:id(\\d+)" component={ShowLink} />
+            <Route component={NotFound} />
+          </Switch>
+        </PageContainer>
+      </AppWrapper>
     </Router>
   )
 }

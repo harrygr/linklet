@@ -4,8 +4,12 @@ import { State } from '../../store/index'
 
 import { Dispatch, connect } from 'react-redux'
 import { Redirect } from 'react-router'
-import { reduxForm, SubmitHandler, Field } from 'redux-form'
+import { reduxForm, SubmitHandler } from 'redux-form'
 import { saveLink } from '../../store/links/thunks'
+import PaddedCard from '../../components/padded-card'
+import Button from '../../components/button'
+import FormInput from '../../components/form-input'
+import Label from '../../components/label'
 
 interface FormProps {
   handleSubmit: SubmitHandler<Fields, {}>
@@ -23,14 +27,14 @@ const LinkForm = reduxForm<Fields>({
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label htmlFor="title">Title</label>
-        <Field name="title" component="input" type="text" />
+        <Label htmlFor="title">Title</Label>
+        <FormInput name="title" component="input" type="text" />
       </div>
       <div>
-        <label htmlFor="url">URL</label>
-        <Field name="url" component="input" type="text" />
+        <Label htmlFor="url">URL</Label>
+        <FormInput name="url" component="input" type="text" />
       </div>
-      <button type="submit">Save Link</button>
+      <Button type="submit">Save Link</Button>
     </form>
   )
 })
@@ -49,10 +53,10 @@ export function Login({ isLoggedIn, saveLink }: Props) {
   }
 
   return (
-    <div>
+    <PaddedCard>
       <h1>New Link</h1>
       <LinkForm onSubmit={saveLink} />
-    </div>
+    </PaddedCard>
   )
 }
 

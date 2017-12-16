@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
 import styled, { css } from 'react-emotion'
+import { colors } from '../styles'
 
 const LinkList = styled('ul')`
   margin: 0;
@@ -18,24 +19,45 @@ interface Props {
   isLoggedIn: boolean
 }
 
+const NavContainer = styled('nav')`
+  display: flex;
+  align-items: center;
+  height: 40px;
+  background-color: ${colors.theme};
+`
+
+const NavLink = styled(Link)`
+  color: #fff;
+  text-decoration: none;
+  opacity: 0.8;
+  &:hover {
+    opacity: 1;
+  }
+`
+const NavButton = styled('button')`
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+`
+
 export default function Navbar({ logout, isLoggedIn }: Props) {
   return (
-    <nav>
+    <NavContainer>
       <LinkList>
         <li className={linkClass}>
-          <Link to="/">Home</Link>
+          <NavLink to="/">Home</NavLink>
         </li>
         <li className={linkClass}>
-          <Link to="/links/new">New Link</Link>
+          <NavLink to="/links/new">New Link</NavLink>
         </li>
         {isLoggedIn ? (
-          <button onClick={logout}>Logout</button>
+          <NavButton onClick={logout}>Logout</NavButton>
         ) : (
           <li className={linkClass}>
-            <Link to="/login">Login</Link>
+            <NavLink to="/login">Login</NavLink>
           </li>
         )}
       </LinkList>
-    </nav>
+    </NavContainer>
   )
 }
