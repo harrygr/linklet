@@ -10,6 +10,7 @@ import PaddedCard from '../../components/padded-card'
 import Button from '../../components/button'
 import FormInput from '../../components/form-input'
 import Label from '../../components/label'
+import SectionHeading from '../../components/section-heading'
 
 interface FormProps {
   handleSubmit: SubmitHandler<Fields, {}>
@@ -54,7 +55,7 @@ export function Login({ isLoggedIn, saveLink }: Props) {
 
   return (
     <PaddedCard>
-      <h1>New Link</h1>
+      <SectionHeading style={{ marginBottom: '20px' }}>New Link</SectionHeading>
       <LinkForm onSubmit={saveLink} />
     </PaddedCard>
   )

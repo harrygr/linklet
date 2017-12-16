@@ -1,6 +1,6 @@
 import styled from 'react-emotion'
 import { Field } from 'redux-form'
-import { fontSizes, colors } from '../styles'
+import { fontSizes, colors, spacing } from '../styles'
 
 const FormInput = styled(Field)`
   appearance: none;
@@ -12,8 +12,9 @@ const FormInput = styled(Field)`
   font-size: ${fontSizes.medium};
   border-style: none;
   border-bottom: 2px solid ${colors.grey};
+  transition: border-color 1s ease;
   outline: none;
-  margin-bottom: 20px;
+  margin-bottom: ${spacing.s2};
   &:focus {
     border-color: ${colors.theme};
   }

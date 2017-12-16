@@ -25,6 +25,7 @@ import Button from '../../components/button'
 import FormInput from '../../components/form-input'
 import Label from '../../components/label'
 import SectionHeading from '../../components/section-heading'
+import { spacing } from '../../styles'
 
 const Heading = styled(LinkHeading)`
   font-size: 150%;
@@ -102,7 +103,7 @@ export class ShowLink extends React.Component<Props> {
         </PaddedCard>
 
         <Card>
-          <div style={{ padding: '20px' }}>
+          <div style={{ padding: spacing.s2 }}>
             <SectionHeading>Comments</SectionHeading>
           </div>
 

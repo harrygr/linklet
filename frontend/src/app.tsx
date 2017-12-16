@@ -21,6 +21,7 @@ interface Props extends StateMappedToProps, DispatchMappedToProps {}
 const AppWrapper = styled('div')`
   background: #f2f3f5;
   min-height: 100vh;
+  padding-bottom: 20px;
 `
 
 const PageContainer = styled('div')`
