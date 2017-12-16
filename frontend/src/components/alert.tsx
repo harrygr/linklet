@@ -8,7 +8,7 @@ interface Props {
   level: AlertLevel
 }
 
-export default function Alert({ message, level }: Props) {
+export function Alert({ message, level }: Props) {
   if (level === 'none') {
     return <div />
   }
@@ -26,3 +26,5 @@ function getBackground(level: AlertLevel): string {
   const bgs = { danger: 'red', warning: 'orange', success: 'green' }
   return bgs[level] || 'transparent'
 }
+
+export default Alert

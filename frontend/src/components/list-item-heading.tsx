@@ -16,10 +16,12 @@ const MetaContainer = styled('span')`
   color: #828282;
 `
 
-export default function LinkHeading({ children, meta }: Props) {
+export function ListItemHeading({ children, meta }: Props) {
   return (
     <Heading>
       {children} <MetaContainer>{meta}</MetaContainer>
     </Heading>
   )
 }
+
+export default ListItemHeading

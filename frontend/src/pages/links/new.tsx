@@ -6,11 +6,13 @@ import { Dispatch, connect } from 'react-redux'
 import { Redirect } from 'react-router'
 import { reduxForm, SubmitHandler } from 'redux-form'
 import { saveLink } from '../../store/links/thunks'
-import PaddedCard from '../../components/padded-card'
-import Button from '../../components/button'
-import FormInput from '../../components/form-input'
-import Label from '../../components/label'
-import SectionHeading from '../../components/section-heading'
+import {
+  PaddedCard,
+  Button,
+  FormInput,
+  Label,
+  SectionHeading,
+} from '../../components'
 
 interface FormProps {
   handleSubmit: SubmitHandler<Fields, {}>

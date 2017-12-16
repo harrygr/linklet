@@ -16,15 +16,18 @@ import {
   postComment,
 } from '../../store/comments/thunks'
 
-import CommentList from '../../components/comment-list'
 import { getUserIdFromToken } from '../../utils/auth'
-import Card from '../../components/card'
-import PaddedCard from '../../components/padded-card'
-import LinkHeading from '../../components/link-heading'
-import Button from '../../components/button'
-import FormInput from '../../components/form-input'
-import Label from '../../components/label'
-import SectionHeading from '../../components/section-heading'
+import {
+  Card,
+  PaddedCard,
+  LinkHeading,
+  Button,
+  CommentList,
+  FormInput,
+  Label,
+  SectionHeading,
+} from '../../components'
+
 import { spacing } from '../../styles'
 
 const Heading = styled(LinkHeading)`

@@ -3,10 +3,8 @@ import { Comment } from '../api/types'
 import { distanceInWordsToNow } from 'date-fns'
 import { Option } from 'catling'
 import styled from 'react-emotion'
-import List from './list'
-import ListItem from './list-item'
-import ListItemHeading from './list-item-heading'
-import Button from './button'
+
+import { List, ListItem, ListItemHeading, Button } from './'
 
 interface Props {
   comments: Comment[]
@@ -18,7 +16,7 @@ const BodyContainer = styled('div')`
   padding-top: 10px;
 `
 
-export default function CommentList({ comments, onDelete, userId }: Props) {
+export function CommentList({ comments, onDelete, userId }: Props) {
   return (
     <List>
       {comments.map(comment => (
@@ -51,3 +49,5 @@ export default function CommentList({ comments, onDelete, userId }: Props) {
     </List>
   )
 }
+
+export default CommentList

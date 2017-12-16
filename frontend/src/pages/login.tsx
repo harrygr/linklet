@@ -4,7 +4,6 @@ import { State } from '../store/index'
 import { Credentials } from '../api/auth'
 import { Dispatch, connect } from 'react-redux'
 import { Redirect } from 'react-router'
-import SectionHeading from '../components/section-heading'
 import Button from '../components/button'
 import Label from '../components/label'
 import FormInput from '../components/form-input'
@@ -52,7 +51,6 @@ export function Login({ requestLogin, isLoggedIn }: Props) {
 
   return (
     <PaddedCard>
-      <SectionHeading style={{ marginBottom: 20 }}>Login</SectionHeading>
       <LoginForm onSubmit={requestLogin} />
     </PaddedCard>
   )

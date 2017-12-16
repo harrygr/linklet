@@ -2,7 +2,7 @@ import styled from 'react-emotion'
 import { Field } from 'redux-form'
 import { fontSizes, colors, spacing } from '../styles'
 
-const FormInput = styled(Field)`
+export const FormInput = styled(Field)`
   appearance: none;
   resize: none;
   display: block;

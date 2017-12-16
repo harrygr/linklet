@@ -4,6 +4,8 @@ interface Props {
   loading: boolean
 }
 
-export default function Loader({ loading }: Props) {
+export function Loader({ loading }: Props) {
   return loading ? <div>Loading...</div> : null
 }
+
+export default Loader

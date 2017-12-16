@@ -1,9 +1,6 @@
-import * as React from 'react'
 import styled from 'react-emotion'
 
-interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
-
-const StyledButton = styled('button')`
+export const Button = styled('button')`
   appearance: none;
   background: transparent;
   border-radius: 2px;
@@ -28,6 +25,4 @@ const StyledButton = styled('button')`
   }
 `
 
-export default function Button(props: Props) {
-  return <StyledButton {...props}>{props.children}</StyledButton>
-}
+export default Button

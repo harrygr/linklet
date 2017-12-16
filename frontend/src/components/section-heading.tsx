@@ -2,7 +2,7 @@ import styled from 'react-emotion'
 
 import { fontSizes, colors, spacing } from '../styles'
 
-const SectionHeading = styled('h2')`
+export const SectionHeading = styled('h2')`
   font-size: ${fontSizes.large};
   font-weight: normal;
   margin: 0;

@@ -1,12 +1,11 @@
 import * as React from 'react'
-import LinkList from '../components/link-list'
 import { connect, Dispatch } from 'react-redux'
 import { State } from '../store'
 import { fetchLinksIfNeeded, fetchLinks } from '../store/links/thunks'
 import { Link } from '../api/types'
 import { values } from 'ramda'
-import Button from '../components/button'
-import Card from '../components/card'
+
+import { LinkList, Button, Card } from '../components'
 
 interface StateMappedToProps {
   links: Link[]

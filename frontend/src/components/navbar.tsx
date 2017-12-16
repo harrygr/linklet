@@ -40,7 +40,7 @@ const NavButton = styled('button')`
   cursor: pointer;
 `
 
-export default function Navbar({ logout, isLoggedIn }: Props) {
+export function Navbar({ logout, isLoggedIn }: Props) {
   return (
     <NavContainer>
       <LinkList>
@@ -61,3 +61,5 @@ export default function Navbar({ logout, isLoggedIn }: Props) {
     </NavContainer>
   )
 }
+
+export default Navbar

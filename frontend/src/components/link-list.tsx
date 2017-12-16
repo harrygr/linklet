@@ -2,13 +2,11 @@ import * as React from 'react'
 import { distanceInWordsToNow } from 'date-fns'
 import styled from 'react-emotion'
 
-import { RouterLink } from './link'
 import { Link } from '../api/types'
 
 import { colors, fontSizes } from '../styles'
-import List from './list'
-import ListItem from './list-item'
-import LinkHeading from './link-heading'
+
+import { ListItem, LinkHeading, RouterLink, List } from './'
 
 interface Props {
   links: Link[]
@@ -20,7 +18,7 @@ const LinkMeta = styled('div')`
   margin-top: 10px;
 `
 
-export default function LinkList({ links }: Props) {
+export function LinkList({ links }: Props) {
   return (
     <List>
       {links.map(link => (
@@ -41,3 +39,5 @@ export default function LinkList({ links }: Props) {
     </List>
   )
 }
+
+export default LinkList

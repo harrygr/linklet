@@ -1,14 +1,13 @@
 import * as React from 'react'
 import extractDomain from '../utils/url-parser'
-import ListItemHeading from './list-item-heading'
-import { Anchor } from './link'
+import { Anchor, ListItemHeading } from './'
 
 interface Props {
   title: string
   url: string
 }
 
-export default function LinkHeading({ title, url }: Props) {
+export function LinkHeading({ title, url }: Props) {
   return (
     <ListItemHeading meta={`(${extractDomain(url)})`}>
       <Anchor href={url} target="_blank">
@@ -17,3 +16,5 @@ export default function LinkHeading({ title, url }: Props) {
     </ListItemHeading>
   )
 }
+
+export default LinkHeading
