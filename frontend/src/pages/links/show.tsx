@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { connect, Dispatch } from 'react-redux'
 import { Option } from 'catling'
-import styled from 'react-emotion'
 
 import { State } from '../../store'
 import { RouteComponentProps } from 'react-router'
@@ -26,13 +25,10 @@ import {
   FormInput,
   Label,
   SectionHeading,
+  LinkMeta,
 } from '../../components'
 
 import { spacing } from '../../styles'
-
-const Heading = styled(LinkHeading)`
-  font-size: 150%;
-`
 
 interface FormProps {
   handleSubmit: SubmitHandler<Fields, {}>
@@ -102,7 +98,13 @@ export class ShowLink extends React.Component<Props> {
     return (
       <div>
         <PaddedCard>
-          <Heading url={link.url} title={link.title} />
+          <LinkHeading url={link.url} title={link.title} />
+          <LinkMeta
+            username={link.user.username}
+            linkDate={link.inserted_at}
+            linkId={link.id}
+            commentCount={link.comments_count}
+          />
         </PaddedCard>
 
         <Card>
