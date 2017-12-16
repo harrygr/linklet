@@ -8,6 +8,7 @@ import { RouteComponentProps } from 'react-router'
 import NotFound from '../404'
 import { Link, Comment } from '../../api/types'
 import { values } from 'ramda'
+import { SubmitHandler, reduxForm } from 'redux-form'
 import { fetchLinksIfNeeded } from '../../store/links/thunks'
 import {
   fetchComments,
@@ -17,7 +18,6 @@ import {
 
 import CommentList from '../../components/comment-list'
 import { getUserIdFromToken } from '../../utils/auth'
-import { SubmitHandler, reduxForm } from 'redux-form'
 import Card from '../../components/card'
 import PaddedCard from '../../components/padded-card'
 import LinkHeading from '../../components/link-heading'
@@ -42,6 +42,7 @@ const CommentForm = reduxForm<Fields>({
   form: 'comment',
 })((props: FormProps) => {
   const { handleSubmit } = props
+
   return (
     <form onSubmit={handleSubmit}>
       <div>
@@ -82,11 +83,8 @@ export class ShowLink extends React.Component<Props> {
   }
 
   render() {
-    if (this.props.loading) {
-      return <div />
-    }
-
     const link = this.props.links[this.props.match.params.id]
+
     if (!link) {
       return NotFound()
     }

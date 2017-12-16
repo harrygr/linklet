@@ -6,6 +6,7 @@ import api from '../../api'
 import { State } from '../index'
 import { flashAlert } from '../ui/reducer'
 import { RemoveComment, AddComment } from './reducer'
+import { reset } from 'redux-form'
 
 export function fetchComments(linkId: string) {
   return async (dispatch: Dispatch<Action>) => {
@@ -59,6 +60,7 @@ export function postComment(linkId: string, body: string) {
         .map(comment => {
           dispatch(AddComment(comment))
           dispatch(flashAlert('Comment posted', 'success'))
+          dispatch(reset('comment'))
         })
         .leftMap(err => dispatch(actions.flashAlert(err.message, 'danger')))
       dispatch(actions.SetLoading(false))
