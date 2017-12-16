@@ -98,7 +98,7 @@ jobs:
       - save_cache:
           key: build-cache
           paths: "_build"
-      - run: sleep 5
+      - run: sleep 8
       - run: mix ecto.create && mix ecto.migrate
       - run: mix test
 
