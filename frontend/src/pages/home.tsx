@@ -37,8 +37,11 @@ export class Home extends React.Component<Props> {
 }
 
 function mapStateToProps(state: State) {
+  const sortKey = state.links.orderedBy
   return {
-    links: values(state.links.items),
+    links: values(state.links.items).sort(
+      (a, b) => (a[sortKey] < b[sortKey] ? 1 : -1),
+    ),
   }
 }
 

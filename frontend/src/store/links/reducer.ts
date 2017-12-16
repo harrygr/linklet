@@ -30,10 +30,11 @@ export type Action = SetLinks | AddLink
 
 export interface State {
   items: Record<string, Link>
+  orderedBy: keyof Link
 }
 
 function emptyState(): State {
-  return { items: {} }
+  return { items: {}, orderedBy: 'inserted_at' }
 }
 
 const reducer = (state: State = emptyState(), action: Action): State => {
