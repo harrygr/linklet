@@ -6,11 +6,13 @@ import { Link } from '../api/types'
 import { values } from 'ramda'
 
 import { LinkList, Button, Card } from '../components'
+import { push } from 'react-router-redux'
 
 interface StateMappedToProps {
   links: Link[]
 }
 interface DispatchMappedToProps {
+  go: () => void
   fetchLinks: () => void
   fetchLinksIfRequired: () => void
 }
@@ -22,11 +24,12 @@ export class Home extends React.Component<Props> {
     this.props.fetchLinksIfRequired()
   }
   render() {
-    const { fetchLinks, links } = this.props
+    const { fetchLinks, links, go } = this.props
     return (
       <div>
         <Card style={{ textAlign: 'center', padding: '10px 0' }}>
           <Button onClick={fetchLinks}>Reload links</Button>
+          <Button onClick={go}>Go</Button>
         </Card>
         <Card>
           <LinkList links={links} />
@@ -44,6 +47,7 @@ function mapStateToProps(state: State) {
 
 function mapDispatchToProps(dispatch: Dispatch<any>) {
   return {
+    go: () => dispatch(push('/links/1')),
     fetchLinks: () => dispatch(fetchLinks()),
     fetchLinksIfRequired: () => dispatch(fetchLinksIfNeeded()),
   }

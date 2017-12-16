@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import styled from 'react-emotion'
 import Home from './pages/home'
 import NotFound from './pages/404'
@@ -15,6 +15,8 @@ import { AlertLevel } from './store/ui/reducer'
 import { connect, Dispatch } from 'react-redux'
 import { State } from './store/index'
 import { State as UiState } from './store/ui/reducer'
+import { ConnectedRouter } from 'react-router-redux'
+import config from './config'
 
 interface Props extends StateMappedToProps, DispatchMappedToProps {}
 
@@ -38,7 +40,7 @@ export function App({
   loading,
 }: Props) {
   return (
-    <Router>
+    <ConnectedRouter history={config.history}>
       <AppWrapper>
         <Navbar
           isLoggedIn={isLoggedIn}
@@ -59,7 +61,7 @@ export function App({
           </Switch>
         </PageContainer>
       </AppWrapper>
-    </Router>
+    </ConnectedRouter>
   )
 }
 

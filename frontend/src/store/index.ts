@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware } from 'redux'
-
+import { routerMiddleware } from 'react-router-redux'
 import thunkMiddleware from 'redux-thunk'
+
 import reducer from './reducer'
 import { State as UiState } from './ui/reducer'
 import { State as LinksState } from './links/reducer'
@@ -9,6 +10,7 @@ import { State as CommentState } from './comments/reducer'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { saveState, retrieveState } from './local-storage'
 import { debounce } from 'lodash'
+import config from '../config'
 
 export interface State {
   ui: UiState
@@ -17,10 +19,15 @@ export interface State {
   comments: CommentState
 }
 
+const middleware = applyMiddleware(
+  thunkMiddleware,
+  routerMiddleware(config.history),
+)
+
 const store = createStore(
   reducer,
   retrieveState(),
-  composeWithDevTools(applyMiddleware(thunkMiddleware)),
+  composeWithDevTools(middleware),
 )
 
 store.subscribe(

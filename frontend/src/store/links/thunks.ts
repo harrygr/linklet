@@ -6,6 +6,7 @@ import api from '../../api'
 
 import { State } from '../index'
 import { CreateLink } from '../../api/types'
+import { push } from 'react-router-redux'
 
 export function fetchLinks() {
   return async (dispatch: Dispatch<Action>) => {
@@ -45,6 +46,7 @@ export function saveLink(link: CreateLink) {
         .map(newLink => {
           dispatch(actions.AddLink(newLink))
           dispatch(actions.flashAlert('Link Saved!', 'success'))
+          dispatch(push('/'))
         })
         .leftMap(err => dispatch(actions.flashAlert(err.message, 'danger')))
       dispatch(actions.SetLoading(false))
