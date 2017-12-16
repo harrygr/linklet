@@ -4,10 +4,7 @@ import { State } from '../store/index'
 import { Credentials } from '../api/auth'
 import { Dispatch, connect } from 'react-redux'
 import { Redirect } from 'react-router'
-import Button from '../components/button'
-import Label from '../components/label'
-import FormInput from '../components/form-input'
-import PaddedCard from '../components/padded-card'
+import { Button, Label, FormInput, PaddedCard } from '../components'
 import { reduxForm, SubmitHandler } from 'redux-form'
 
 interface StateMappedToProps {
@@ -22,9 +19,11 @@ interface Fields {
   email: string
   password: string
 }
+
 interface FormProps {
   handleSubmit: SubmitHandler<Fields, {}>
 }
+
 const LoginForm = reduxForm<Fields>({
   form: 'login',
 })((props: FormProps) => {
