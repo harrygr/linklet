@@ -13,10 +13,10 @@ describe('auth utils', () => {
     const token =
       'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJsaW5rbGV0IiwibmJmIjoxNTEzMDA0MTc1LCJ0eXAiOiJhY2Nlc3MifQ.gE65G-C4q4J5caDK_DesryKCzg2wI99diNkoKfkS_JU'
 
-    expect(getUserIdFromToken(token).isDefined()).toBe(false)
+    expect(getUserIdFromToken(token).isSome()).toBe(false)
   })
 
   it('handles parsing an invalid token', () => {
-    expect(getUserIdFromToken('foo').isDefined()).toBe(false)
+    expect(getUserIdFromToken('foo').isSome()).toBe(false)
   })
 })

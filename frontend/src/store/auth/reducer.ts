@@ -45,7 +45,7 @@ export function requestLogin(creds: Credentials) {
         dispatch(SetToken(response.jwt))
         dispatch(UiAction.flashAlert('welcome', 'success'))
       })
-      .mapError(err => {
+      .leftMap(err => {
         dispatch(UiAction.flashAlert(err.message, 'danger'))
       })
     dispatch(UiAction.SetLoading(false))

@@ -1,4 +1,4 @@
-import { Option } from 'space-lift'
+import { Option } from 'catling'
 import * as jwtDecode from 'jwt-decode'
 
 export function getUserIdFromToken(token: string | null): Option<number> {

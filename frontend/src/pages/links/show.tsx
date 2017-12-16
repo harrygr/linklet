@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { connect, Dispatch } from 'react-redux'
-import { Option } from 'space-lift'
+import { Option } from 'catling'
 
 import { State } from '../../store'
 import { RouteComponentProps } from 'react-router'

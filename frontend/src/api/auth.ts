@@ -12,7 +12,6 @@ interface SuccessfulLoginResponse {
 export default function links({ post }: Client) {
   return {
     login(creds: Credentials) {
-      console.log(creds)
       return post<SuccessfulLoginResponse>('/auth', creds)
     },
   }

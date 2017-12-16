@@ -14,7 +14,7 @@ export function fetchLinks() {
       .map(links => {
         dispatch(actions.SetLinks(links))
       })
-      .mapError(err => {
+      .leftMap(err => {
         dispatch(actions.flashAlert(err.message, 'danger'))
       })
     dispatch(actions.SetLoading(false))
@@ -46,7 +46,7 @@ export function saveLink(link: CreateLink) {
           dispatch(actions.AddLink(newLink))
           dispatch(actions.flashAlert('Link Saved!', 'success'))
         })
-        .mapError(err => dispatch(actions.flashAlert(err.message, 'danger')))
+        .leftMap(err => dispatch(actions.flashAlert(err.message, 'danger')))
       dispatch(actions.SetLoading(false))
     }
   }

@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosPromise, AxiosRequestConfig } from 'axios'
-import { Result, Ok, Err } from 'space-lift'
+import { Either, Left, Right } from 'catling'
 import { deriveError, ApiError } from './errors'
 import links from './links'
 import comments from './comments'
@@ -58,10 +58,10 @@ function wrapClient(client: AxiosInstance) {
 
 export function convertToResult<T>(
   axiosResponse: AxiosPromise,
-): Promise<Result<ApiError, T>> {
+): Promise<Either<ApiError, T>> {
   return axiosResponse
-    .then(response => Ok(response.data as T))
-    .catch(e => Err(deriveError(e)))
+    .then(response => Right(response.data as T))
+    .catch(e => Left(deriveError(e)))
 }
 
 // this hacky looking function is only used for type inference

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Comment } from '../api/types'
 import { distanceInWordsToNow } from 'date-fns'
-import { Option } from 'space-lift'
+import { Option } from 'catling'
 
 interface Props {
   comments: Comment[]

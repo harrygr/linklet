@@ -15,7 +15,7 @@ export function fetchComments(linkId: string) {
       .map(comments => {
         dispatch(actions.SetComments(comments))
       })
-      .mapError(err => dispatch(actions.flashAlert(err.message, 'danger')))
+      .leftMap(err => dispatch(actions.flashAlert(err.message, 'danger')))
     dispatch(actions.SetLoading(false))
   }
 }
@@ -37,7 +37,7 @@ export function deleteComment(linkId: string, commentId: string) {
           dispatch(RemoveComment(parseInt(commentId, 10)))
           dispatch(flashAlert('Comment deleted', 'success'))
         })
-        .mapError(err => dispatch(actions.flashAlert(err.message, 'danger')))
+        .leftMap(err => dispatch(actions.flashAlert(err.message, 'danger')))
       dispatch(actions.SetLoading(false))
     }
   }
@@ -60,7 +60,7 @@ export function postComment(linkId: string, body: string) {
           dispatch(AddComment(comment))
           dispatch(flashAlert('Comment posted', 'success'))
         })
-        .mapError(err => dispatch(actions.flashAlert(err.message, 'danger')))
+        .leftMap(err => dispatch(actions.flashAlert(err.message, 'danger')))
       dispatch(actions.SetLoading(false))
     }
   }
