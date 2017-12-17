@@ -5,6 +5,7 @@ import links from './links'
 import comments from './comments'
 import auth from './auth'
 import config from '../config'
+import users from './users'
 
 export const servicesType = getReturnType(wrapClient)
 export type Client = typeof servicesType
@@ -23,6 +24,7 @@ export default function api() {
     links: links(client),
     auth: auth(client),
     comments: comments(client),
+    users: users(client),
   }
 }
 

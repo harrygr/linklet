@@ -53,9 +53,14 @@ export function Navbar({ logout, isLoggedIn }: Props) {
         {isLoggedIn ? (
           <NavButton onClick={logout}>Logout</NavButton>
         ) : (
-          <li className={linkClass}>
-            <NavLink to="/login">Login</NavLink>
-          </li>
+          [
+            <li className={linkClass} key="login">
+              <NavLink to="/login">Login</NavLink>
+            </li>,
+            <li className={linkClass} key="register">
+              <NavLink to="/register">Sign Up</NavLink>
+            </li>,
+          ]
         )}
       </LinkList>
     </NavContainer>
