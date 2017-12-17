@@ -12,4 +12,11 @@ defmodule Linklet.UserView do
       email: user.email
     }
   end
+
+    def related_user_json(user) do
+    %{
+      id: user.id,
+      username: user.username,
+    }
+  end
 end

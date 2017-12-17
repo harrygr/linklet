@@ -16,7 +16,7 @@ defmodule Linklet.CommentView do
       inserted_at: comment.inserted_at,
       updated_at: comment.updated_at,
       link_id: comment.link_id,
-      user: Linklet.UserView.user_json(comment.user)
+      user: Linklet.UserView.related_user_json(comment.user)
     }
   end
 end

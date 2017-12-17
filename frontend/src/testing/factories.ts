@@ -1,4 +1,4 @@
-import { Comment, User } from '../api/types'
+import { Comment, User, CurrentUser } from '../api/types'
 
 export function comment(overrides: Partial<Comment> = {}): Comment {
   return {
@@ -16,6 +16,13 @@ export function user(overrides: Partial<User> = {}): User {
   return {
     id: 1,
     username: 'testuser',
+    ...overrides,
+  }
+}
+
+export function currentUser(overrides: Partial<CurrentUser> = {}): CurrentUser {
+  return {
+    ...user(),
     email: 'testuser@gmail.com',
     ...overrides,
   }

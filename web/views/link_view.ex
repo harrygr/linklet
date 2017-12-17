@@ -20,7 +20,7 @@ defmodule Linklet.LinkView do
       url: link.url,
       inserted_at: link.inserted_at,
       updated_at: link.updated_at,
-      user: Linklet.UserView.user_json(link.user),
+      user: Linklet.UserView.related_user_json(link.user),
       comments_count: comments_count,
     }
   end
@@ -32,7 +32,7 @@ defmodule Linklet.LinkView do
       url: link.url,
       inserted_at: link.inserted_at,
       updated_at: link.updated_at,
-      user: Linklet.UserView.user_json(link.user),
+      user: Linklet.UserView.related_user_json(link.user),
       comments: Enum.map(link.comments, &CommentView.comment_json/1)
     }
   end
