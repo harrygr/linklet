@@ -44,7 +44,7 @@ const RegisterForm = reduxForm<Fields>({
         <Label htmlFor="password">Password</Label>
         <FormInput name="password" component="input" type="password" />
       </div>
-      <Button type="submit">Login</Button>
+      <Button type="submit">Sign Up</Button>
     </form>
   )
 })
