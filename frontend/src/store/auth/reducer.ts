@@ -6,14 +6,11 @@ import { isValid } from './utils'
 
 interface SetToken {
   type: 'SET_TOKEN'
-  token: string
+  token: string | null
 }
 
-export function SetToken(token: string | null) {
-  return {
-    type: 'SET_TOKEN',
-    token,
-  }
+export function SetToken(token: string | null): SetToken {
+  return { type: 'SET_TOKEN', token }
 }
 
 interface CheckToken {
@@ -21,7 +18,7 @@ interface CheckToken {
   currentTime: Date
 }
 
-export function CheckToken(currentTime: Date) {
+export function CheckToken(currentTime: Date): CheckToken {
   return {
     type: 'CHECK_TOKEN',
     currentTime,
@@ -47,7 +44,7 @@ const reducer = (state: State = emptyState(), action: Action): State => {
       return {
         ...state,
         token:
-          state.token && !isValid(action.currentTime, state.token)
+          state.token && isValid(action.currentTime, state.token)
             ? state.token
             : null,
       }

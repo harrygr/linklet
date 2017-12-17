@@ -13,7 +13,7 @@ export function isValid(currentTime: Date, token: string): boolean {
   return tokenExpiry(token)
     .toOption()
     .map(expiry => isBefore(currentTime, expiry))
-    .getOrElse(true)
+    .getOrElse(false)
 }
 
 export function tokenExpiry(token: string): Either<string, Date> {
