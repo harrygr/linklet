@@ -29,7 +29,7 @@ export function CheckToken(currentTime: Date) {
 }
 
 export type Action = SetToken | CheckToken
-export const Action = { SetToken, CheckToken }
+export const Action = { SetToken, CheckToken, requestLogin }
 
 export interface State {
   token: string | null

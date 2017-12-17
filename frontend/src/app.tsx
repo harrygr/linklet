@@ -8,6 +8,7 @@ import { Switch } from 'react-router'
 import Alert from './components/alert'
 import Loader from './components/loader'
 import Login from './pages/login'
+import Register from './pages/register'
 import NewLink from './pages/links/new'
 import Navbar from './components/navbar'
 import actions from './store/actions'
@@ -53,6 +54,7 @@ export function App({
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/register" component={Register} />
             <Route path="/links/new" component={NewLink} />
             <Route path="/links/:id(\\d+)" component={ShowLink} />
             <Route component={NotFound} />

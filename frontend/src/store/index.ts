@@ -6,6 +6,7 @@ import { State as UiState } from './ui/reducer'
 import { State as LinksState } from './links/reducer'
 import { State as AuthState } from './auth/reducer'
 import { State as CommentState } from './comments/reducer'
+import { State as UserState } from './users/reducer'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { saveState, retrieveState } from './local-storage'
 import { debounce } from 'lodash'
@@ -16,6 +17,7 @@ export interface State {
   links: LinksState
   auth: AuthState
   comments: CommentState
+  users: UserState
 }
 
 const store = createStore(

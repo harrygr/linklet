@@ -22,8 +22,14 @@ export interface Comment {
   user: User
 }
 
-export interface User {
+export interface CreateUser {
   username: string
+  email: string
+  password: string
+}
+
+export interface User {
   id: number
+  username: string
   email: string
 }
