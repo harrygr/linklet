@@ -9,6 +9,7 @@ import { State as CommentState } from './comments/reducer'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { saveState, retrieveState } from './local-storage'
 import { debounce } from 'lodash'
+import actions from './actions'
 
 export interface State {
   ui: UiState
@@ -34,5 +35,8 @@ store.subscribe(
     }
   }, 1000),
 )
+
+// dispatch token check on app boot
+store.dispatch(actions.CheckToken(new Date()))
 
 export default store
