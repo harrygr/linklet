@@ -19,17 +19,17 @@ interface Props extends StateMappedToProps, DispatchMappedToProps {}
 
 export class Home extends React.Component<Props> {
   componentDidMount() {
-    this.props.fetchLinksIfRequired()
+    this.props.fetchLinks()
   }
   render() {
     const { fetchLinks, links } = this.props
     return (
       <div>
-        <Card style={{ textAlign: 'center', padding: '10px 0' }}>
-          <Button onClick={fetchLinks}>Reload links</Button>
-        </Card>
         <Card>
           <LinkList links={links} />
+        </Card>
+        <Card style={{ textAlign: 'center', padding: '10px 0' }}>
+          <Button onClick={fetchLinks}>Reload links</Button>
         </Card>
       </div>
     )

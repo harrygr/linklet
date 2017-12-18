@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
 import styled, { css } from 'react-emotion'
-import { colors } from '../styles'
+import { colors, shadow, spacing } from '../styles'
 
 const LinkList = styled('ul')`
   margin: 0;
@@ -21,9 +21,12 @@ interface Props {
 
 const NavContainer = styled('nav')`
   display: flex;
+  position: sticky;
+  top: 0;
   align-items: center;
-  height: 40px;
+  padding: ${spacing.s1};
   background-color: ${colors.theme};
+  box-shadow: ${shadow};
 `
 
 const NavLink = styled(Link)`

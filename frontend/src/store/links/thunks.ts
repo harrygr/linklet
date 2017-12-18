@@ -6,6 +6,7 @@ import api from '../../api'
 
 import { State } from '../index'
 import { CreateLink } from '../../api/types'
+import { isEmpty } from 'ramda'
 
 export function fetchLinks() {
   return async (dispatch: Dispatch<Action>) => {
@@ -23,7 +24,7 @@ export function fetchLinks() {
 
 export function fetchLinksIfNeeded() {
   return (dispatch: Dispatch<Action>, getState: () => State) => {
-    if (Object.keys(getState().links.items).length === 0) {
+    if (isEmpty(getState().links.items)) {
       dispatch(fetchLinks())
     }
   }

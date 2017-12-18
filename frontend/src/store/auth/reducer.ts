@@ -61,7 +61,7 @@ export function requestLogin(creds: Credentials) {
     ;(await api().auth.login(creds))
       .map(response => {
         dispatch(SetToken(response.jwt))
-        dispatch(UiAction.flashAlert('welcome', 'success'))
+        dispatch(UiAction.flashAlert('Welcome', 'success'))
       })
       .leftMap(err => {
         dispatch(UiAction.flashAlert(err.message, 'danger'))
