@@ -1,4 +1,5 @@
 import { Dispatch } from 'react-redux'
+import { reset } from 'redux-form'
 
 import actions, { Action } from '../../store/actions'
 
@@ -46,6 +47,7 @@ export function saveLink(link: CreateLink) {
         .map(newLink => {
           dispatch(actions.AddLink(newLink))
           dispatch(actions.flashAlert('Link Saved!', 'success'))
+          dispatch(reset('link'))
         })
         .leftMap(err => dispatch(actions.flashAlert(err.message, 'danger')))
       dispatch(actions.SetLoading(false))
