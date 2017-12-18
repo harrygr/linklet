@@ -114,7 +114,7 @@ jobs:
       - run: cp ./build/index.html ./build/200.html
       - run:
           name: deploy-build
-          command: npx surge --project=./build --domain=linklet.surge.sh
+          command: npx surge --project=./build --domain=https://linklet.surge.sh
 
   deploy-api:
     docker:
