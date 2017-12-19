@@ -1,10 +1,12 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
 import styled, { css } from 'react-emotion'
-import { colors, shadow, spacing } from '../styles'
+import { colors, shadow, spacing, animation } from '../styles'
+import { Spinner } from './spinner'
 
 const LinkList = styled('ul')`
-  margin: 0;
+  margin: 0 auto 0 0;
+
   padding: 0;
   list-style-type: none;
   display: flex;
@@ -17,6 +19,7 @@ const linkClass = css`
 interface Props {
   logout: () => any
   isLoggedIn: boolean
+  isLoading: boolean
 }
 
 const NavContainer = styled('nav')`
@@ -43,7 +46,15 @@ const NavButton = styled('button')`
   cursor: pointer;
 `
 
-export function Navbar({ logout, isLoggedIn }: Props) {
+const iconClass = (visible: boolean) => css`
+  fill: #fff;
+  opacity: ${visible ? 1 : 0};
+  transition: opacity 300ms ease;
+  transition-delay: 300ms;
+  animation: ${animation.spin} 700ms linear infinite;
+`
+
+export function Navbar({ logout, isLoggedIn, isLoading }: Props) {
   return (
     <NavContainer>
       <LinkList>
@@ -66,6 +77,8 @@ export function Navbar({ logout, isLoggedIn }: Props) {
           ]
         )}
       </LinkList>
+
+      <Spinner className={iconClass(isLoading)} />
     </NavContainer>
   )
 }

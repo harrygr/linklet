@@ -6,7 +6,6 @@ import NotFound from './pages/404'
 import ShowLink from './pages/links/show'
 import { Switch } from 'react-router'
 import Alert from './components/alert'
-import Loader from './components/loader'
 import Login from './pages/login'
 import Register from './pages/register'
 import NewLink from './pages/links/new'
@@ -47,9 +46,10 @@ export function App({
             setToken(null)
             flashAlert('You are now logged out', 'success')
           }}
+          isLoading={loading}
         />
         <Alert message={alert.message} level={alert.level} />
-        <Loader loading={loading} />
+
         <PageContainer>
           <Switch>
             <Route exact path="/" component={Home} />
