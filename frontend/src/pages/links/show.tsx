@@ -6,7 +6,7 @@ import { State } from '../../store'
 import { RouteComponentProps } from 'react-router'
 import NotFound from '../404'
 import { Link, Comment } from '../../api/types'
-import { values } from 'ramda'
+import { values, isEmpty } from 'ramda'
 import { SubmitHandler, reduxForm } from 'redux-form'
 import { fetchLinksIfNeeded } from '../../store/links/thunks'
 import {
@@ -18,6 +18,7 @@ import {
 import { getUserIdFromToken } from '../../utils/auth'
 import {
   Card,
+  CardSection,
   PaddedCard,
   LinkHeading,
   Button,
@@ -27,8 +28,6 @@ import {
   SectionHeading,
   LinkMeta,
 } from '../../components'
-
-import { spacing } from '../../styles'
 
 interface FormProps {
   handleSubmit: SubmitHandler<Fields, {}>
@@ -94,7 +93,7 @@ export class ShowLink extends React.Component<Props> {
     }
 
     const onPostComment = this.props.postComment(link.id.toString())
-
+    const comments = values(this.props.comments)
     return (
       <div>
         <PaddedCard>
@@ -108,15 +107,16 @@ export class ShowLink extends React.Component<Props> {
         </PaddedCard>
 
         <Card>
-          <div style={{ padding: spacing.s2 }}>
+          <CardSection>
             <SectionHeading>Comments</SectionHeading>
-          </div>
+          </CardSection>
 
           <CommentList
-            comments={values(this.props.comments)}
+            comments={comments}
             onDelete={onDeleteComment}
             userId={this.props.userId}
           />
+          {isEmpty(comments) && <CardSection>None yet</CardSection>}
         </Card>
 
         {this.props.userId

@@ -4,6 +4,7 @@ export const colors = { theme: '#3f51b5', grey: '#828282', greyLight: '#eee' }
 export const fontSizes = {
   small: '12px',
   medium: '15px',
+  largish: '16px',
   large: '18px',
 }
 

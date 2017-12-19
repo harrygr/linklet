@@ -1,15 +1,5 @@
 import * as React from 'react'
-
-import styled from 'react-emotion'
-
-const Icon = styled('svg')`
-  display: inline-block;
-  width: 1em;
-  height: 1em;
-  stroke-width: 0;
-  stroke: currentColor;
-  fill: currentColor;
-`
+import { Icon } from './index'
 
 interface Props {
   className: string
