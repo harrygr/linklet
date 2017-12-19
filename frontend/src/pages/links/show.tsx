@@ -116,7 +116,8 @@ export class ShowLink extends React.Component<Props> {
             onDelete={onDeleteComment}
             userId={this.props.userId}
           />
-          {isEmpty(comments) && <CardSection>None yet</CardSection>}
+          {!this.props.loading &&
+            isEmpty(comments) && <CardSection>None yet</CardSection>}
         </Card>
 
         {this.props.userId
