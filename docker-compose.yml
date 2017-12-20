@@ -2,7 +2,6 @@
 version: '3.1'
 
 services:
-
   db:
     image: mysql
     restart: always
@@ -11,3 +10,8 @@ services:
       MYSQL_ROOT_PASSWORD: password
     ports:
       - 3306:3306
+    volumes:
+      - mysql_volume:/var/lib/mysql
+
+volumes:
+  mysql_volume:
