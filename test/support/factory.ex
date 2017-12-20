@@ -25,4 +25,12 @@ defmodule Linklet.Factory do
       user: user_factory()
     }
   end
+
+  def vote_factory do
+    %Linklet.Vote{
+      direction: 0,
+      user: user_factory(),
+      link: link_factory()
+    }
+  end
 end
