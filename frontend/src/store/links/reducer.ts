@@ -65,7 +65,13 @@ const reducer = (state: State = emptyState(), action: Action): State => {
           v => v.user_id === action.userId && v.link_id === action.linkId,
         )
         if (voteIndex === -1) {
-          return Some(link.votes)
+          return Some(
+            link.votes.concat({
+              link_id: action.linkId,
+              user_id: action.userId,
+              direction: action.direction,
+            }),
+          )
         }
         return Option(link.votes[voteIndex])
           .map(v => ({ ...v, direction: action.direction } as Vote))
