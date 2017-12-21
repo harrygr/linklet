@@ -53,7 +53,8 @@ export function LinkList({ links, onVote, userId }: Props) {
 
         const score = link.votes.reduce((sum, v) => sum + v.direction, 0)
 
-        const voteChange = vote === 0 ? 1 : 0
+        const upvoteChange = vote === 1 ? 0 : 1
+        const downvoteChange = vote === -1 ? 0 : -1
 
         return (
           <ListItem key={link.id}>
@@ -63,7 +64,7 @@ export function LinkList({ links, onVote, userId }: Props) {
                 <ButtonLink
                   onClick={() =>
                     onVote({
-                      direction: voteChange,
+                      direction: upvoteChange,
                       link_id: link.id,
                     })
                   }
@@ -73,7 +74,7 @@ export function LinkList({ links, onVote, userId }: Props) {
                 <ButtonLink
                   onClick={() =>
                     onVote({
-                      direction: -voteChange as -1,
+                      direction: downvoteChange,
                       link_id: link.id,
                     })
                   }
