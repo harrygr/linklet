@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { connect, Dispatch } from 'react-redux'
 import { State } from '../store'
-import { fetchLinksIfNeeded, fetchLinks } from '../store/links/thunks'
-import { Link } from '../api/types'
+import { fetchLinksIfNeeded, fetchLinks, vote } from '../store/links/thunks'
+import { Link, Vote } from '../api/types'
 import { values } from 'ramda'
 
 import { LinkList, Button, Card } from '../components'
@@ -13,6 +13,7 @@ interface StateMappedToProps {
 interface DispatchMappedToProps {
   fetchLinks: () => void
   fetchLinksIfRequired: () => void
+  onVote: (vote: Vote) => any
 }
 
 interface Props extends StateMappedToProps, DispatchMappedToProps {}
@@ -22,11 +23,11 @@ export class Home extends React.Component<Props> {
     this.props.fetchLinks()
   }
   render() {
-    const { fetchLinks, links } = this.props
+    const { fetchLinks, links, onVote } = this.props
     return (
       <div>
         <Card>
-          <LinkList links={links} />
+          <LinkList links={links} onVote={onVote} />
         </Card>
         <Card style={{ textAlign: 'center', padding: '10px 0' }}>
           <Button onClick={fetchLinks}>Reload links</Button>
@@ -49,6 +50,7 @@ function mapDispatchToProps(dispatch: Dispatch<any>) {
   return {
     fetchLinks: () => dispatch(fetchLinks()),
     fetchLinksIfRequired: () => dispatch(fetchLinksIfNeeded()),
+    onVote: (payload: Vote) => dispatch(vote(payload)),
   }
 }
 

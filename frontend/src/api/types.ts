@@ -6,6 +6,7 @@ export interface Link {
   updated_at: string
   user: User
   comments_count: number
+  score: number
 }
 
 export interface CreateLink {
@@ -35,4 +36,9 @@ export interface User {
 
 export interface CurrentUser extends User {
   email: string
+}
+
+export interface Vote {
+  link_id: number
+  direction: 1 | 0 | -1
 }

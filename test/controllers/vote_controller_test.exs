@@ -21,6 +21,17 @@ defmodule Linklet.VoteControllerTest do
     assert direction == 1
   end
 
+  test "#create downvotes a link where a vote already exists", %{} do
+    vote = insert(:vote)
+
+    response = get_authenticated_conn()
+      |> post("/api/votes", %{link_id: vote.link.id, direction: -1})
+
+
+    %{"direction" => direction} = json_response(response, :created) |> Poison.encode! |> Poison.decode!
+    assert direction == -1
+  end
+
   test "#create upvotes a link where a vote hasn't yet been created", %{} do
     user = insert(:user)
     link = insert(:link)
