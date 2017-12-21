@@ -7,7 +7,6 @@ defmodule Linklet.VoteView do
 
   def vote_json(vote) do
     %{
-      id: vote.id,
       direction: vote.direction,
       link_id: vote.link_id,
       user_id: vote.user_id,

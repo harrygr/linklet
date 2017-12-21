@@ -7,7 +7,7 @@ defmodule Linklet.LinkController do
 
   def index(conn, _params) do
     query = from [l, c, v] in Link.with_score_and_comments(),
-      preload: [:user],
+      preload: [:user, :votes],
       select: %{%{l | comment_count: count(c.id)} | score: fragment("CONVERT(ifnull(?, 0), SIGNED)", sum(v.direction))}
 
     links = query
@@ -20,7 +20,7 @@ defmodule Linklet.LinkController do
 
     query = from [l, c, v] in Link.with_score_and_comments(),
       where: [id: ^id],
-      preload: [:user, :comments],
+      preload: [:user, :comments, :votes],
       select: %{%{l | comment_count: count(c.id)} | score: fragment("CONVERT(ifnull(?, 0), SIGNED)", sum(v.direction))}
 
     result = query

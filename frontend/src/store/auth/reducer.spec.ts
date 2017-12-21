@@ -9,6 +9,7 @@ describe('Auth reducer', () => {
     const state = reducer(
       {
         token,
+        user: null,
       },
       Action.CheckToken(new Date('2017-12-12')),
     )
@@ -17,13 +18,16 @@ describe('Auth reducer', () => {
   })
 
   it('removes an expired token', () => {
-    const state = reducer({ token }, Action.CheckToken(new Date('2018-02-12')))
+    const state = reducer(
+      { token, user: null },
+      Action.CheckToken(new Date('2018-02-12')),
+    )
 
     expect(state.token).toBeNull()
   })
 
   it('sets a token', () => {
-    const state = reducer({ token: null }, Action.SetToken('foo'))
+    const state = reducer({ token: null, user: null }, Action.SetToken('foo'))
     expect(state.token).toBe('foo')
   })
 })

@@ -21,7 +21,8 @@ defmodule Linklet.LinkView do
       updated_at: link.updated_at,
       user: Linklet.UserView.related_user_json(link.user),
       comments_count: comments_count,
-      score: link.score
+      score: link.score,
+      votes: Enum.map(link.votes, &Linklet.VoteView.vote_json/1)
     }
   end
 

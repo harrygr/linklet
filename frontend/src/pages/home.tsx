@@ -2,18 +2,20 @@ import * as React from 'react'
 import { connect, Dispatch } from 'react-redux'
 import { State } from '../store'
 import { fetchLinksIfNeeded, fetchLinks, vote } from '../store/links/thunks'
-import { Link, Vote } from '../api/types'
+import { Link, CreateVote } from '../api/types'
 import { values } from 'ramda'
+import { Option } from 'catling'
 
 import { LinkList, Button, Card } from '../components'
 
 interface StateMappedToProps {
   links: Link[]
+  userId: Option<number>
 }
 interface DispatchMappedToProps {
   fetchLinks: () => void
   fetchLinksIfRequired: () => void
-  onVote: (vote: Vote) => any
+  onVote: (vote: CreateVote) => any
 }
 
 interface Props extends StateMappedToProps, DispatchMappedToProps {}
@@ -23,11 +25,11 @@ export class Home extends React.Component<Props> {
     this.props.fetchLinks()
   }
   render() {
-    const { fetchLinks, links, onVote } = this.props
+    const { fetchLinks, links, onVote, userId } = this.props
     return (
       <div>
         <Card>
-          <LinkList links={links} onVote={onVote} />
+          <LinkList links={links} onVote={onVote} userId={userId} />
         </Card>
         <Card style={{ textAlign: 'center', padding: '10px 0' }}>
           <Button onClick={fetchLinks}>Reload links</Button>
@@ -43,6 +45,7 @@ function mapStateToProps(state: State) {
     links: values(state.links.items).sort(
       (a, b) => (a[sortKey] < b[sortKey] ? 1 : -1),
     ),
+    userId: Option(state.auth.user).map(u => u.id),
   }
 }
 
@@ -50,7 +53,7 @@ function mapDispatchToProps(dispatch: Dispatch<any>) {
   return {
     fetchLinks: () => dispatch(fetchLinks()),
     fetchLinksIfRequired: () => dispatch(fetchLinksIfNeeded()),
-    onVote: (payload: Vote) => dispatch(vote(payload)),
+    onVote: (payload: CreateVote) => dispatch(vote(payload)),
   }
 }
 

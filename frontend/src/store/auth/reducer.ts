@@ -3,6 +3,7 @@ import { Credentials } from '../../api/auth'
 import api from '../../api'
 import { Action as UiAction } from '../ui/reducer'
 import { isValid } from './utils'
+import { User } from '../../api/types'
 
 interface SetToken {
   type: 'SET_TOKEN'
@@ -25,21 +26,33 @@ export function CheckToken(currentTime: Date): CheckToken {
   }
 }
 
-export type Action = SetToken | CheckToken
-export const Action = { SetToken, CheckToken, requestLogin }
+interface SetUser {
+  type: 'SET_USER'
+  user: User | null
+}
+
+export function SetUser(user: User | null): SetUser {
+  return { type: 'SET_USER', user }
+}
+
+export type Action = SetToken | CheckToken | SetUser
+export const Action = { SetToken, CheckToken, SetUser, requestLogin }
 
 export interface State {
   token: string | null
+  user: User | null
 }
 
 function emptyState(): State {
-  return { token: null }
+  return { token: null, user: null }
 }
 
 const reducer = (state: State = emptyState(), action: Action): State => {
   switch (action.type) {
     case 'SET_TOKEN':
       return { ...state, token: action.token }
+    case 'SET_USER':
+      return { ...state, user: action.user }
     case 'CHECK_TOKEN':
       return {
         ...state,
@@ -61,6 +74,7 @@ export function requestLogin(creds: Credentials) {
     ;(await api().auth.login(creds))
       .map(response => {
         dispatch(SetToken(response.jwt))
+        dispatch(SetUser(response.user))
         dispatch(UiAction.flashAlert('Welcome', 'success'))
       })
       .leftMap(err => {
