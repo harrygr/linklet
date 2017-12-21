@@ -47,7 +47,6 @@ export function link(overrides: Partial<Link> = {}): Link {
         link_id: 1,
       }),
     ],
-    score: 1,
     user: user(),
     comments_count: 0,
     inserted_at: '2017-01-16T22:46:52.000000',
