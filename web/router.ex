@@ -16,6 +16,7 @@ defmodule Linklet.Router do
     resources "/links", LinkController, only: [:index, :show, :create] do
       resources "/comments", CommentController, only: [:index, :create, :delete]
     end
+    resources "/votes", VoteController, only: [:create]
   end
 
   scope "/", Linklet do

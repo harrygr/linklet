@@ -5,10 +5,10 @@ import { Option } from 'catling'
 import { State } from '../../store'
 import { RouteComponentProps } from 'react-router'
 import NotFound from '../404'
-import { Link, Comment } from '../../api/types'
+import { Link, Comment, CreateVote } from '../../api/types'
 import { values, isEmpty } from 'ramda'
 import { SubmitHandler, reduxForm } from 'redux-form'
-import { fetchLinksIfNeeded } from '../../store/links/thunks'
+import { fetchLinksIfNeeded, vote } from '../../store/links/thunks'
 import {
   fetchComments,
   deleteComment,
@@ -20,13 +20,12 @@ import {
   Card,
   CardSection,
   PaddedCard,
-  LinkHeading,
   Button,
   CommentList,
   FormInput,
   Label,
   SectionHeading,
-  LinkMeta,
+  LinkItem,
 } from '../../components'
 
 interface FormProps {
@@ -68,6 +67,7 @@ interface DispatchMappedToProps {
   fetchComments: (linkId: string) => void
   postComment: (linkId: string) => (fields: Fields) => any
   deleteComment: (linkId: string, commentId: string) => void
+  onVote: (vote: CreateVote) => any
 }
 
 interface Props
@@ -97,12 +97,10 @@ export class ShowLink extends React.Component<Props> {
     return (
       <div>
         <PaddedCard>
-          <LinkHeading url={link.url} title={link.title} />
-          <LinkMeta
-            username={link.user.username}
-            linkDate={link.inserted_at}
-            linkId={link.id}
-            commentCount={link.comments_count}
+          <LinkItem
+            link={link}
+            onVote={this.props.onVote}
+            userId={this.props.userId}
           />
         </PaddedCard>
 
@@ -148,6 +146,7 @@ function mapDispatchToProps(dispatch: Dispatch<any>) {
       dispatch(deleteComment(linkId, commentId)),
     postComment: (linkId: string) => (fields: Fields) =>
       dispatch(postComment(linkId, fields.body)),
+    onVote: (payload: CreateVote) => dispatch(vote(payload)),
   }
 }
 

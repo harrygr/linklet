@@ -1,24 +1,20 @@
 import * as React from 'react'
-import { Link } from '../api/types'
-import { ListItem, LinkHeading, List, LinkMeta } from './'
+import { Option } from 'catling'
+import { Link, CreateVote } from '../api/types'
+import { LinkItem, List, ListItem } from './'
 
 interface Props {
   links: Link[]
+  onVote: (vote: CreateVote) => any
+  userId: Option<number>
 }
 
-export function LinkList({ links }: Props) {
+export function LinkList({ links, onVote, userId }: Props) {
   return (
     <List>
-      {links.map(link => (
+      {links.map((link, i) => (
         <ListItem key={link.id}>
-          <LinkHeading url={link.url} title={link.title} />
-
-          <LinkMeta
-            username={link.user.username}
-            linkDate={link.inserted_at}
-            linkId={link.id}
-            commentCount={link.comments_count}
-          />
+          <LinkItem key={i} link={link} onVote={onVote} userId={userId} />
         </ListItem>
       ))}
     </List>

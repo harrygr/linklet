@@ -15,6 +15,7 @@ defmodule Linklet.LinkControllerTest do
   test "#index shows a list of links" do
     conn = build_conn()
     link = insert(:link)
+      |> Repo.preload([:votes])
 
     conn = get conn, link_path(conn, :index)
 
@@ -23,7 +24,8 @@ defmodule Linklet.LinkControllerTest do
 
   test "#show renders a single link" do
     conn = build_conn()
-    link = insert(:link) |> Repo.preload([:user, [comments: :user]])
+    link = insert(:link)
+      |> Repo.preload([:user, [comments: :user]])
 
     conn = get conn, link_path(conn, :show, link)
 
@@ -65,5 +67,4 @@ defmodule Linklet.LinkControllerTest do
 
     assert response.status == 422
   end
-
 end

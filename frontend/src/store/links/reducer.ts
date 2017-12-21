@@ -1,4 +1,6 @@
-import { Link } from '../../api/types'
+import { Option, Some } from 'catling'
+import { Link, Vote } from '../../api/types'
+import { update } from 'ramda'
 
 interface SetLinks {
   type: 'SET_LINKS'
@@ -24,9 +26,24 @@ export function AddLink(link: Link): AddLink {
   }
 }
 
-export const Action = { AddLink, SetLinks }
+export interface UpdateVote {
+  type: 'UPDATE_VOTE'
+  linkId: number
+  userId: number
+  direction: 1 | 0 | -1
+}
 
-export type Action = SetLinks | AddLink
+export function UpdateVote(
+  linkId: number,
+  userId: number,
+  direction: 1 | 0 | -1,
+): UpdateVote {
+  return { type: 'UPDATE_VOTE', linkId, userId, direction }
+}
+
+export const Action = { AddLink, SetLinks, UpdateVote }
+
+export type Action = SetLinks | AddLink | UpdateVote
 
 export interface State {
   items: Record<string, Link>
@@ -41,6 +58,28 @@ const reducer = (state: State = emptyState(), action: Action): State => {
   switch (action.type) {
     case 'SET_LINKS':
       return { ...state, items: action.links }
+    case 'UPDATE_VOTE': {
+      const link = Option(state.items[action.linkId])
+      const votes = link.flatMap(link => {
+        const voteIndex = link.votes.findIndex(
+          v => v.user_id === action.userId && v.link_id === action.linkId,
+        )
+        if (voteIndex === -1) {
+          return Some(link.votes)
+        }
+        return Option(link.votes[voteIndex])
+          .map(v => ({ ...v, direction: action.direction } as Vote))
+          .map(newVote => update(voteIndex, newVote, link.votes))
+      })
+
+      if (link.isSome() && votes.isSome()) {
+        return link
+          .map(l => ({ ...l, votes: votes.getOrElse([]) } as Link))
+          .map(l => ({ ...state, items: { ...state.items, [l.id]: l } }))
+          .getOrElse(state)
+      }
+      return state
+    }
     case 'ADD_LINK':
       return {
         ...state,

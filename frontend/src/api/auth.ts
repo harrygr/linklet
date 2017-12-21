@@ -1,4 +1,5 @@
 import { Client } from './index'
+import { User } from './types'
 
 export interface Credentials {
   email: string
@@ -7,6 +8,7 @@ export interface Credentials {
 
 interface SuccessfulLoginResponse {
   jwt: string
+  user: User
 }
 
 export default function links({ post }: Client) {

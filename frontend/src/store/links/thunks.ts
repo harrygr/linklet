@@ -6,7 +6,7 @@ import actions, { Action } from '../../store/actions'
 import api from '../../api'
 
 import { State } from '../index'
-import { CreateLink } from '../../api/types'
+import { CreateLink, CreateVote } from '../../api/types'
 import { isEmpty } from 'ramda'
 
 export function fetchLinks() {
@@ -51,6 +51,22 @@ export function saveLink(link: CreateLink) {
         })
         .leftMap(err => dispatch(actions.flashAlert(err.message, 'danger')))
       dispatch(actions.SetLoading(false))
+    }
+  }
+}
+
+export function vote(vote: CreateVote) {
+  return async (dispatch: Dispatch<Action>, getState: () => State) => {
+    const state = getState()
+    if (!state.auth.token || !state.auth.user) {
+      dispatch(
+        actions.flashAlert('No auth token present. Cannot vote', 'danger'),
+      )
+    } else {
+      dispatch(
+        actions.UpdateVote(vote.link_id, state.auth.user.id, vote.direction),
+      )
+      await api().votes.create(state.auth.token, vote)
     }
   }
 }

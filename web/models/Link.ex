@@ -3,12 +3,18 @@ defmodule Linklet.Link do
 
   @timestamps_opts [usec: false]
 
+  alias Linklet.Link
+
   schema "links" do
     field :title
     field :url
 
+    field :comment_count, :integer, virtual: true
+    field :score, :integer, virtual: true
+
     belongs_to :user, Linklet.User
     has_many :comments, Linklet.Comment
+    has_many :votes, Linklet.Vote
 
     timestamps()
   end
@@ -24,10 +30,9 @@ defmodule Linklet.Link do
     |> order_by([l], [desc: l.inserted_at])
   end
 
-  def count_comments(query) do
-    from l in query,
+  def with_comments() do
+    from l in Link,
       left_join: c in assoc(l, :comments),
-      select: {l, count(c.id)},
       group_by: l.id
   end
 end
