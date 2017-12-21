@@ -31,7 +31,7 @@ describe('link reducer', () => {
 
     const votes = newState.items['1'].votes
 
-    expect(votes).toHaveLength(2)
-    expect(votes.reduce((sum, v) => sum + v.direction, 0)).toBe(3)
+    expect(votes).toHaveLength(3)
+    expect(votes.reduce((sum, v) => sum + v.direction, 0)).toBe(1)
   })
 })
