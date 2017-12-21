@@ -15,10 +15,11 @@ defmodule Linklet.LinkControllerTest do
   test "#index shows a list of links" do
     conn = build_conn()
     link = insert(:link)
+      |> Repo.preload([:votes])
 
     conn = get conn, link_path(conn, :index)
 
-    assert json_response(conn, 200) == render_json(LinkView, "index.json", links: [link |> Map.put(:score, 0)])
+    assert json_response(conn, 200) == render_json(LinkView, "index.json", links: [link])
   end
 
   test "#show renders a single link" do
@@ -28,7 +29,7 @@ defmodule Linklet.LinkControllerTest do
 
     conn = get conn, link_path(conn, :show, link)
 
-    assert json_response(conn, 200) == render_json(LinkView, "show.json", link: link |> Map.put(:score, 0))
+    assert json_response(conn, 200) == render_json(LinkView, "show.json", link: link)
   end
 
   test "#gives 404 for a non existant link" do

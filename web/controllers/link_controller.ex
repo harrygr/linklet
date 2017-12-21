@@ -6,9 +6,9 @@ defmodule Linklet.LinkController do
   plug Guardian.Plug.EnsureAuthenticated when action in [:create]
 
   def index(conn, _params) do
-    query = from [l, c, v] in Link.with_score_and_comments(),
+    query = from [l, c] in Link.with_comments(),
       preload: [:user, :votes],
-      select: %{%{l | comment_count: count(c.id)} | score: fragment("CONVERT(ifnull(?, 0), SIGNED)", sum(v.direction))}
+      select: %{l | comment_count: count(c.id)}
 
     links = query
       |> Repo.all
@@ -18,10 +18,10 @@ defmodule Linklet.LinkController do
 
   def show(conn, %{"id" => id}) do
 
-    query = from [l, c, v] in Link.with_score_and_comments(),
+    query = from [l, c] in Link.with_comments(),
       where: [id: ^id],
       preload: [:user, :comments, :votes],
-      select: %{%{l | comment_count: count(c.id)} | score: fragment("CONVERT(ifnull(?, 0), SIGNED)", sum(v.direction))}
+      select: %{l | comment_count: count(c.id)}
 
     result = query
       |> Repo.one

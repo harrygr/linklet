@@ -19,13 +19,12 @@ defmodule Linklet.LinkViewTest do
       updated_at: link.updated_at,
       user: UserView.related_user_json(link.user),
       comments: [],
-      score: 1
     }
   end
 
   test "index.json" do
     link = insert(:link)
-    |> Map.put(:score, 1)
+    |> Repo.preload([:votes])
 
     rendered_links = LinkView.render("index.json", %{links: [link]})
 
@@ -35,7 +34,6 @@ defmodule Linklet.LinkViewTest do
   test "show.json" do
     link = insert(:link)
       |> Repo.preload([:user, [comments: :user]])
-      |> Map.put(:score, 1)
 
     rendered_link = LinkView.render("show.json", %{link: link})
 

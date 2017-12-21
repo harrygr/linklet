@@ -6,7 +6,6 @@ export interface Link {
   updated_at: string
   user: User
   comments_count: number
-  score: number
   votes: Vote[]
 }
 

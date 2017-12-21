@@ -35,10 +35,4 @@ defmodule Linklet.Link do
       left_join: c in assoc(l, :comments),
       group_by: l.id
   end
-
-  def with_score_and_comments() do
-    from [l, c] in with_comments(),
-      left_join: v in assoc(l, :votes),
-      group_by: l.id
-  end
 end
