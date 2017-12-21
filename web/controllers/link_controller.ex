@@ -1,39 +1,38 @@
 defmodule Linklet.LinkController do
   use Linklet.Web, :controller
-  # use Guardian.Phoenix.Controller
 
   alias Linklet.Link
 
   plug Guardian.Plug.EnsureAuthenticated when action in [:create]
 
-
   def index(conn, _params) do
-    result = Link
-    |> Link.ordered
-    |> Link.count_comments
-    |> Repo.all
-    |> Enum.map(&attach_comments_count/1)
-    |> Repo.preload([:user])
+    query = from [l, c, v] in Link.with_score_and_comments(),
+      preload: [:user],
+      select: %{%{l | comment_count: count(c.id)} | score: fragment("CONVERT(ifnull(?, 0), SIGNED)", sum(v.direction))}
 
-    render conn, "index.json", links: result
-  end
+    links = query
+      |> Repo.all
 
-  defp attach_comments_count({link, count}) do
-    Map.put(link, :comments_count, count)
+    render conn, "index.json", links: links
   end
 
   def show(conn, %{"id" => id}) do
-    link = Link
-    |> Repo.get(id)
-    |> Repo.preload([:user, comments: :user])
 
-    case link do
+    query = from [l, c, v] in Link.with_score_and_comments(),
+      where: [id: ^id],
+      preload: [:user, :comments],
+      select: %{%{l | comment_count: count(c.id)} | score: fragment("CONVERT(ifnull(?, 0), SIGNED)", sum(v.direction))}
+
+    result = query
+      |> Repo.one
+
+    case result do
       nil ->
         conn
         |> put_status(404)
         |> render(Linklet.ErrorView, "404.json")
-      link ->
-        render conn, "show.json", link: link
+      result ->
+        render conn, "show.json", link: result
     end
   end
 

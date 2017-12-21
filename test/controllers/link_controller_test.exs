@@ -18,16 +18,17 @@ defmodule Linklet.LinkControllerTest do
 
     conn = get conn, link_path(conn, :index)
 
-    assert json_response(conn, 200) == render_json(LinkView, "index.json", links: [link])
+    assert json_response(conn, 200) == render_json(LinkView, "index.json", links: [link |> Map.put(:score, 0)])
   end
 
   test "#show renders a single link" do
     conn = build_conn()
-    link = insert(:link) |> Repo.preload([:user, [comments: :user]])
+    link = insert(:link)
+      |> Repo.preload([:user, [comments: :user]])
 
     conn = get conn, link_path(conn, :show, link)
 
-    assert json_response(conn, 200) == render_json(LinkView, "show.json", link: link)
+    assert json_response(conn, 200) == render_json(LinkView, "show.json", link: link |> Map.put(:score, 0))
   end
 
   test "#gives 404 for a non existant link" do
@@ -65,5 +66,4 @@ defmodule Linklet.LinkControllerTest do
 
     assert response.status == 422
   end
-
 end
