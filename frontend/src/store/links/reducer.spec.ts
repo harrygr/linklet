@@ -26,12 +26,12 @@ describe('link reducer', () => {
     expect(votes.reduce((sum, v) => sum + v.direction, 0)).toBe(2)
   })
 
-  it('handles trying to update a non-existant vote', () => {
+  it("adds a vote if it doesn't already exist", () => {
     const newState = reducer(state, Action.UpdateVote(1, 88, -1))
 
     const votes = newState.items['1'].votes
 
     expect(votes).toHaveLength(2)
-    expect(votes.reduce((sum, v) => sum + v.direction, 0)).toBe(2)
+    expect(votes.reduce((sum, v) => sum + v.direction, 0)).toBe(3)
   })
 })
