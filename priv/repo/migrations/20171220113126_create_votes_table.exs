@@ -3,7 +3,7 @@ defmodule Linklet.Repo.Migrations.CreateVotesTable do
 
   def change do
     create table :votes do
-      add :direction, :integer
+      add :direction, :tinyint
 
       add :user_id, references(:users)
       add :link_id, references(:links)

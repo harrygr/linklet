@@ -1,4 +1,6 @@
 export { Alert } from './alert'
+export { ArrowUp } from './arrow-up'
+export { ArrowDown } from './arrow-down'
 export { Anchor, RouterLink } from './link'
 export { Button } from './button'
 export { ButtonLink } from './button-link'
