@@ -30,20 +30,14 @@ const PageContainer = styled('div')`
   border-radius: 2px;
 `
 
-export function App({
-  flashAlert,
-  setToken,
-  isLoggedIn,
-  alert,
-  loading,
-}: Props) {
+export function App({ flashAlert, logout, isLoggedIn, alert, loading }: Props) {
   return (
     <Router>
       <AppWrapper>
         <Navbar
           isLoggedIn={isLoggedIn}
           logout={() => {
-            setToken(null)
+            logout()
             flashAlert('You are now logged out', 'success')
           }}
           isLoading={loading}
@@ -72,7 +66,7 @@ interface StateMappedToProps {
 }
 interface DispatchMappedToProps {
   flashAlert: (message: string, level: AlertLevel) => any
-  setToken: (token: string | null) => any
+  logout: () => any
 }
 
 function mapStateToProps(state: State): StateMappedToProps {
@@ -87,7 +81,7 @@ function mapDispatchToProps(dispatch: Dispatch<any>) {
   return {
     flashAlert: (message: string, level: AlertLevel) =>
       dispatch(actions.flashAlert(message, level)),
-    setToken: (token: string | null) => dispatch(actions.SetToken(token)),
+    logout: () => dispatch(actions.Logout()),
   }
 }
 

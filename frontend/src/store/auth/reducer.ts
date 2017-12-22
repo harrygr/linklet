@@ -35,8 +35,16 @@ export function SetUser(user: User | null): SetUser {
   return { type: 'SET_USER', user }
 }
 
-export type Action = SetToken | CheckToken | SetUser
-export const Action = { SetToken, CheckToken, SetUser, requestLogin }
+interface Logout {
+  type: 'LOGOUT'
+}
+
+export function Logout(): Logout {
+  return { type: 'LOGOUT' }
+}
+
+export type Action = SetToken | CheckToken | SetUser | Logout
+export const Action = { SetToken, CheckToken, SetUser, Logout, requestLogin }
 
 export interface State {
   token: string | null
@@ -53,6 +61,8 @@ const reducer = (state: State = emptyState(), action: Action): State => {
       return { ...state, token: action.token }
     case 'SET_USER':
       return { ...state, user: action.user }
+    case 'LOGOUT':
+      return emptyState()
     case 'CHECK_TOKEN':
       return {
         ...state,
