@@ -1,10 +1,10 @@
 import { Dispatch } from 'react-redux'
-import actions, { Action as AnyAction } from '../actions'
+import actions from '../actions'
 import api from '../../api/index'
 import { CreateUser } from '../../api/types'
 
 export function register(user: CreateUser) {
-  return async (dispatch: Dispatch<AnyAction>) => {
+  return async (dispatch: Dispatch<any>) => {
     dispatch(actions.SetLoading(true))
     ;(await api().users.create(user))
       .map(links => {

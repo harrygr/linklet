@@ -1,30 +1,60 @@
 import * as React from 'react'
 
-import styled from 'react-emotion'
+import { css } from 'react-emotion'
 import { AlertLevel } from '../store/ui/reducer'
+import { transitionTime, colors } from '../styles'
 
 interface Props {
   message: string
   level: AlertLevel
 }
 
-export function Alert({ message, level }: Props) {
-  if (level === 'none') {
-    return <div />
-  }
+const baseAlertClass = css`
+  padding: 15px;
+  color: #fff;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all ${transitionTime}ms ease;
+`
 
-  const Container = styled('div')`
-    background: ${getBackground(level)};
-    color: #fff;
-    padding: 15px;
+export function Alert({ message, level }: Props) {
+  const alertClass = css`
+    ${baseAlertClass};
+    ${getContextCss(level)};
   `
 
-  return <Container>{message}</Container>
+  return <div className={alertClass}>{message}</div>
 }
 
-function getBackground(level: AlertLevel): string {
-  const bgs = { danger: 'red', warning: 'orange', success: 'green' }
-  return bgs[level] || 'transparent'
+function getContextCss(level: AlertLevel) {
+  switch (level) {
+    case 'none': {
+      return css`
+        transform: translateY(100%);
+        opacity: 0;
+      `
+    }
+    case 'success': {
+      return css`
+        background: ${colors.green};
+      `
+    }
+    case 'warning': {
+      return css`
+        background: ${colors.amber};
+      `
+    }
+    case 'danger': {
+      return css`
+        background: ${colors.red};
+      `
+    }
+  }
 }
 
 export default Alert

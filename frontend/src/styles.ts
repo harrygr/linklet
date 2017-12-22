@@ -1,5 +1,14 @@
 import { keyframes } from 'react-emotion'
-export const colors = { theme: '#3f51b5', grey: '#828282', greyLight: '#eee' }
+export const colors = {
+  theme: '#3f51b5',
+  grey: '#828282',
+  greyLight: '#eee',
+  red: '#F44336',
+  blue: '#2196F3',
+  green: '#4CAF50',
+  orange: '#FF9800',
+  amber: '#FFC107',
+}
 
 export const fontSizes = {
   small: '12px',
@@ -21,3 +30,5 @@ export const animation = {
     to {transform:rotate(360deg);}
   `,
 }
+
+export const transitionTime = 400

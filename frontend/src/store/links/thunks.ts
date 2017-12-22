@@ -1,7 +1,7 @@
 import { Dispatch } from 'react-redux'
 import { reset } from 'redux-form'
 
-import actions, { Action } from '../../store/actions'
+import actions from '../../store/actions'
 
 import api from '../../api'
 
@@ -10,7 +10,7 @@ import { CreateLink, CreateVote } from '../../api/types'
 import { isEmpty } from 'ramda'
 
 export function fetchLinks() {
-  return async (dispatch: Dispatch<Action>) => {
+  return async (dispatch: Dispatch<any>) => {
     dispatch(actions.SetLoading(true))
     ;(await api().links.all())
       .map(links => {
@@ -24,7 +24,7 @@ export function fetchLinks() {
 }
 
 export function fetchLinksIfNeeded() {
-  return (dispatch: Dispatch<Action>, getState: () => State) => {
+  return (dispatch: Dispatch<any>, getState: () => State) => {
     if (isEmpty(getState().links.items)) {
       dispatch(fetchLinks())
     }
@@ -32,7 +32,7 @@ export function fetchLinksIfNeeded() {
 }
 
 export function saveLink(link: CreateLink) {
-  return async (dispatch: Dispatch<Action>, getState: () => State) => {
+  return async (dispatch: Dispatch<any>, getState: () => State) => {
     const state = getState()
     if (!state.auth.token) {
       dispatch(
@@ -56,7 +56,7 @@ export function saveLink(link: CreateLink) {
 }
 
 export function vote(vote: CreateVote) {
-  return async (dispatch: Dispatch<Action>, getState: () => State) => {
+  return async (dispatch: Dispatch<any>, getState: () => State) => {
     const state = getState()
     if (!state.auth.token || !state.auth.user) {
       dispatch(actions.flashAlert('You have to be logged in to vote', 'danger'))
