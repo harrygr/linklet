@@ -19,7 +19,7 @@ defmodule Linklet.Mixfile do
   def application do
     [mod: {Linklet, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :mariaex, :comeonin]]
+                    :phoenix_ecto, :mariaex, :comeonin, :faker]]
   end
 
   # Specifies which paths to compile per environment.
@@ -41,6 +41,7 @@ defmodule Linklet.Mixfile do
      {:comeonin, "~> 3.0"},
      {:guardian, "~> 1.0"},
      {:cors_plug, "~> 1.2"},
+     {:faker, "~> 0.9", only: :dev},
      {:cowboy, "~> 1.0"}]
   end
 
@@ -53,6 +54,7 @@ defmodule Linklet.Mixfile do
   defp aliases do
     ["ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
      "ecto.reset": ["ecto.drop", "ecto.setup"],
-     "test": ["ecto.create --quiet", "ecto.migrate", "test"]]
+     "test": ["ecto.create --quiet", "ecto.migrate", "test"],
+     "ecto.fakes": ["run priv/repo/fakes.exs"]]
   end
 end
