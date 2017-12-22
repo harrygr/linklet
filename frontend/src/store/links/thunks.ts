@@ -59,9 +59,7 @@ export function vote(vote: CreateVote) {
   return async (dispatch: Dispatch<Action>, getState: () => State) => {
     const state = getState()
     if (!state.auth.token || !state.auth.user) {
-      dispatch(
-        actions.flashAlert('No auth token present. Cannot vote', 'danger'),
-      )
+      dispatch(actions.flashAlert('You have to be logged in to vote', 'danger'))
     } else {
       dispatch(
         actions.UpdateVote(vote.link_id, state.auth.user.id, vote.direction),
