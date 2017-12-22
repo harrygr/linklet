@@ -16,6 +16,7 @@ defmodule Linklet.LinkControllerTest do
     conn = build_conn()
     link = insert(:link)
       |> Repo.preload([:votes])
+      |> Map.put(:comments_count, 0)
 
     conn = get conn, link_path(conn, :index)
 

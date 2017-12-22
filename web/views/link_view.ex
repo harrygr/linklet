@@ -12,7 +12,6 @@ defmodule Linklet.LinkView do
 
 
   def multi_link_json(link) do
-    comments_count = if (Map.has_key?(link, :comments_count)), do: link.comments_count, else: 0
     %{
       id: link.id,
       title: link.title,
@@ -20,7 +19,7 @@ defmodule Linklet.LinkView do
       inserted_at: link.inserted_at,
       updated_at: link.updated_at,
       user: Linklet.UserView.related_user_json(link.user),
-      comments_count: comments_count,
+      comments_count: link.comments_count,
       votes: Enum.map(link.votes, &Linklet.VoteView.vote_json/1)
     }
   end

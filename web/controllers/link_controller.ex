@@ -8,7 +8,7 @@ defmodule Linklet.LinkController do
   def index(conn, _params) do
     query = from [l, c] in Link.with_comments(),
       preload: [:user, :votes],
-      select: %{l | comment_count: count(c.id)}
+      select: %{l | comments_count: count(c.id)}
 
     links = query
       |> Repo.all
@@ -21,7 +21,7 @@ defmodule Linklet.LinkController do
     query = from [l, c] in Link.with_comments(),
       where: [id: ^id],
       preload: [:user, :comments, :votes],
-      select: %{l | comment_count: count(c.id)}
+      select: %{l | comments_count: count(c.id)}
 
     result = query
       |> Repo.one

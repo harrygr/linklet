@@ -9,7 +9,7 @@ defmodule Linklet.Link do
     field :title
     field :url
 
-    field :comment_count, :integer, virtual: true
+    field :comments_count, :integer, virtual: true
     field :score, :integer, virtual: true
 
     belongs_to :user, Linklet.User
