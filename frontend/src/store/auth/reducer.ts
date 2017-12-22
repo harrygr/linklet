@@ -79,7 +79,7 @@ const reducer = (state: State = emptyState(), action: Action): State => {
 export default reducer
 
 export function requestLogin(creds: Credentials) {
-  return async (dispatch: Dispatch<Action>) => {
+  return async (dispatch: Dispatch<any>) => {
     dispatch(UiAction.SetLoading(true))
     ;(await api().auth.login(creds))
       .map(response => {

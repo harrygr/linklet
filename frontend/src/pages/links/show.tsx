@@ -14,8 +14,6 @@ import {
   deleteComment,
   postComment,
 } from '../../store/comments/thunks'
-
-import { getUserIdFromToken } from '../../utils/auth'
 import {
   Card,
   CardSection,
@@ -134,7 +132,7 @@ function mapStateToProps({ links, ui, comments, auth }: State) {
     links: links.items,
     comments: comments.items,
     loading: ui.loading,
-    userId: getUserIdFromToken(auth.token),
+    userId: Option(auth.user).map(u => u.id),
   }
 }
 

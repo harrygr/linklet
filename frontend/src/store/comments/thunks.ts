@@ -1,6 +1,6 @@
 import { Dispatch } from 'react-redux'
 
-import actions, { Action } from '../../store/actions'
+import actions from '../../store/actions'
 
 import api from '../../api'
 import { State } from '../index'
@@ -9,7 +9,7 @@ import { RemoveComment, AddComment } from './reducer'
 import { reset } from 'redux-form'
 
 export function fetchComments(linkId: string) {
-  return async (dispatch: Dispatch<Action>) => {
+  return async (dispatch: Dispatch<any>) => {
     dispatch(actions.SetComments([]))
     dispatch(actions.SetLoading(true))
     ;(await api().comments.fetch(linkId))
@@ -22,7 +22,7 @@ export function fetchComments(linkId: string) {
 }
 
 export function deleteComment(linkId: string, commentId: string) {
-  return async (dispatch: Dispatch<Action>, getState: () => State) => {
+  return async (dispatch: Dispatch<any>, getState: () => State) => {
     const token = getState().auth.token
     if (!token) {
       dispatch(
@@ -45,7 +45,7 @@ export function deleteComment(linkId: string, commentId: string) {
 }
 
 export function postComment(linkId: string, body: string) {
-  return async (dispatch: Dispatch<Action>, getState: () => State) => {
+  return async (dispatch: Dispatch<any>, getState: () => State) => {
     const token = getState().auth.token
     if (!token) {
       dispatch(
