@@ -19,6 +19,14 @@ defmodule Linklet.Fakes do
     })
   end
 
+  def insert_comment(user_id, link_id) do
+    Repo.insert!(%Linklet.Comment{
+      user_id: user_id,
+      link_id: link_id,
+      body: Faker.Lorem.paragraph()
+    })
+  end
+
   def fill(func, times) do
     fill(func, times, [])
   end
@@ -33,7 +41,18 @@ end
 
 users = Linklet.Fakes.fill(&Linklet.Fakes.insert_user/0, 5)
 user1 = Enum.at(users, 0)
+user2 = Enum.at(users, 1)
+user3 = Enum.at(users, 2)
 
-links = Linklet.Fakes.fill(fn () -> Linklet.Fakes.insert_link(user1.id) end, 10)
+links1 = Linklet.Fakes.fill(fn () -> Linklet.Fakes.insert_link(user1.id) end, 8)
+links2 = Linklet.Fakes.fill(fn () -> Linklet.Fakes.insert_link(user2.id) end, 6)
+links3 = Linklet.Fakes.fill(fn () -> Linklet.Fakes.insert_link(user3.id) end, 10)
+
+Enum.map(links3, fn (link) ->  case Integer.mod(link.id,3) do
+    m when m == 0 -> Linklet.Fakes.insert_comment(user1.id, link.id)
+    _ -> nil
+  end
+end)
+
 IO.inspect(users)
-IO.inspect(links)
+IO.inspect(links1)

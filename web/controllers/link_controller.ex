@@ -5,13 +5,13 @@ defmodule Linklet.LinkController do
 
   plug Guardian.Plug.EnsureAuthenticated when action in [:create]
 
-  def index(conn, _params) do
+  def index(conn, params) do
     query = from [l, c] in Link.with_comments(),
       preload: [:user, :votes],
       select: %{l | comments_count: count(c.id)}
 
     links = query
-      |> Repo.all
+      |> Repo.paginate(params)
 
     render conn, "index.json", links: links
   end

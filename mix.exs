@@ -19,7 +19,7 @@ defmodule Linklet.Mixfile do
   def application do
     [mod: {Linklet, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :mariaex, :comeonin, :faker]]
+                    :phoenix_ecto, :mariaex, :comeonin, :faker, :scrivener_ecto]]
   end
 
   # Specifies which paths to compile per environment.
@@ -42,6 +42,7 @@ defmodule Linklet.Mixfile do
      {:guardian, "~> 1.0"},
      {:cors_plug, "~> 1.2"},
      {:faker, "~> 0.9", only: :dev},
+     {:scrivener_ecto, "~> 1.0"},
      {:cowboy, "~> 1.0"}]
   end
 
