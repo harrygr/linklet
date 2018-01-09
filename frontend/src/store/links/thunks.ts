@@ -9,10 +9,10 @@ import { State } from '../index'
 import { CreateLink, CreateVote } from '../../api/types'
 import { isEmpty } from 'ramda'
 
-export function fetchLinks() {
+export function fetchLinks(page: number = 1) {
   return async (dispatch: Dispatch<any>) => {
     dispatch(actions.SetLoading(true))
-    ;(await api().links.all())
+    ;(await api().links.all({ page }))
       .map(links => {
         dispatch(actions.SetLinks(links))
       })

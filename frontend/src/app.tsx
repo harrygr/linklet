@@ -47,6 +47,7 @@ export function App({ flashAlert, logout, isLoggedIn, alert, loading }: Props) {
         <PageContainer>
           <Switch>
             <Route exact path="/" component={Home} />
+            <Route path="/top/:page(\\d+)" component={Home} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route path="/links/new" component={NewLink} />

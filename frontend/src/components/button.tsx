@@ -1,6 +1,6 @@
-import styled from 'react-emotion'
+import styled, { css } from 'react-emotion'
 
-export const Button = styled('button')`
+export const buttonClass = css`
   appearance: none;
   background: transparent;
   border-radius: 2px;
@@ -23,6 +23,10 @@ export const Button = styled('button')`
   &:focus {
     background: rgba(153, 153, 153, 0.7);
   }
+`
+
+export const Button = styled('button')`
+  ${buttonClass};
 `
 
 export default Button

@@ -22,7 +22,7 @@ export function LinkMeta({ username, linkDate, commentCount, linkId }: Props) {
   return (
     <LinkMetaContainer>
       By {username} | {distanceInWordsToNow(linkDate, { addSuffix: true })} |{' '}
-      <RouterLink to={`/links/${linkId}`} className="">
+      <RouterLink to={`/links/${linkId}`}>
         {commentCount} comment{commentCount === 1 ? '' : 's'}
       </RouterLink>
     </LinkMetaContainer>
