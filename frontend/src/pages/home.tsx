@@ -6,7 +6,9 @@ import { Link, CreateVote } from '../api/types'
 import { values } from 'ramda'
 import { Option } from 'catling'
 
-import { LinkList, Button, Card } from '../components'
+import { LinkList, Card, PaddedCard } from '../components'
+import { RouteComponentProps } from 'react-router'
+import { LinkButton } from '../components/link'
 
 interface StateMappedToProps {
   links: Link[]
@@ -18,40 +20,41 @@ interface DispatchMappedToProps {
   onVote: (vote: CreateVote) => any
 }
 
-interface Props extends StateMappedToProps, DispatchMappedToProps {}
-interface HomeState extends StateMappedToProps {
-  page: number
+interface Params {
+  page?: string
 }
 
-export class Home extends React.Component<Props, HomeState> {
-  constructor(props: Props) {
-    super(props)
-  }
+interface Props
+  extends StateMappedToProps,
+    DispatchMappedToProps,
+    RouteComponentProps<Params> {}
 
+export class Home extends React.Component<Props> {
   componentDidMount() {
-    this.setState({ page: 1 }, () => {
-      this.props.fetchLinks(this.state.page)
-    })
+    this.props.fetchLinks(pageAsNumber(this.props.match.params.page))
+  }
+  componentWillReceiveProps(nextProps: Props) {
+    const nextPage = pageAsNumber(nextProps.match.params.page)
+    if (nextPage !== pageAsNumber(this.props.match.params.page)) {
+      this.props.fetchLinks(nextPage)
+    }
   }
 
   render() {
-    const { fetchLinks, links, onVote, userId } = this.props
+    const { links, onVote, userId } = this.props
+    const page = parseInt(this.props.match.params.page || '1', 10)
 
-    const getPageOffset = (offset: number) => {
-      const newPage = this.state.page + offset
-      fetchLinks(newPage)
-      this.setState({ page: newPage })
-    }
     return (
       <div>
-        <Card>
-          <LinkList links={links} onVote={onVote} userId={userId} />
-        </Card>
-        <Card style={{ textAlign: 'center', padding: '10px 0' }}>
-          <Button onClick={() => getPageOffset(-1)}>← Prev</Button>
-
-          <Button onClick={() => getPageOffset(1)}>Next →</Button>
-        </Card>
+        <Pagination page={page} />
+        {links.length > 0 ? (
+          <Card>
+            <LinkList links={links} onVote={onVote} userId={userId} />
+          </Card>
+        ) : (
+          <PaddedCard>No links to show</PaddedCard>
+        )}
+        <Pagination page={page} />
       </div>
     )
   }
@@ -79,3 +82,25 @@ export default connect<StateMappedToProps, DispatchMappedToProps>(
   mapStateToProps,
   mapDispatchToProps,
 )(Home)
+
+function pageAsNumber(page?: string): number {
+  if (!page) {
+    return 1
+  }
+  return parseInt(page, 10)
+}
+
+interface PaginationProps {
+  page: number
+}
+
+function Pagination({ page }: PaginationProps) {
+  return (
+    <Card style={{ textAlign: 'center', padding: '10px 0' }}>
+      {page > 1 && (
+        <LinkButton to={{ pathname: `/top/${page - 1}` }}>← Prev</LinkButton>
+      )}
+      <LinkButton to={{ pathname: `/top/${page + 1}` }}>Next →</LinkButton>
+    </Card>
+  )
+}
