@@ -41,7 +41,7 @@ defmodule Linklet.Mixfile do
      {:comeonin, "~> 3.0"},
      {:guardian, "~> 1.0"},
      {:cors_plug, "~> 1.2"},
-     {:faker, "~> 0.9", only: :dev},
+     {:faker, "~> 0.9"},
      {:scrivener_ecto, "~> 1.0"},
      {:cowboy, "~> 1.0"}]
   end
