@@ -45,7 +45,7 @@ defmodule Linklet.LinkController do
       {:ok, link} ->
          conn
          |> put_status(:created)
-         |> render("show.json", link: Repo.preload(link, [:user, [comments: :user]]))
+         |> render("show.json", link: Repo.preload(link, [:user, [comments: :user], :votes]))
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)

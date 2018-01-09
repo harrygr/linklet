@@ -45,7 +45,6 @@ export function saveLink(link: CreateLink) {
       dispatch(actions.SetLoading(true))
       ;(await api().links.create(state.auth.token, link))
         .map(newLink => {
-          dispatch(actions.AddLink(newLink))
           dispatch(actions.flashAlert('Link Saved!', 'success'))
           dispatch(reset('link'))
         })
