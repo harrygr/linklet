@@ -20,7 +20,7 @@ defmodule Linklet.LinkController do
 
     query = from [l, c] in Link.with_comments(),
       where: [id: ^id],
-      preload: [:user, :comments, :votes],
+      preload: [:user, :votes],
       select: %{l | comments_count: count(c.id)}
 
     result = query
@@ -32,7 +32,7 @@ defmodule Linklet.LinkController do
         |> put_status(404)
         |> render(Linklet.ErrorView, "404.json")
       result ->
-        render conn, "show.json", link: result
+        render(conn, "show.json", link: Repo.preload(result, [:user, [comments: :user], :votes]))
     end
   end
 

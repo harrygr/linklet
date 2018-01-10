@@ -13,6 +13,9 @@ export default function links({ get, post }: Client) {
     all(pagination: Pagination = defaultPagination) {
       return get<Link[]>('/links', { params: pagination })
     },
+    fetch(id: string) {
+      return get<Link>(`links/${id}`)
+    },
     create(token: string, link: CreateLink) {
       return post<Link>('/links', link, {
         headers: {

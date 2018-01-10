@@ -26,7 +26,7 @@ defmodule Linklet.LinkControllerTest do
   test "#show renders a single link" do
     conn = build_conn()
     link = insert(:link)
-      |> Repo.preload([:user, [comments: :user]])
+      |> Repo.preload([:user, [comments: :user], :votes])
 
     conn = get conn, link_path(conn, :show, link)
 
