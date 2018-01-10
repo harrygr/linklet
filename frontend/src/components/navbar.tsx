@@ -14,6 +14,11 @@ const LinkList = styled('ul')`
 
 const linkClass = css`
   padding: 5px 10px;
+
+  opacity: 0.8;
+  &:hover {
+    opacity: 1;
+  }
 `
 
 interface Props {
@@ -30,20 +35,21 @@ const NavContainer = styled('nav')`
   padding: ${spacing.s1};
   background-color: ${colors.theme};
   box-shadow: ${shadow};
+  font-weight: 200;
 `
 
 const NavLink = styled(Link)`
   color: #fff;
   text-decoration: none;
-  opacity: 0.8;
-  &:hover {
-    opacity: 1;
-  }
 `
 const NavButton = styled('button')`
   background: transparent;
   color: #fff;
   cursor: pointer;
+  padding: 0;
+  font-size: 15px;
+  border: none;
+  font-weight: 200;
 `
 
 const iconClass = (visible: boolean) => css`
@@ -65,7 +71,9 @@ export function Navbar({ logout, isLoggedIn, isLoading }: Props) {
           <NavLink to="/links/new">New Link</NavLink>
         </li>
         {isLoggedIn ? (
-          <NavButton onClick={logout}>Logout</NavButton>
+          <li className={linkClass}>
+            <NavButton onClick={logout}>Logout</NavButton>
+          </li>
         ) : (
           [
             <li className={linkClass} key="login">
