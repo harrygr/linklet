@@ -8,7 +8,7 @@ import NotFound from '../404'
 import { Link, Comment, CreateVote } from '../../api/types'
 import { values, isEmpty } from 'ramda'
 import { SubmitHandler, reduxForm } from 'redux-form'
-import { fetchLinksIfNeeded, vote } from '../../store/links/thunks'
+import { fetchLinkIfNeeded, vote } from '../../store/links/thunks'
 import {
   fetchComments,
   deleteComment,
@@ -61,7 +61,7 @@ interface StateMappedToProps {
   userId: Option<number>
 }
 interface DispatchMappedToProps {
-  fetchLinksIfNeeded: () => void
+  fetchLinkIfNeeded: (linkId: string) => void
   fetchComments: (linkId: string) => void
   postComment: (linkId: string) => (fields: Fields) => any
   deleteComment: (linkId: string, commentId: string) => void
@@ -75,7 +75,7 @@ interface Props
 
 export class ShowLink extends React.Component<Props> {
   componentDidMount() {
-    this.props.fetchLinksIfNeeded()
+    this.props.fetchLinkIfNeeded(this.props.match.params.id)
     this.props.fetchComments(this.props.match.params.id)
   }
 
@@ -83,7 +83,7 @@ export class ShowLink extends React.Component<Props> {
     const link = this.props.links[this.props.match.params.id]
 
     if (!link) {
-      return NotFound()
+      return !this.props.loading && NotFound()
     }
 
     const onDeleteComment = (commentId: number) => {
@@ -138,7 +138,7 @@ function mapStateToProps({ links, ui, comments, auth }: State) {
 
 function mapDispatchToProps(dispatch: Dispatch<any>) {
   return {
-    fetchLinksIfNeeded: () => dispatch(fetchLinksIfNeeded()),
+    fetchLinkIfNeeded: (linkId: string) => dispatch(fetchLinkIfNeeded(linkId)),
     fetchComments: (linkId: string) => dispatch(fetchComments(linkId)),
     deleteComment: (linkId: string, commentId: string) =>
       dispatch(deleteComment(linkId, commentId)),

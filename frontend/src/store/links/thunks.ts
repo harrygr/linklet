@@ -23,10 +23,28 @@ export function fetchLinks(page: number = 1) {
   }
 }
 
+export function fetchLink(linkId: string) {
+  return async (dispatch: Dispatch<any>) => {
+    dispatch(actions.SetLoading(true))
+    ;(await api().links.fetch(linkId)).map(link => {
+      dispatch(actions.SetLinks([link]))
+    })
+    dispatch(actions.SetLoading(false))
+  }
+}
+
 export function fetchLinksIfNeeded() {
   return (dispatch: Dispatch<any>, getState: () => State) => {
     if (isEmpty(getState().links.items)) {
       dispatch(fetchLinks())
+    }
+  }
+}
+
+export function fetchLinkIfNeeded(linkId: string) {
+  return (dispatch: Dispatch<any>, getState: () => State) => {
+    if (!getState().links.items[linkId]) {
+      dispatch(fetchLink(linkId))
     }
   }
 }
