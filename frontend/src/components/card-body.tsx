@@ -2,9 +2,9 @@ import styled from 'react-emotion'
 import { spacing } from '../styles'
 
 export const CardSection = styled('div')`
-  padding: ${spacing.s2} ${spacing.s2} 0 ${spacing.s2};
+  padding: ${spacing.cat} ${spacing.cat} 0 ${spacing.cat};
   &:last-child {
-    padding-bottom: ${spacing.s2};
+    padding-bottom: ${spacing.cat};
   }
 `
 export default CardSection

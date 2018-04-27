@@ -4,8 +4,8 @@ import { State } from '../store/index'
 
 import { Dispatch, connect } from 'react-redux'
 import { Redirect } from 'react-router'
-import { Button, Label, FormInput, PaddedCard } from '../components'
-import { reduxForm, SubmitHandler } from 'redux-form'
+import { Button, FormInput, PaddedCard, Vspace } from '../components'
+import { reduxForm, SubmitHandler, Field } from 'redux-form'
 import actions from '../store/actions'
 
 interface StateMappedToProps {
@@ -26,25 +26,33 @@ interface FormProps {
   handleSubmit: SubmitHandler<Fields, {}>
 }
 
+const required = (val: string) => (val ? undefined : 'Required')
+
 const RegisterForm = reduxForm<Fields>({
   form: 'register',
 })((props: FormProps) => {
   const { handleSubmit } = props
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <Label htmlFor="username">Username</Label>
-        <FormInput name="username" component="input" type="text" />
-      </div>
-      <div>
-        <Label htmlFor="email">Email</Label>
-        <FormInput name="email" component="input" type="email" />
-      </div>
-      <div>
-        <Label htmlFor="password">Password</Label>
-        <FormInput name="password" component="input" type="password" />
-      </div>
-      <Button type="submit">Sign Up</Button>
+    <form onSubmit={handleSubmit} noValidate>
+      <Vspace>
+        <Field
+          component={FormInput}
+          name="username"
+          label="Username"
+          validate={required}
+        />
+
+        <Field component={FormInput} name="email" label="Email" type="email" />
+
+        <Field
+          component={FormInput}
+          name="password"
+          label="Password"
+          type="password"
+        />
+
+        <Button type="submit">Sign Up</Button>
+      </Vspace>
     </form>
   )
 })
@@ -66,7 +74,6 @@ function mapStateToProps(state: State) {
 }
 
 function mapDispatchToProps(dispatch: Dispatch<any>) {
-  console.log(actions)
   return {
     requestRegister: (details: Fields) => dispatch(actions.register(details)),
   }

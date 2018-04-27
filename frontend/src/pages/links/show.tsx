@@ -7,7 +7,7 @@ import { RouteComponentProps } from 'react-router'
 import NotFound from '../404'
 import { Link, Comment, CreateVote } from '../../api/types'
 import { values, isEmpty } from 'ramda'
-import { SubmitHandler, reduxForm } from 'redux-form'
+import { SubmitHandler, reduxForm, Field } from 'redux-form'
 import { fetchLinkIfNeeded, vote } from '../../store/links/thunks'
 import {
   fetchComments,
@@ -21,7 +21,6 @@ import {
   Button,
   CommentList,
   FormInput,
-  Label,
   SectionHeading,
   LinkItem,
 } from '../../components'
@@ -41,10 +40,8 @@ const CommentForm = reduxForm<Fields>({
 
   return (
     <form onSubmit={handleSubmit}>
-      <div>
-        <Label htmlFor="body">Comment</Label>
-        <FormInput name="body" component="textarea" type="text" rows={1} />
-      </div>
+      <Field component={FormInput} name="body" label="Comment" type="text" />
+
       <Button type="submit">Post Comment</Button>
     </form>
   )

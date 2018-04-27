@@ -4,15 +4,9 @@ import { State } from '../../store/index'
 
 import { Dispatch, connect } from 'react-redux'
 import { Redirect } from 'react-router'
-import { reduxForm, SubmitHandler } from 'redux-form'
+import { reduxForm, SubmitHandler, Field } from 'redux-form'
 import { saveLink } from '../../store/links/thunks'
-import {
-  PaddedCard,
-  Button,
-  FormInput,
-  Label,
-  SectionHeading,
-} from '../../components'
+import { PaddedCard, Button, FormInput, SectionHeading } from '../../components'
 
 interface FormProps {
   handleSubmit: SubmitHandler<Fields, {}>
@@ -29,14 +23,10 @@ const LinkForm = reduxForm<Fields>({
   const { handleSubmit } = props
   return (
     <form onSubmit={handleSubmit}>
-      <div>
-        <Label htmlFor="title">Title</Label>
-        <FormInput name="title" component="input" type="text" />
-      </div>
-      <div>
-        <Label htmlFor="url">URL</Label>
-        <FormInput name="url" component="input" type="text" />
-      </div>
+      <Field component={FormInput} name="title" label="Title" type="text" />
+
+      <Field component={FormInput} name="url" label="URL" type="text" />
+
       <Button type="submit">Save Link</Button>
     </form>
   )

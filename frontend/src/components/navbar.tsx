@@ -32,7 +32,7 @@ const NavContainer = styled('nav')`
   position: sticky;
   top: 0;
   align-items: center;
-  padding: ${spacing.s1};
+  padding: ${spacing.mouse};
   background-color: ${colors.theme};
   box-shadow: ${shadow};
   font-weight: 200;

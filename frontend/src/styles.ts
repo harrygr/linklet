@@ -1,8 +1,9 @@
 import { keyframes } from 'react-emotion'
 export const colors = {
   theme: '#3f51b5',
-  grey: '#828282',
-  greyLight: '#eee',
+  grey3: '#828282',
+  grey5: '#d4d4d4',
+  grey7: '#eee',
   red: '#F44336',
   blue: '#2196F3',
   green: '#4CAF50',
@@ -18,8 +19,11 @@ export const fontSizes = {
 }
 
 export const spacing = {
-  s1: '10px',
-  s2: '20px',
+  flea: '5px',
+  mouse: '10px',
+  cat: '20px',
+  sheep: '32px',
+  cow: '50px',
 }
 
 export const shadow = '0 1px 2px rgba(0,0,0,.1)'

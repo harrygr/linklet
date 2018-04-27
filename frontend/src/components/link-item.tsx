@@ -18,7 +18,7 @@ const ScoreContainer = styled('div')`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${colors.grey};
+  color: ${colors.grey3};
 `
 
 const arrowContainerStyle = css`
@@ -27,11 +27,11 @@ const arrowContainerStyle = css`
   justify-content: space-between;
   height: 45px;
   width: 17px;
-  margin-right: ${spacing.s2};
+  margin-right: ${spacing.cat};
 `
 
 const arrowStyle = (voted: boolean) => css`
-  fill: ${voted ? colors.grey : colors.greyLight};
+  fill: ${voted ? colors.grey3 : colors.grey7};
 `
 
 export function LinkItem({ link, onVote, userId }: Props) {

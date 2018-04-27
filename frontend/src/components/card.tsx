@@ -3,7 +3,7 @@ import { spacing, shadow } from '../styles'
 
 export const Card = styled('div')`
   background: #fff;
-  margin-top: ${spacing.s2};
+  margin-top: ${spacing.cat};
   border-radius: 2px;
   box-shadow: ${shadow};
 `

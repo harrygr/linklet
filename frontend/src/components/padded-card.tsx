@@ -3,6 +3,6 @@ import styled from 'react-emotion'
 import { spacing } from '../styles'
 
 export const PaddedCard = styled(Card)`
-  padding: ${spacing.s2};
+  padding: ${spacing.cat};
 `
 export default PaddedCard

@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import { css } from 'react-emotion'
 import { AlertLevel } from '../store/ui/reducer'
-import { transitionTime, colors } from '../styles'
+import { transitionTime, colors, spacing } from '../styles'
 
 interface Props {
   message: string
@@ -10,12 +10,12 @@ interface Props {
 }
 
 const baseAlertClass = css`
-  padding: 15px;
+  padding: ${spacing.cat};
   color: #fff;
   position: fixed;
   bottom: 0;
   width: 100%;
-  height: 30px;
+
   display: flex;
   justify-content: center;
   align-items: center;

@@ -22,6 +22,9 @@ const AppWrapper = styled('div')`
   background: #f2f3f5;
   min-height: 100vh;
   padding-bottom: 20px;
+  * {
+    box-sizing: border-box;
+  }
 `
 
 const PageContainer = styled('div')`

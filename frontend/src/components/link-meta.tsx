@@ -14,7 +14,7 @@ interface Props {
 }
 
 const LinkMetaContainer = styled('div')`
-  color: ${colors.grey};
+  color: ${colors.grey3};
   font-size: ${fontSizes.small};
   margin-top: 10px;
 `

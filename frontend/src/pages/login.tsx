@@ -4,8 +4,8 @@ import { State } from '../store/index'
 import { Credentials } from '../api/auth'
 import { Dispatch, connect } from 'react-redux'
 import { Redirect } from 'react-router'
-import { Button, Label, FormInput, PaddedCard } from '../components'
-import { reduxForm, SubmitHandler } from 'redux-form'
+import { Button, FormInput, PaddedCard, Vspace } from '../components'
+import { reduxForm, SubmitHandler, Field } from 'redux-form'
 
 interface StateMappedToProps {
   isLoggedIn: boolean
@@ -29,16 +29,19 @@ const LoginForm = reduxForm<Fields>({
 })((props: FormProps) => {
   const { handleSubmit } = props
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <Label htmlFor="email">Email</Label>
-        <FormInput name="email" component="input" type="email" />
-      </div>
-      <div>
-        <Label htmlFor="password">Password</Label>
-        <FormInput name="password" component="input" type="password" />
-      </div>
-      <Button type="submit">Login</Button>
+    <form onSubmit={handleSubmit} noValidate>
+      <Vspace space="cat">
+        <Field component={FormInput} name="email" label="Email" type="email" />
+
+        <Field
+          component={FormInput}
+          name="password"
+          label="Password"
+          type="password"
+        />
+
+        <Button type="submit">Login</Button>
+      </Vspace>
     </form>
   )
 })
