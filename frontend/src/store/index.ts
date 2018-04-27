@@ -32,7 +32,6 @@ store.subscribe(
     if (state) {
       saveState({
         auth: state.auth,
-        links: state.links,
       })
     }
   }, 1000),

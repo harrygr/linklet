@@ -13,17 +13,17 @@ export interface Alert {
 
 interface SetAlert {
   type: 'SET_ALERT'
-  alert: string
+  message: string
   level: AlertLevel
   id: number
 }
 
 export function SetAlert(
-  alert: string,
+  message: string,
   level: AlertLevel = 'success',
   id: number,
 ): SetAlert {
-  return { type: 'SET_ALERT', alert, level, id }
+  return { type: 'SET_ALERT', message, level, id }
 }
 
 interface HideAlert {
@@ -78,7 +78,7 @@ const reducer = (state: State = emptyState(), action: Action): State => {
     case 'SET_ALERT':
       return {
         ...state,
-        alert: { message: action.alert, level: action.level, id: action.id },
+        alert: { message: action.message, level: action.level, id: action.id },
       }
     case 'HIDE_ALERT': {
       if (state.alert.id !== action.id) {
