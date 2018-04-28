@@ -61,7 +61,7 @@ jobs:
           - DB_USER=linklet
           - DB_PASSWORD=secret
           - DB_DATABASE=linklet
-      - image: mysql:8
+      - image: mysql:5
         environment:
           - MYSQL_USER=linklet
           - MYSQL_PASSWORD=secret
