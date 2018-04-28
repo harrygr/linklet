@@ -7,6 +7,7 @@ import { Redirect } from 'react-router'
 import { Button, FormInput, PaddedCard, Vspace } from '../components'
 import { reduxForm, SubmitHandler, Field } from 'redux-form'
 import actions from '../store/actions'
+import { required, emailAddress, minLength } from '../validation'
 
 interface StateMappedToProps {
   isLoggedIn: boolean
@@ -26,7 +27,7 @@ interface FormProps {
   handleSubmit: SubmitHandler<Fields, {}>
 }
 
-const required = (val: string) => (val ? undefined : 'Required')
+const passwordLength = minLength(6)
 
 const RegisterForm = reduxForm<Fields>({
   form: 'register',
@@ -42,13 +43,20 @@ const RegisterForm = reduxForm<Fields>({
           validate={required}
         />
 
-        <Field component={FormInput} name="email" label="Email" type="email" />
+        <Field
+          component={FormInput}
+          name="email"
+          label="Email"
+          type="email"
+          validate={[required, emailAddress]}
+        />
 
         <Field
           component={FormInput}
           name="password"
           label="Password"
           type="password"
+          validate={[required, passwordLength]}
         />
 
         <Button type="submit">Sign Up</Button>
