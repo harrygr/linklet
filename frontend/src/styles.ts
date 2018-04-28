@@ -1,9 +1,16 @@
 import { keyframes } from 'react-emotion'
 export const colors = {
-  theme: '#3f51b5',
+  themeDarker: '#689064',
+  themeDark: '#79a075',
+  theme: '#89B584',
+  themeLight: '#94c48f',
+
+  // Greys
   grey3: '#828282',
   grey5: '#d4d4d4',
   grey7: '#eee',
+
+  // Validation
   red: '#F44336',
   blue: '#2196F3',
   green: '#4CAF50',

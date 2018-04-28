@@ -17,5 +17,6 @@ export const RouterLink = styled(Link)`
 
 export const LinkButton = styled(Link)`
   ${buttonClass};
+  display: inline-block;
 `
 export default { Anchor, RouterLink }

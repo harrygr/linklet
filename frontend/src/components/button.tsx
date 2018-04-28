@@ -1,27 +1,29 @@
 import styled, { css } from 'react-emotion'
+import { colors, spacing, fontSizes } from '../styles'
 
 export const buttonClass = css`
   appearance: none;
-  background: transparent;
-  border-radius: 2px;
-  border: none;
+  color: #fff;
+  background-color: ${colors.theme};
+  border-color: ${colors.theme};
+  border-radius: 3px;
+  border-style: solid;
   cursor: pointer;
-  font-size: 0.875rem;
-  font-weight: 500;
-  height: 36px;
+  font-size: ${fontSizes.medium};
   letter-spacing: 0.04em;
-  line-height: 2.25rem;
   outline: none;
-  padding: 0 16px;
+  padding: ${spacing.flea} ${spacing.cat};
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
-  transition: background-color ease 300ms;
+  transition: background-color ease 300ms, border-color ease 300ms;
   &:hover {
-    background: rgba(153, 153, 153, 0.5);
+    background: ${colors.themeDark};
+    border-color: ${colors.themeDark};
   }
   &:focus {
-    background: rgba(153, 153, 153, 0.7);
+    background: ${colors.themeDarker};
+    border-color: ${colors.themeDarker};
   }
 `
 

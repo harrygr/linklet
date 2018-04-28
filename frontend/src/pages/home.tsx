@@ -9,6 +9,8 @@ import { Option } from 'catling'
 import { LinkList, Card, PaddedCard } from '../components'
 import { RouteComponentProps } from 'react-router'
 import { LinkButton } from '../components/link'
+import styled from 'react-emotion'
+import { spacing } from '../styles'
 
 interface StateMappedToProps {
   links: Link[]
@@ -94,13 +96,19 @@ interface PaginationProps {
   page: number
 }
 
+const PaginationCard = styled(Card)`
+  padding: ${spacing.cat};
+  display: flex;
+`
+
 function Pagination({ page }: PaginationProps) {
   return (
-    <Card style={{ textAlign: 'center', padding: '10px 0' }}>
+    <PaginationCard>
       {page > 1 && (
         <LinkButton to={{ pathname: `/top/${page - 1}` }}>← Prev</LinkButton>
       )}
+      <div style={{ flexGrow: 1 }} />
       <LinkButton to={{ pathname: `/top/${page + 1}` }}>Next →</LinkButton>
-    </Card>
+    </PaginationCard>
   )
 }

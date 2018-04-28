@@ -15,6 +15,7 @@ import { AlertLevel } from './store/ui/reducer'
 import { connect, Dispatch } from 'react-redux'
 import { State } from './store/index'
 import { State as UiState } from './store/ui/reducer'
+import { spacing } from './styles'
 
 interface Props extends StateMappedToProps, DispatchMappedToProps {}
 
@@ -31,6 +32,7 @@ const PageContainer = styled('div')`
   max-width: 800px;
   margin: 0 auto;
   border-radius: 2px;
+  padding: ${spacing.cat};
 `
 
 export function App({ flashAlert, logout, isLoggedIn, alert, loading }: Props) {

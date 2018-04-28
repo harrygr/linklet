@@ -23,7 +23,9 @@ import {
   FormInput,
   SectionHeading,
   LinkItem,
+  Vspace,
 } from '../../components'
+import { required } from '../../validation'
 
 interface FormProps {
   handleSubmit: SubmitHandler<Fields, {}>
@@ -40,9 +42,17 @@ const CommentForm = reduxForm<Fields>({
 
   return (
     <form onSubmit={handleSubmit}>
-      <Field component={FormInput} name="body" label="Comment" type="text" />
+      <Vspace>
+        <Field
+          component={FormInput}
+          name="body"
+          label="Comment"
+          type="text"
+          validate={required}
+        />
 
-      <Button type="submit">Post Comment</Button>
+        <Button type="submit">Post Comment</Button>
+      </Vspace>
     </form>
   )
 })
