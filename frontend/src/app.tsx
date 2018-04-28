@@ -57,6 +57,7 @@ export function App({ flashAlert, logout, isLoggedIn, alert, loading }: Props) {
             <Route exact path="/register" component={Register} />
             <Route path="/links/new" component={NewLink} />
             <Route path="/links/:id(\\d+)" component={ShowLink} />
+
             <Route component={NotFound} />
           </Switch>
         </PageContainer>

@@ -33,8 +33,11 @@ export function CommentList({ comments, onDelete, userId }: Props) {
             .map(
               id =>
                 id === comment.user.id ? (
-                  <ContentContainer>
-                    <DeleteButton onClick={() => onDelete(comment.id)} />
+                  <ContentContainer style={{ textAlign: 'right' }}>
+                    <DeleteButton
+                      title="Delete comment"
+                      onClick={() => onDelete(comment.id)}
+                    />
                   </ContentContainer>
                 ) : null,
             )

@@ -5,8 +5,8 @@ import { fetchLinksIfNeeded, fetchLinks, vote } from '../store/links/thunks'
 import { Link, CreateVote } from '../api/types'
 import { values } from 'ramda'
 import { Option } from 'catling'
-
-import { LinkList, Card, PaddedCard } from '../components'
+import NotFound from './404'
+import { LinkList, Card } from '../components'
 import { RouteComponentProps } from 'react-router'
 import { LinkButton } from '../components/link'
 import styled from 'react-emotion'
@@ -15,6 +15,7 @@ import { spacing } from '../styles'
 interface StateMappedToProps {
   links: Link[]
   userId: Option<number>
+  isLoading: boolean
 }
 interface DispatchMappedToProps {
   fetchLinks: (page: number) => void
@@ -43,32 +44,37 @@ export class Home extends React.Component<Props> {
   }
 
   render() {
-    const { links, onVote, userId } = this.props
+    const { links, onVote, userId, isLoading } = this.props
+
+    if (!isLoading && links.length === 0) {
+      return <NotFound />
+    }
+
     const page = parseInt(this.props.match.params.page || '1', 10)
+    const showNext = links.length > 9
 
     return (
       <div>
-        <Pagination page={page} />
-        {links.length > 0 ? (
-          <Card>
-            <LinkList links={links} onVote={onVote} userId={userId} />
-          </Card>
-        ) : (
-          <PaddedCard>No links to show</PaddedCard>
-        )}
-        <Pagination page={page} />
+        <Pagination page={page} showNext={showNext} />
+
+        <Card>
+          <LinkList links={links} onVote={onVote} userId={userId} />
+        </Card>
+
+        <Pagination page={page} showNext={showNext} />
       </div>
     )
   }
 }
 
-function mapStateToProps(state: State) {
+function mapStateToProps(state: State): StateMappedToProps {
   const sortKey = state.links.orderedBy
   return {
     links: values(state.links.items).sort(
       (a, b) => (a[sortKey] < b[sortKey] ? 1 : -1),
     ),
     userId: Option(state.auth.user).map(u => u.id),
+    isLoading: state.ui.loading,
   }
 }
 
@@ -94,6 +100,7 @@ function pageAsNumber(page?: string): number {
 
 interface PaginationProps {
   page: number
+  showNext: boolean
 }
 
 const PaginationCard = styled(Card)`
@@ -101,14 +108,16 @@ const PaginationCard = styled(Card)`
   display: flex;
 `
 
-function Pagination({ page }: PaginationProps) {
+function Pagination({ page, showNext }: PaginationProps) {
   return (
     <PaginationCard>
       {page > 1 && (
         <LinkButton to={{ pathname: `/top/${page - 1}` }}>← Prev</LinkButton>
       )}
       <div style={{ flexGrow: 1 }} />
-      <LinkButton to={{ pathname: `/top/${page + 1}` }}>Next →</LinkButton>
+      {showNext && (
+        <LinkButton to={{ pathname: `/top/${page + 1}` }}>Next →</LinkButton>
+      )}
     </PaginationCard>
   )
 }

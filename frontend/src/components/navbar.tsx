@@ -59,8 +59,6 @@ const iconClass = (visible: boolean) => css`
   transition-delay: 300ms;
   animation: ${animation.spin} 700ms linear infinite;
   max-height: 100%;
-  max-height: 32px;
-  max-width: 32px;
 `
 
 export function Navbar({ logout, isLoggedIn, isLoading }: Props) {
