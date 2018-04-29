@@ -67,9 +67,10 @@ jobs:
           - MYSQL_PASSWORD=secret
           - MYSQL_DATABASE=linklet
           - MYSQL_ROOT_PASSWORD=secret
-    working_directory: ~/repo
+    working_directory: ~/repo/server
     steps:
-      - checkout
+      - checkout:
+          path: ~/repo
       - run:
           name: Install hex deps
           command: |
@@ -119,9 +120,10 @@ jobs:
   deploy-api:
     docker:
       - image: circleci/elixir
-    working_directory: ~/repo
+    working_directory: ~/repo/server
     steps:
-      - checkout
+      - checkout:
+          path: ~/repo
       - run:
           name: Run setup script
           command: bash .circleci/setup-heroku.sh
@@ -131,5 +133,5 @@ jobs:
       - run:
           name: Deploy Master to Heroku
           command: |
-            git push --force git@heroku.com:$HEROKU_APP_NAME.git HEAD:refs/heads/master
+            git subtree push --prefix server git@heroku.com:$HEROKU_APP_NAME.git HEAD:refs/heads/master
             heroku run "mix ecto.migrate" --app=$HEROKU_APP_NAME
