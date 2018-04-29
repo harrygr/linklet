@@ -3,7 +3,7 @@ defmodule Linklet.UserResolver do
   alias Linklet.Repo
 
   def all(_root, _args, _info) do
-    Repo.all(User)
+    {:ok, Repo.all(User)}
   end
 
   def get(_root, %{id: user_id}, _info) do
