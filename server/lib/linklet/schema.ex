@@ -6,11 +6,17 @@ defmodule Linklet.Schema do
   alias Linklet.UserResolver
   alias Linklet.CommentResolver
 
+  import_types(Absinthe.Type.Custom)
+
+  # Queries
+
   object :link do
     field(:id, non_null(:id))
 
     field(:url, non_null(:string))
     field(:title, non_null(:string))
+    field(:created_at, non_null(:naive_datetime), resolve: &resolve_created_date/3)
+    field(:score, non_null(:integer), resolve: &LinkResolver.get_score/3)
 
     field(:user, :user, resolve: assoc(:user))
     field(:comments, non_null(list_of(non_null(:comment))), resolve: assoc(:comments))
@@ -27,8 +33,13 @@ defmodule Linklet.Schema do
   object :comment do
     field(:id, non_null(:id))
     field(:body, non_null(:string))
+    field(:created_at, non_null(:naive_datetime), resolve: &resolve_created_date/3)
 
     field(:user, non_null(:user), resolve: assoc(:user))
+  end
+
+  def resolve_created_date(_root, _args, %{source: %{inserted_at: inserted_at}}) do
+    {:ok, inserted_at}
   end
 
   query do
@@ -53,6 +64,18 @@ defmodule Linklet.Schema do
 
     field :comments, non_null(list_of(non_null(:comment))) do
       resolve(&CommentResolver.all/3)
+    end
+  end
+
+  # Mutations
+
+  mutation do
+    # @desc "Create a link"
+    field :create_link, type: :link do
+      arg(:url, non_null(:string))
+      arg(:title, non_null(:string))
+
+      resolve(&LinkResolver.create_link/3)
     end
   end
 end

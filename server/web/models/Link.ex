@@ -25,6 +25,11 @@ defmodule Linklet.Link do
     |> validate_required([:title, :url])
   end
 
+  def get_score(link) do
+    link.votes
+    |> Enum.reduce(0, fn vote, acc -> acc + vote.direction end)
+  end
+
   def ordered(query) do
     query
     |> order_by([l], desc: l.inserted_at)

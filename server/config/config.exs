@@ -6,16 +6,14 @@
 use Mix.Config
 
 # General application configuration
-config :linklet,
-  ecto_repos: [Linklet.Repo]
+config :linklet, ecto_repos: [Linklet.Repo]
 
 # Configures the endpoint
 config :linklet, Linklet.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "iqPt0g1kKJmf7IKLVGgtNmHvUEpT+MBktnbtp7G16//tPFDltgS7FWF5X1RyQiTq",
   render_errors: [view: Linklet.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Linklet.PubSub,
-           adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: Linklet.PubSub, adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger
 config :logger, :console,
@@ -36,4 +34,4 @@ config :linklet, Linklet.Auth.Guardian,
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
-import_config "#{Mix.env}.exs"
+import_config "#{Mix.env()}.exs"

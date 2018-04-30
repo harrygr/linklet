@@ -7,6 +7,11 @@ defmodule Linklet.Router do
     plug(Linklet.Auth.Pipeline)
   end
 
+  pipeline :graphql do
+    plug(Linklet.Auth.Pipeline)
+    plug(Linklet.Context)
+  end
+
   # Here be the API routes
   scope "/api", Linklet do
     pipe_through(:api)
@@ -22,11 +27,12 @@ defmodule Linklet.Router do
   end
 
   scope "/" do
+    pipe_through(:graphql)
+
     forward(
       "/graphiql",
       Absinthe.Plug.GraphiQL,
       schema: Linklet.Schema,
-      interface: :simple,
       context: %{pubsub: Linklet.Endpoint}
     )
 
