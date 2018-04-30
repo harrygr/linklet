@@ -28,4 +28,15 @@ defmodule Linklet.LinkResolver do
   def create_link(_root, _args, _info) do
     {:error, "Access denied"}
   end
+
+  def upvote(_root, %{link_id: link_id}, %{context: %{current_user: user}}) do
+    case Linklet.VoteService.vote(%{direction: 1, link_id: link_id, user_id: user.id}) do
+      {:ok, vote} -> {:ok, Repo.preload(vote, :link) |> Map.get(:link)}
+      err -> err
+    end
+  end
+
+  def upvote(_root, _args, _info) do
+    {:error, "Access denied"}
+  end
 end

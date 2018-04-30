@@ -4,10 +4,10 @@ defmodule Linklet.Vote do
   @timestamps_opts [usec: false]
 
   schema "votes" do
-    field :direction, :integer
+    field(:direction, :integer)
 
-    belongs_to :user, Linklet.User
-    belongs_to :link, Linklet.Link
+    belongs_to(:user, Linklet.User)
+    belongs_to(:link, Linklet.Link)
 
     timestamps()
   end
@@ -16,6 +16,7 @@ defmodule Linklet.Vote do
     model
     |> cast(params, [:link_id, :user_id, :direction])
     |> validate_required([:link_id, :user_id, :direction])
+
     # |> unique_constraint([:link_id, :user_id])
   end
 end

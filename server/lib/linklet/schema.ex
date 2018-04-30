@@ -70,12 +70,19 @@ defmodule Linklet.Schema do
   # Mutations
 
   mutation do
-    # @desc "Create a link"
+    @desc "Create a link"
     field :create_link, type: :link do
       arg(:url, non_null(:string))
       arg(:title, non_null(:string))
 
       resolve(&LinkResolver.create_link/3)
+    end
+
+    @desc "Upvote a link"
+    field :upvote_link, type: :link do
+      arg(:link_id, non_null(:id))
+
+      resolve(&LinkResolver.upvote/3)
     end
   end
 end
