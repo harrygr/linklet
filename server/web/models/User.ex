@@ -2,13 +2,13 @@ defmodule Linklet.User do
   use Linklet.Web, :model
 
   schema "users" do
-    field :username, :string
-    field :email, :string
-    field :password, :string, virtual: true
-    field :password_hash, :string
+    field(:username, :string)
+    field(:email, :string)
+    field(:password, :string, virtual: true)
+    field(:password_hash, :string)
 
-    has_many :links, Linklet.Link
-    has_many :comments, Linklet.Comment
+    has_many(:links, Linklet.Link)
+    has_many(:comments, Linklet.Comment)
 
     timestamps()
   end
@@ -29,13 +29,17 @@ defmodule Linklet.User do
     |> cast(params, [:password])
     |> validate_required([:username, :email, :password])
     |> validate_length(:password, min: 8)
+    |> validate_format(:email, ~r/@/)
+    |> unique_constraint(:username)
+    |> unique_constraint(:email)
     |> put_password_hash
   end
 
   def find_and_confirm_password(model, params \\ %{}) do
-    changeset = model
-    |> cast(params, [:email, :password])
-    |> validate_required([:email, :password])
+    changeset =
+      model
+      |> cast(params, [:email, :password])
+      |> validate_required([:email, :password])
 
     case changeset do
       %{valid?: true, changes: credentials} ->
@@ -43,7 +47,9 @@ defmodule Linklet.User do
           {:ok, user} -> {:ok, user}
           {:error, reason} -> {:error, add_error(changeset, :auth, reason), :invalid_creds}
         end
-      _ -> {:error, changeset, :invalid_form}
+
+      _ ->
+        {:error, changeset, :invalid_form}
     end
   end
 
@@ -53,7 +59,9 @@ defmodule Linklet.User do
         changeset
         |> put_change(:password_hash, Comeonin.Bcrypt.hashpwsalt(pass))
         |> delete_change(:password)
-      _ -> changeset
+
+      _ ->
+        changeset
     end
   end
 end

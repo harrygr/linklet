@@ -5,6 +5,7 @@ defmodule Linklet.Schema do
   alias Linklet.LinkResolver
   alias Linklet.UserResolver
   alias Linklet.CommentResolver
+  alias Linklet.SessionResolver
 
   import_types(Absinthe.Type.Custom)
 
@@ -36,6 +37,21 @@ defmodule Linklet.Schema do
     field(:created_at, non_null(:naive_datetime), resolve: &resolve_created_date/3)
 
     field(:user, non_null(:user), resolve: assoc(:user))
+  end
+
+  object :session do
+    field(:jwt, non_null(:string))
+    field(:user, non_null(:user))
+  end
+
+  object :signup_response do
+    field(:user, :user)
+    field(:errors, list_of(:error))
+  end
+
+  object :error do
+    field(:field, non_null(:string))
+    field(:messages, list_of(non_null(:string)))
   end
 
   def resolve_created_date(_root, _args, %{source: %{inserted_at: inserted_at}}) do
@@ -70,6 +86,23 @@ defmodule Linklet.Schema do
   # Mutations
 
   mutation do
+    @desc "Obtain a JWT"
+    field :login, type: :session do
+      arg(:email, non_null(:string))
+      arg(:password, non_null(:string))
+
+      resolve(&SessionResolver.login/3)
+    end
+
+    @desc "Sign up as a new user"
+    field :register, type: :signup_response do
+      arg(:email, non_null(:string))
+      arg(:username, non_null(:string))
+      arg(:password, non_null(:string))
+
+      resolve(&UserResolver.create/3)
+    end
+
     @desc "Create a link"
     field :create_link, type: :link do
       arg(:url, non_null(:string))
